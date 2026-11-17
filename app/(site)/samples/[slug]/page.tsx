@@ -49,7 +49,7 @@ export default async function SamplePage(props: PageProps<"/samples/[slug]">) {
         src={`/demo/${sample.slug}`}
         title={`${sample.name} 샘플 미리보기`}
         loading="lazy"
-        className="mt-8 h-[70vh] w-full rounded-xl border border-line"
+        className="mt-8 h-[70vh] w-full rounded-md border border-line"
       />
       <p className="mt-3 text-sm text-muted">
         {sample.plan > 0 &&

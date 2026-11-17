@@ -33,7 +33,7 @@ export default function Pricing() {
       <Section
         title="수정 범위"
         lead="1건은 문구 한 덩어리, 이미지 한 장, 링크나 연락처 한 곳입니다."
-        tinted
+       
       >
         <KV rows={editScope} />
       </Section>
@@ -42,7 +42,7 @@ export default function Pricing() {
         <KV rows={extras} />
       </Section>
 
-      <Section title="약정과 해지" tinted>
+      <Section title="약정과 해지">
         <KV rows={terms} />
       </Section>
 
@@ -73,7 +73,7 @@ export default function Pricing() {
         </table>
       </Section>
 
-      <Section title="자주 묻는 질문" tinted>
+      <Section title="자주 묻는 질문">
         <Faq items={faqs} />
       </Section>
 

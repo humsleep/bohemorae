@@ -14,7 +14,7 @@ export default function Apps() {
       <p className="mt-3 text-muted">iOS 4종 출시, Android 개발 중.</p>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {apps.map((a) => (
-          <li key={a.name} className="rounded-xl border border-line p-5">
+          <li key={a.name} className="rounded-md border border-line p-5">
             <p className="text-sm text-muted">
               {a.category} · {a.status}
             </p>
@@ -29,7 +29,7 @@ export default function Apps() {
           </li>
         ))}
       </ul>
-      <p className="mt-10 rounded-xl bg-surface p-5">
+      <p className="mt-10 rounded-md bg-surface p-5">
         이 앱들을 만든 개발자가 홈페이지도 직접 만듭니다.{" "}
         <Link href="/samples" className="font-semibold text-brand underline">
           홈페이지 샘플 보기

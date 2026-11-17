@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
+// 글자 범위별로 쪼갠 파일이라 화면에 쓰인 글자 묶음만 내려받는다
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

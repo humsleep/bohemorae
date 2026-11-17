@@ -39,7 +39,7 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
           <li key={s.slug}>
             <Link
               href={`/samples/${s.slug}`}
-              className="block overflow-hidden rounded-xl border border-line hover:border-brand"
+              className="block overflow-hidden rounded-md border border-line hover:border-brand"
             >
               <div style={s.vars} className="flex h-36 flex-col items-center justify-center bg-surface px-3 text-center text-ink">
                 <span className="font-display text-xl font-bold">{s.name}</span>

@@ -31,7 +31,7 @@ export function ContactForm({
 
   if (state.ok)
     return (
-      <p role="status" className="rounded-xl border border-brand bg-surface p-5 font-semibold">
+      <p role="status" className="rounded-md border border-brand bg-surface p-5 font-semibold">
         {state.message}
       </p>
     );
