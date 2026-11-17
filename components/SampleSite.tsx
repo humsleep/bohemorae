@@ -16,7 +16,7 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
       );
     case "prices":
       return (
-        <div className={wrap} id="prices">
+        <div className={wrap}>
           <h2 className={h2}>{s.title}</h2>
           <div className="mt-6 grid gap-8 sm:grid-cols-2">
             {s.groups.map((g) => (
@@ -30,6 +30,20 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
                     </div>
                   ))}
                 </dl>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    case "cards":
+      return (
+        <div className={wrap}>
+          <h2 className={h2}>{s.title}</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {s.items.map(([name, desc]) => (
+              <div key={name} className="rounded-xl border border-line bg-paper p-5">
+                <h3 className="font-bold">{name}</h3>
+                <p className="mt-2 text-sm text-muted">{desc}</p>
               </div>
             ))}
           </div>
@@ -84,6 +98,8 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
 // 콘텐츠 파일 하나를 받아 사이트 한 채를 그린다. 샘플 데모와 고객 사이트가 함께 쓴다.
 export function SampleSite({ sample }: { sample: Sample }) {
   const center = themes[sample.theme].center;
+  // 히어로 버튼은 첫 가격표·카드 섹션으로 내려간다
+  const target = Math.max(0, sample.sections.findIndex((s) => s.kind === "prices" || s.kind === "cards"));
   return (
     <div style={themeStyle(sample.theme)} className="flex-1 bg-paper text-ink">
       <header className="border-b border-line">
@@ -101,13 +117,13 @@ export function SampleSite({ sample }: { sample: Sample }) {
             {sample.name}
           </h1>
           <p className="mt-4 text-lg text-muted">{sample.tagline}</p>
-          <a href="#prices" className={button + " mt-8"}>
+          <a href={`#sec-${target}`} className={button + " mt-8"}>
             {sample.cta}
           </a>
         </div>
       </section>
       {sample.sections.map((s, i) => (
-        <section key={s.title} className={i % 2 ? "bg-surface" : undefined}>
+        <section key={s.title} id={`sec-${i}`} className={i % 2 ? "scroll-mt-10 bg-surface" : "scroll-mt-10"}>
           <Block section={s} sample={sample} />
         </section>
       ))}

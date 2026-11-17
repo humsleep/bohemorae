@@ -3,6 +3,7 @@ import type { Sample } from "@/lib/samples";
 const sample: Sample = {
   slug: "hair",
   type: "미용실",
+  category: "매장",
   plan: 0,
   theme: "mono",
   name: "헤어 온결",

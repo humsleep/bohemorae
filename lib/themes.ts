@@ -47,6 +47,50 @@ const defs = {
       "--font-display": serif,
     },
   },
+  bright: {
+    label: "밝은",
+    center: true,
+    vars: {
+      "--color-brand": "#2456c9",
+      "--color-accent": "#e0862a",
+      "--color-ink": "#172033",
+      "--color-muted": "#5b6577",
+      "--color-line": "#dde4f0",
+      "--color-surface": "#eef3fc",
+      "--color-paper": "#ffffff",
+      "--radius-md": "999px",
+      "--radius-xl": "1.25rem",
+    },
+  },
+  navy: {
+    label: "단정한",
+    center: false,
+    vars: {
+      "--color-brand": "#14305a",
+      "--color-accent": "#14305a",
+      "--color-ink": "#101826",
+      "--color-muted": "#5a6473",
+      "--color-line": "#d9dee6",
+      "--color-surface": "#f3f5f8",
+      "--color-paper": "#ffffff",
+      "--radius-md": "0.25rem",
+      "--radius-xl": "0.25rem",
+    },
+  },
+  ink: {
+    label: "차분한",
+    center: false,
+    vars: {
+      "--color-brand": "#1d4a4a",
+      "--color-accent": "#9a6b3f",
+      "--color-ink": "#1c2323",
+      "--color-muted": "#616b6b",
+      "--color-line": "#dfe3df",
+      "--color-surface": "#f1f3ef",
+      "--color-paper": "#fbfbf8",
+      "--font-display": serif,
+    },
+  },
 };
 
 export type ThemeName = keyof typeof defs;

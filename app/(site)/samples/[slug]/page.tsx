@@ -52,6 +52,8 @@ export default async function SamplePage(props: PageProps<"/samples/[slug]">) {
         className="mt-8 h-[70vh] w-full rounded-xl border border-line"
       />
       <p className="mt-3 text-sm text-muted">
+        {sample.plan > 0 &&
+          `데모는 메인 페이지만 보여줍니다. ${plan.name} 플랜은 ${plan.specs[0][1]}까지 만들 수 있습니다. `}
         {sample.name}은 샘플용으로 만든 가상의 가게입니다. 상호, 전화번호, 주소는 실제와 관계가 없습니다.
       </p>
     </div>

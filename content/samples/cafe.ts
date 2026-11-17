@@ -4,6 +4,7 @@ import type { Sample } from "@/lib/samples";
 const sample: Sample = {
   slug: "cafe",
   type: "카페",
+  category: "매장",
   plan: 0,
   theme: "warm",
   name: "달목 커피",

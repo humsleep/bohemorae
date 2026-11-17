@@ -3,6 +3,7 @@ import type { Sample } from "@/lib/samples";
 const sample: Sample = {
   slug: "restaurant",
   type: "식당",
+  category: "매장",
   plan: 0,
   theme: "hearty",
   name: "솥밥집 다온채",
