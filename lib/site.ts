@@ -4,6 +4,7 @@ export const site = {
   description:
     "가게·회사 홈페이지, 구축 19만원부터. 월 2.5만원에 대신 고쳐드립니다.",
   email: "bohemorae@gmail.com",
+  kakaoChannelUrl: "", // 채널 개설 후 주소를 넣으면 문의 페이지에 버튼이 생긴다
   nav: [
     { href: "/samples", label: "샘플" },
     { href: "/pricing", label: "요금" },
