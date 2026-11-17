@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* 디자인 토큰: 색·글꼴은 여기서만 바꾼다 */
+@theme {
+  --color-ink: #16181d;
+  --color-muted: #5c6370;
+  --color-line: #e4e6ea;
+  --color-surface: #f6f5f1;
+  --color-paper: #ffffff;
+  --color-brand: #1f4d3a;
+  --color-brand-ink: #ffffff;
+  --color-accent: #c8742b;
+  /* shortcut: 시스템 글꼴만 사용(기기마다 인상이 다름), 브랜드 글꼴이 필요해지면 next/font로 Pretendard 추가 */
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --container-page: 68rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  word-break: keep-all;
+}
