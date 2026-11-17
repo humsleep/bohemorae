@@ -6,6 +6,12 @@ import academy from "@/content/samples/academy";
 import company from "@/content/samples/company";
 import freelancer from "@/content/samples/freelancer";
 import restaurant from "@/content/samples/restaurant";
+import pilates from "@/content/samples/pilates";
+import interior from "@/content/samples/interior";
+import nail from "@/content/samples/nail";
+import tax from "@/content/samples/tax";
+import dental from "@/content/samples/dental";
+import pension from "@/content/samples/pension";
 
 export type SampleSection =
   | { kind: "about"; title: string; body: string }
@@ -15,7 +21,7 @@ export type SampleSection =
   | { kind: "info"; title: string; hours: [string, string][]; address: string }
   | { kind: "contact"; title: string; body: string; cta: string };
 
-export const categories = ["매장", "교육", "회사", "개인"] as const;
+export const categories = ["매장", "교육", "회사", "전문직", "개인"] as const;
 export type Category = (typeof categories)[number];
 
 // 콘텐츠 파일 하나 = 사이트 하나. 고객 사이트도 같은 형식으로 만든다.
@@ -34,7 +40,9 @@ export type Sample = {
 };
 
 // 샘플 추가: content/samples에 파일을 만들고 아래 배열에 한 줄 추가
-export const samples: Sample[] = [cafe, hair, restaurant, academy, company, freelancer];
+export const samples: Sample[] = [cafe, hair, restaurant, academy, company, freelancer,
+  pilates, interior, nail, tax, dental, pension,
+];
 
 export const getSample = (slug: string) => samples.find((s) => s.slug === slug);
 
