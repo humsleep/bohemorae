@@ -1,16 +1,7 @@
 import Link from "next/link";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { faqs, plans } from "@/lib/pricing";
-
-// 3일차에 샘플 콘텐츠 파일이 생기면 거기서 읽도록 바꾼다
-const sampleTypes: [string, number][] = [
-  ["카페", 0],
-  ["미용실", 0],
-  ["식당", 0],
-  ["학원·교습소", 1],
-  ["소규모 회사", 2],
-  ["강사·프리랜서", 0],
-];
+import { samplePrice, samples } from "@/lib/samples";
 
 const promises = [
   ["조건 전부 공개", "가격, 약정, 해지 조건을 요금 페이지 한 곳에 전부 적었습니다."],
@@ -45,12 +36,12 @@ export default function Home() {
 
       <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다." tinted>
         <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
-          {sampleTypes.map(([type, i]) => (
-            <li key={type}>
-              <Link href="/samples" className="block rounded-xl border border-line bg-paper p-4 hover:border-brand">
-                <span className="block font-bold">{type}</span>
+          {samples.slice(0, 6).map((s) => (
+            <li key={s.slug}>
+              <Link href={`/samples/${s.slug}`} className="block rounded-xl border border-line bg-paper p-4 hover:border-brand">
+                <span className="block font-bold">{s.type}</span>
                 <span className="mt-1 block text-sm text-muted">
-                  {plans[i].name} · 구축 {plans[i].build} + 월 {plans[i].monthly}
+                  {plans[s.plan].name} · {samplePrice(s)}
                 </span>
               </Link>
             </li>

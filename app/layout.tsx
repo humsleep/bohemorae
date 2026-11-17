@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -10,14 +8,11 @@ export const metadata: Metadata = {
   description: site.description,
 };
 
+// 헤더·푸터는 (site)/layout.tsx에 있다. 데모(/demo)는 고객 사이트처럼 보여야 해서 여기엔 두지 않는다.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

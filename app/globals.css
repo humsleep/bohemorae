@@ -13,6 +13,7 @@
   /* shortcut: 시스템 글꼴만 사용(기기마다 인상이 다름), 브랜드 글꼴이 필요해지면 next/font로 Pretendard 추가 */
   --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-display: var(--font-sans);
   --container-page: 68rem;
 }
 
