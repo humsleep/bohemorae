@@ -5,7 +5,7 @@ const sample: Sample = {
   "type": "필라테스·PT",
   "category": "매장",
   "plan": 0,
-  "theme": "bright",
+  "theme": "soft",
   "name": "숨결 필라테스",
   "tagline": "한 반 4명, 소그룹 기구 필라테스",
   "intro": "수업 종류와 수강료, 체험 수업 신청을 앞세운 필라테스·PT용 1페이지 디자인입니다. 밝은 색과 둥근 화면으로 가벼운 인상을 줍니다.",

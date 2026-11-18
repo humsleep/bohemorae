@@ -5,7 +5,7 @@ const sample: Sample = {
   "type": "펜션·숙소",
   "category": "매장",
   "plan": 0,
-  "theme": "hearty",
+  "theme": "forest",
   "name": "숲마루 스테이",
   "tagline": "하루 두 팀만 받는 독채 숙소",
   "intro": "객실과 요금, 이용 안내, 예약 문의를 앞세운 펜션·숙소용 1페이지 디자인입니다. 짙은 색으로 든든한 인상을 줍니다. 객실 사진은 받는 대로 넣습니다.",

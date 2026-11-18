@@ -38,6 +38,7 @@ export type Sample = {
   intro: string; // 샘플 소개 페이지 설명
   phone: string;
   cta: string;
+  stats?: [string, string][]; // 첫 화면 아래 숫자 띠
   sections: SampleSection[];
   photos?: { hero?: string; gallery: string[] }; // 아래에서 파일이 있는 것만 자동으로 채운다
 };

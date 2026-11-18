@@ -5,7 +5,7 @@ const sample: Sample = {
   "type": "네일·뷰티",
   "category": "매장",
   "plan": 0,
-  "theme": "warm",
+  "theme": "blush",
   "name": "네일 소담",
   "tagline": "예약제 1인 네일숍",
   "intro": "시술 가격표와 예약 안내를 앞세운 네일·뷰티 매장용 1페이지 디자인입니다. 따뜻한 색과 가운데 정렬로 부드러운 인상을 줍니다.",
