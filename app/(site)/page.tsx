@@ -1,95 +1,221 @@
 import Link from "next/link";
-import { SampleSite } from "@/components/SampleSite";
+import type { ReactNode } from "react";
+import { SitePreview } from "@/components/SitePreview";
 import { Faq, PlanCards, Section } from "@/components/ui";
-import { faqs, plans } from "@/lib/pricing";
+import { apps } from "@/lib/apps";
+import { comparison, faqs, plans } from "@/lib/pricing";
 import { samplePrice, samples } from "@/lib/samples";
 import { themeStyle } from "@/lib/themes";
 
-const promises = [
-  ["조건 전부 공개", "가격, 약정, 해지 조건을 요금 페이지 한 곳에 전부 적었습니다."],
-  ["해지해도 내 사이트", "도메인은 고객 명의로 사고, 해지하면 소스와 콘텐츠를 넘겨드립니다."],
-  ["만든 개발자가 직접 응대", "14년차 개발자가 직접 만들고 직접 답합니다. 전화 영업은 하지 않습니다."],
+const primary = "rounded-full bg-brand px-6 py-3 font-medium text-brand-ink hover:opacity-90";
+const secondary = "rounded-full border border-line px-6 py-3 font-medium hover:bg-surface";
+const more = "mt-6 inline-block font-medium text-brand hover:underline";
+const panel = "rounded-3xl border border-line bg-surface p-6 md:p-10";
+
+const steps = [
+  ["샘플 선택", "마음에 드는 디자인을 고릅니다"],
+  ["자료 전달", "상호, 가격표, 사진을 보내 주세요"],
+  ["초안 확인", `${plans[0].specs[8][1]} 안에 초안을 드립니다`],
+  ["오픈", "확인이 끝나면 도메인에 연결합니다"],
 ];
 
-const steps = ["샘플 선택", "자료 전달", "영업일 3일 내 초안", "확인 후 오픈"];
+// 3년 총액 비교: 직접 제작, 우리 라이트, 초기비 0원 구독형. 숫자는 요금 페이지와 같은 출처.
+const totals = [comparison[0], comparison[1], comparison[4]].map((c) => ({
+  ...c,
+  n: parseFloat(c.total.replace(/[^0-9.]/g, "")),
+}));
+const maxTotal = Math.max(...totals.map((t) => t.n));
 
-const apps = ["모쏠 탈출기", "Wickhollow", "Ribatto", "FC Scope"];
-
-// 히어로 오른쪽 조건표. 가장 싼 요금제 기준.
-const sheet = [
-  ["구축", plans[0].build],
-  ["월 관리", plans[0].monthly],
-  ["최소 이용", "3개월"],
-  ["해지하면", "소스·콘텐츠 인도"],
+// 수정 요청 화면 예시(가상의 요청)
+const requests = [
+  ["런치 메뉴 가격을 9,000원에서 10,000원으로 바꿔 주세요", "화 10:12 요청", "수 16:40 반영"],
+  ["토요일 영업시간을 17시까지로 고쳐 주세요", "화 10:12 요청", "수 16:40 반영"],
+  ["12월 휴무 공지를 올려 주세요", "화 10:13 요청", "수 16:41 반영"],
 ];
 
-// 첫 화면에 실제 결과물로 보여 줄 샘플
-const featured = samples[0];
+const handover = [
+  ["도메인", "처음부터 고객 명의"],
+  ["소스 코드", "전체 무료 전달"],
+  ["콘텐츠 파일", "문구와 이미지 전부"],
+  ["다른 호스팅으로 이전", "원하면 5만원에 대행"],
+];
 
-const primary = "rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90";
-const secondary = "rounded-lg border border-ink px-5 py-3 font-medium hover:bg-surface";
-const more = "mt-8 inline-block border-b border-ink pb-0.5 font-medium hover:border-brand hover:text-brand";
-const num = "text-sm font-medium text-accent";
+function Feature({
+  title,
+  body,
+  href,
+  link,
+  flip,
+  children,
+}: {
+  title: string;
+  body: string;
+  href: string;
+  link: string;
+  flip?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <div className="mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
+      <div className={flip ? "md:order-2" : undefined}>
+        <h2 className="text-3xl font-semibold leading-tight md:text-4xl">{title}</h2>
+        <p className="mt-4 max-w-md text-lg text-muted">{body}</p>
+        <Link href={href} className={more}>
+          {link} →
+        </Link>
+      </div>
+      <div className={panel}>{children}</div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <>
-      <section className="mx-auto grid max-w-page items-end gap-10 px-4 pt-16 pb-12 md:grid-cols-[1fr_19rem] md:pt-28 md:pb-16">
-        <div>
-          <h1 className="text-4xl font-semibold leading-[1.15] sm:text-6xl">
+      <section className="pt-20 md:pt-28">
+        <div className="mx-auto max-w-page px-4 text-center">
+          <h1 className="text-5xl font-semibold leading-[1.1] md:text-7xl">
             가게·회사 홈페이지,
             <br />
             구축 <span className="text-brand">19만원</span>부터
           </h1>
-          <p className="mt-6 max-w-md text-lg text-muted">
+          <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
             월 2.5만원에 대신 고쳐드립니다. 가격과 해지 조건은 전부 공개합니다.
           </p>
-          <div className="mt-9 flex gap-3">
+          <div className="mt-9 flex justify-center gap-3">
             <Link href="/samples" className={primary}>샘플 보기</Link>
             <Link href="/contact" className={secondary}>문의하기</Link>
           </div>
         </div>
-        <div>
-          <dl className="border-t-2 border-ink">
-          {sheet.map(([k, v]) => (
-            <div key={k} className="flex items-baseline justify-between gap-4 border-b border-line py-3">
-              <dt className="text-sm text-muted">{k}</dt>
-              <dd className="font-medium">{v}</dd>
-            </div>
-          ))}
-          </dl>
-          <p className="pt-3 text-xs text-muted">라이트 요금제 기준, 부가세 별도</p>
+
+        {/* 실제 샘플 사이트 세 채. 가운데가 주인공이고 양옆은 화면 밖으로 걸친다. */}
+        <div className="relative mt-16 overflow-hidden px-4 md:px-0">
+          <div className="flex items-end justify-center gap-6">
+            <SitePreview sample={samples[1]} zoom={0.6} className="hidden h-[26rem] w-[660px] shrink-0 opacity-50 md:block" />
+            <SitePreview sample={samples[0]} zoom={0.8} className="h-[24rem] w-full shrink-0 md:h-[34rem] md:w-[880px]" />
+            <SitePreview sample={samples[2]} zoom={0.6} className="hidden h-[26rem] w-[660px] shrink-0 opacity-50 md:block" />
+          </div>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent" />
+          <Link href="/samples" aria-label="샘플 전체 보기" className="absolute inset-0" />
         </div>
       </section>
 
-      {/* 실제 샘플 사이트를 그대로 그린 미리보기. 아래쪽은 잘려서 다음 구역으로 이어진다. */}
-      <div className="mx-auto max-w-page px-4">
-        <div className="relative overflow-hidden rounded-t-xl border border-b-0 border-line hover:border-ink">
-          <div className="flex items-center gap-2 border-b border-line bg-surface px-4 py-3 text-xs text-muted">
-            <span className="size-2 rounded-full bg-line" />
-            <span className="size-2 rounded-full bg-line" />
-            <span className="size-2 rounded-full bg-line" />
-            <span className="ml-2">샘플 · {featured.type} · {samplePrice(featured)}</span>
-          </div>
-          <div inert aria-hidden className="h-80 md:h-[26rem]">
-            <SampleSite sample={featured} preview />
-          </div>
-          {/* 미리보기 안에 링크(전화번호)가 있어 감쌀 수 없으므로 위에 덮는다 */}
-          <Link href={`/samples/${featured.slug}`} aria-label={`${featured.name} 샘플 보기`} className="absolute inset-0" />
-        </div>
-      </div>
+      <section className="mx-auto max-w-page px-4 py-16 text-center">
+        <p className="text-sm text-muted">샘플이 준비된 업종 {samples.length}개</p>
+        <ul className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-3 text-lg font-medium text-muted">
+          {samples.map((s) => (
+            <li key={s.slug}>
+              <Link href={`/samples/${s.slug}`} className="hover:text-ink">{s.type}</Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다.">
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
+      <Feature
+        title="가격과 조건을 전부 공개합니다"
+        body="구축비, 월 요금, 약정, 해지 조건을 요금 페이지 한 곳에 적었습니다. 3년 동안 내는 돈까지 미리 계산해 두었습니다."
+        href="/pricing"
+        link="요금 전부 보기"
+      >
+        <p className="font-medium">3년 동안 내는 돈</p>
+        <ul className="mt-6 space-y-6">
+          {totals.map((t) => (
+            <li key={t.name}>
+              <div className="flex items-baseline justify-between gap-4">
+                <span className={t.ours ? "font-medium" : "text-muted"}>{t.name}</span>
+                <span className={`whitespace-nowrap text-xl font-semibold ${t.ours ? "text-brand" : ""}`}>{t.total}</span>
+              </div>
+              <div className="mt-2 h-2 rounded-full bg-raised">
+                <div
+                  className={`h-2 rounded-full ${t.ours ? "bg-brand" : "bg-muted/50"}`}
+                  style={{ width: `${(t.n / maxTotal) * 100}%` }}
+                />
+              </div>
+              <p className="mt-2 text-sm text-muted">수정: {t.edits}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-xs text-muted">부가세 별도, 도메인 비용 제외</p>
+      </Feature>
+
+      <Feature
+        flip
+        title="고칠 일이 생기면 대신 고쳐드립니다"
+        body={`가격표, 영업시간, 사진, 공지처럼 자주 바뀌는 내용은 요청만 하시면 됩니다. 라이트 기준 ${plans[0].specs[1][1]}, ${plans[0].specs[2][1]} 안에 반영합니다.`}
+        href="/pricing"
+        link="수정 범위 보기"
+      >
+        <div className="flex items-baseline justify-between">
+          <p className="font-medium">11월 수정 요청</p>
+          <p className="text-sm text-muted">예시 화면</p>
+        </div>
+        <ul className="mt-6 space-y-3">
+          {requests.map(([text, asked, done]) => (
+            <li key={text} className="rounded-2xl bg-raised p-4">
+              <p>{text}</p>
+              <p className="mt-3 flex items-center justify-between text-sm text-muted">
+                <span>{asked}</span>
+                <span className="flex items-center gap-2 text-brand">
+                  <span className="size-1.5 rounded-full bg-brand" />
+                  {done}
+                </span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </Feature>
+
+      <Feature
+        title="해지해도 사이트는 고객님 것입니다"
+        body="도메인은 처음부터 고객 명의로 삽니다. 해지하면 소스와 콘텐츠 파일을 무료로 넘겨드립니다. 최소 이용 기간은 3개월입니다."
+        href="/pricing"
+        link="약정과 해지 조건"
+      >
+        <p className="font-medium">해지할 때 받는 것</p>
+        <dl className="mt-6 divide-y divide-line border-y border-line">
+          {handover.map(([k, v]) => (
+            <div key={k} className="flex items-baseline justify-between gap-4 py-4">
+              <dt>{k}</dt>
+              <dd className="text-right text-muted">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Feature>
+
+      <Feature
+        flip
+        title="14년차 개발자가 직접 만들고 직접 답합니다"
+        body="Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 앱스토어에 앱을 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다."
+        href="/apps"
+        link="출시 앱 보기"
+      >
+        <ul className="grid grid-cols-2 gap-3">
+          {apps.slice(0, 4).map((a) => (
+            <li key={a.name} className="rounded-2xl bg-raised p-4">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-paper font-semibold text-brand">
+                {a.name[0]}
+              </span>
+              <p className="mt-4 font-medium">{a.name}</p>
+              <p className="mt-1 text-sm text-muted">{a.desc}</p>
+            </li>
+          ))}
+        </ul>
+      </Feature>
+
+      <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다">
+        <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {samples.slice(0, 6).map((s) => (
             <li key={s.slug}>
               <Link href={`/samples/${s.slug}`} className="group block">
                 <span
                   style={themeStyle(s.theme)}
-                  className="flex aspect-[4/3] flex-col justify-between border border-line bg-surface p-4 text-ink group-hover:border-ink"
+                  className="flex aspect-[4/3] flex-col justify-between rounded-2xl bg-surface p-5 text-ink ring-brand group-hover:ring-2"
                 >
                   <span className="h-1 w-8 bg-brand" />
-                  <span className="font-display text-lg font-semibold leading-snug sm:text-xl">{s.name}</span>
+                  <span>
+                    <span className="block font-display text-xl font-semibold leading-snug sm:text-2xl">{s.name}</span>
+                    <span className="mt-1 hidden text-sm text-muted sm:block">{s.tagline}</span>
+                  </span>
                 </span>
                 <span className="mt-3 block font-medium">{s.type}</span>
                 <span className="block text-sm text-muted">
@@ -99,60 +225,43 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <Link href="/samples" className={more}>샘플 {samples.length}개 전체 보기</Link>
-      </Section>
-
-      <Section title="세 가지 약속">
-        <ol className="border-t border-line">
-          {promises.map(([t, d], i) => (
-            <li key={t} className="grid gap-x-6 gap-y-1 border-b border-line py-5 sm:grid-cols-[2.5rem_13rem_1fr]">
-              <span className={num}>0{i + 1}</span>
-              <h3 className="text-lg font-semibold">{t}</h3>
-              <p className="text-muted">{d}</p>
-            </li>
-          ))}
-        </ol>
+        <Link href="/samples" className={more}>샘플 {samples.length}개 전체 보기 →</Link>
       </Section>
 
       <Section title="요금" lead="부가세 별도. 최소 이용 기간은 3개월입니다.">
         <PlanCards />
-        <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기</Link>
+        <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기 →</Link>
       </Section>
 
       <Section title="진행 절차">
-        <ol className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
-          {steps.map((s, i) => (
-            <li key={s} className="border-t border-ink pt-3">
-              <span className={num}>0{i + 1}</span>
-              <span className="mt-1 block font-medium">{s}</span>
+        <ol className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+          {steps.map(([t, d], i) => (
+            <li key={t} className="rounded-2xl border border-line p-6">
+              <span className="text-sm font-medium text-accent">0{i + 1}</span>
+              <p className="mt-6 text-lg font-medium">{t}</p>
+              <p className="mt-1 text-sm text-muted">{d}</p>
             </li>
           ))}
         </ol>
       </Section>
 
-      <Section title="만든 사람">
-        <p className="max-w-2xl text-lg leading-relaxed">
-          Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 14년차 개발자가 앱스토어에
-          출시한 앱({apps.join(", ")})을 만든 손으로 홈페이지도 직접 만듭니다.
-        </p>
-        <Link href="/apps" className={more}>출시 앱 보기</Link>
-      </Section>
-
       <Section title="자주 묻는 질문">
-        <Faq items={faqs.slice(0, 3)} />
-        <Link href="/pricing" className={more}>질문 더 보기</Link>
+        <Faq items={faqs.slice(0, 4)} />
+        <Link href="/pricing" className={more}>질문 더 보기 →</Link>
       </Section>
 
-      <section className="bg-brand text-brand-ink">
-        <div className="mx-auto flex max-w-page flex-col gap-6 px-4 py-16 md:flex-row md:items-end md:justify-between md:py-20">
-          <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
+      <section className="mx-auto max-w-page px-4 pb-24">
+        <div className="rounded-3xl border border-line bg-surface px-6 py-16 text-center md:py-20">
+          <h2 className="text-3xl font-semibold leading-tight md:text-5xl">
             업종과 원하는 샘플만
             <br />
             알려주셔도 됩니다
           </h2>
-          <Link href="/contact" className="self-start rounded-lg bg-paper px-6 py-3 font-medium text-ink hover:opacity-90 md:self-auto">
-            문의하기
-          </Link>
+          <p className="mt-4 text-muted">영업일 2일 안에 메일로 답변드립니다</p>
+          <div className="mt-8 flex justify-center gap-3">
+            <Link href="/contact" className={primary}>문의하기</Link>
+            <Link href="/pricing" className={secondary}>요금 보기</Link>
+          </div>
         </div>
       </section>
     </>

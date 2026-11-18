@@ -97,4 +97,6 @@ export type ThemeName = keyof typeof defs;
 
 export const themes: Record<ThemeName, { label: string; center: boolean; vars: Record<string, string> }> = defs;
 
-export const themeStyle = (name: ThemeName) => themes[name].vars as CSSProperties;
+// 사이트 본체가 어두운 바탕이라, 테마가 따로 정하지 않는 값은 밝은 바탕용으로 되돌린다
+export const themeStyle = (name: ThemeName) =>
+  ({ "--color-brand-ink": "#ffffff", colorScheme: "light", ...themes[name].vars }) as CSSProperties;

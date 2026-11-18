@@ -2,18 +2,24 @@
 
 /* 디자인 토큰: 색·글꼴은 여기서만 바꾼다 */
 @theme {
-  --color-ink: #14171a;
-  --color-muted: #5f635f;
-  --color-line: #dfdcd3;
-  --color-surface: #f3f1ea;
-  --color-paper: #fbfaf7;
-  --color-brand: #1f4d3a;
-  --color-brand-ink: #ffffff;
-  --color-accent: #9c5518;
+  /* 어두운 바탕. 초록 기운이 아주 약하게 도는 회색 단계 */
+  --color-paper: #0b0f0e;
+  --color-surface: #121816;
+  --color-raised: #1a2220;
+  --color-line: #252f2b;
+  --color-ink: #eef2ef;
+  --color-muted: #97a39d;
+  --color-brand: #9fe0b8;
+  --color-brand-ink: #0b0f0e;
+  --color-accent: #e3b76a;
   --font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
   --font-display: var(--font-sans);
   --container-page: 68rem;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
