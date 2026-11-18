@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SampleSite } from "@/components/SampleSite";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { faqs, plans } from "@/lib/pricing";
 import { samplePrice, samples } from "@/lib/samples";
@@ -22,6 +23,9 @@ const sheet = [
   ["해지하면", "소스·콘텐츠 인도"],
 ];
 
+// 첫 화면에 실제 결과물로 보여 줄 샘플
+const featured = samples[0];
+
 const primary = "rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90";
 const secondary = "rounded-lg border border-ink px-5 py-3 font-medium hover:bg-surface";
 const more = "mt-8 inline-block border-b border-ink pb-0.5 font-medium hover:border-brand hover:text-brand";
@@ -30,7 +34,7 @@ const num = "text-sm font-medium text-accent";
 export default function Home() {
   return (
     <>
-      <section className="mx-auto grid max-w-page items-end gap-10 px-4 py-16 md:grid-cols-[1fr_19rem] md:py-28">
+      <section className="mx-auto grid max-w-page items-end gap-10 px-4 pt-16 pb-12 md:grid-cols-[1fr_19rem] md:pt-28 md:pb-16">
         <div>
           <h1 className="text-4xl font-semibold leading-[1.15] sm:text-6xl">
             가게·회사 홈페이지,
@@ -57,6 +61,23 @@ export default function Home() {
           <p className="pt-3 text-xs text-muted">라이트 요금제 기준, 부가세 별도</p>
         </div>
       </section>
+
+      {/* 실제 샘플 사이트를 그대로 그린 미리보기. 아래쪽은 잘려서 다음 구역으로 이어진다. */}
+      <div className="mx-auto max-w-page px-4">
+        <div className="relative overflow-hidden rounded-t-xl border border-b-0 border-line hover:border-ink">
+          <div className="flex items-center gap-2 border-b border-line bg-surface px-4 py-3 text-xs text-muted">
+            <span className="size-2 rounded-full bg-line" />
+            <span className="size-2 rounded-full bg-line" />
+            <span className="size-2 rounded-full bg-line" />
+            <span className="ml-2">샘플 · {featured.type} · {samplePrice(featured)}</span>
+          </div>
+          <div inert aria-hidden className="h-80 md:h-[26rem]">
+            <SampleSite sample={featured} preview />
+          </div>
+          {/* 미리보기 안에 링크(전화번호)가 있어 감쌀 수 없으므로 위에 덮는다 */}
+          <Link href={`/samples/${featured.slug}`} aria-label={`${featured.name} 샘플 보기`} className="absolute inset-0" />
+        </div>
+      </div>
 
       <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다.">
         <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">

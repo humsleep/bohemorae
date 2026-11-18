@@ -96,7 +96,9 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
 }
 
 // 콘텐츠 파일 하나를 받아 사이트 한 채를 그린다. 샘플 데모와 고객 사이트가 함께 쓴다.
-export function SampleSite({ sample }: { sample: Sample }) {
+// preview: 다른 페이지 안에 미리보기로 넣을 때. 그 페이지의 h1과 겹치지 않게 제목 태그를 바꾼다.
+export function SampleSite({ sample, preview }: { sample: Sample; preview?: boolean }) {
+  const Title = preview ? "p" : "h1";
   const center = themes[sample.theme].center;
   // 히어로 버튼은 첫 가격표·카드 섹션으로 내려간다
   const target = Math.max(0, sample.sections.findIndex((s) => s.kind === "prices" || s.kind === "cards"));
@@ -113,9 +115,9 @@ export function SampleSite({ sample }: { sample: Sample }) {
       <section className="bg-surface">
         <div className={`mx-auto max-w-3xl px-5 py-20 sm:py-28 ${center ? "text-center" : ""}`}>
           <p className="text-sm font-semibold text-accent">{sample.type}</p>
-          <h1 className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">
+          <Title className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">
             {sample.name}
-          </h1>
+          </Title>
           <p className="mt-4 text-lg text-muted">{sample.tagline}</p>
           <a href={`#sec-${target}`} className={button + " mt-8"}>
             {sample.cta}
