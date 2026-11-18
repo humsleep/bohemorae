@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SitePreview } from "@/components/SitePreview";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { apps } from "@/lib/apps";
 import { comparison, faqs, plans } from "@/lib/pricing";
@@ -8,9 +9,12 @@ import { samplePrice, samples } from "@/lib/samples";
 import { themeStyle } from "@/lib/themes";
 
 const primary = "rounded-full bg-brand px-6 py-3 font-medium text-brand-ink hover:opacity-90";
-const secondary = "rounded-full border border-line px-6 py-3 font-medium hover:bg-surface";
+const secondary = "rounded-full border border-ink px-6 py-3 font-medium hover:bg-surface";
 const more = "mt-6 inline-block font-medium text-brand hover:underline";
-const panel = "rounded-3xl border border-line bg-surface p-6 md:p-10";
+const panel = "rounded-3xl border border-line bg-surface p-6 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:p-10";
+
+// 샘플 벽: 두 채씩 묶어 세로 단을 만든다
+const columns = Array.from({ length: Math.ceil(samples.length / 2) }, (_, i) => samples.slice(i * 2, i * 2 + 2));
 
 const steps = [
   ["샘플 선택", "마음에 드는 디자인을 고릅니다"],
@@ -58,7 +62,7 @@ function Feature({
   return (
     <div className="mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
       <div className={flip ? "md:order-2" : undefined}>
-        <h2 className="text-3xl font-semibold leading-tight md:text-4xl">{title}</h2>
+        <h2 className="font-display text-3xl font-semibold leading-tight md:text-4xl">{title}</h2>
         <p className="mt-4 max-w-md text-lg text-muted">{body}</p>
         <Link href={href} className={more}>
           {link} →
@@ -72,14 +76,22 @@ function Feature({
 export default function Home() {
   return (
     <>
-      <section className="pt-20 md:pt-28">
+      <section className="overflow-hidden pt-16 md:pt-24">
         <div className="mx-auto max-w-page px-4 text-center">
-          <h1 className="text-5xl font-semibold leading-[1.1] md:text-7xl">
+          <h1 className="font-display text-5xl font-semibold leading-[1.15] md:text-7xl">
             가게·회사 홈페이지,
             <br />
-            구축 <span className="text-brand">19만원</span>부터
+            구축{" "}
+            <span className="relative inline-block text-brand">
+              19만원
+              {/* 손으로 그은 듯한 밑줄 */}
+              <svg aria-hidden viewBox="0 0 200 12" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-3 w-full text-accent">
+                <path d="M2 8 C 40 2, 70 11, 110 5 S 170 3, 198 7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            </span>
+            부터
           </h1>
-          <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
+          <p className="mx-auto mt-8 max-w-lg text-lg text-muted">
             월 2.5만원에 대신 고쳐드립니다. 가격과 해지 조건은 전부 공개합니다.
           </p>
           <div className="mt-9 flex justify-center gap-3">
@@ -88,27 +100,39 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 실제 샘플 사이트 세 채. 가운데가 주인공이고 양옆은 화면 밖으로 걸친다. */}
-        <div className="relative mt-16 overflow-hidden px-4 md:px-0">
-          <div className="flex items-end justify-center gap-6">
-            <SitePreview sample={samples[1]} zoom={0.6} className="hidden h-[26rem] w-[660px] shrink-0 opacity-50 md:block" />
-            <SitePreview sample={samples[0]} zoom={0.8} className="h-[24rem] w-full shrink-0 md:h-[34rem] md:w-[880px]" />
-            <SitePreview sample={samples[2]} zoom={0.6} className="hidden h-[26rem] w-[660px] shrink-0 opacity-50 md:block" />
+        {/* 샘플 사이트 벽. 업종마다 글꼴, 색, 첫 화면 구성이 다르다. 화면보다 넓게 깔고 가운데를 맞춘다. */}
+        <div className="relative mt-16 [--z:0.24] md:[--z:0.34]">
+          <div className="flex justify-center gap-4 md:gap-6">
+            {columns.map((col, i) => (
+              <div key={i} className={`flex shrink-0 flex-col gap-4 md:gap-6 ${i % 2 ? "pt-12 md:pt-20" : ""}`}>
+                {col.map((s) => (
+                  <SitePreview key={s.slug} sample={s} />
+                ))}
+              </div>
+            ))}
           </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper to-transparent" />
           <Link href="/samples" aria-label="샘플 전체 보기" className="absolute inset-0" />
         </div>
       </section>
 
-      <section className="mx-auto max-w-page px-4 py-16 text-center">
-        <p className="text-sm text-muted">샘플이 준비된 업종 {samples.length}개</p>
-        <ul className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-3 text-lg font-medium text-muted">
-          {samples.map((s) => (
-            <li key={s.slug}>
-              <Link href={`/samples/${s.slug}`} className="hover:text-ink">{s.type}</Link>
-            </li>
-          ))}
-        </ul>
+      <section className="mx-auto max-w-page px-4 py-20 md:py-28">
+        <div className="text-center">
+          <h2 className="font-display text-3xl font-semibold leading-tight md:text-5xl">
+            같은 가게도
+            <br />
+            분위기는 고르는 대로
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-lg text-muted">
+            글꼴, 색, 첫 화면 구성을 통째로 바꿉니다. 아래에서 직접 눌러 보세요.
+          </p>
+        </div>
+        <div className="mt-10">
+          <ThemeSwitcher sample={samples[0]} />
+        </div>
+        <p className="mt-6 text-center text-sm text-muted">
+          원하는 분위기가 여기 없다면 맞춤 디자인({plans[0].specs[4][1]}부터)으로 새로 만듭니다
+        </p>
       </section>
 
       <Feature
@@ -127,7 +151,7 @@ export default function Home() {
               </div>
               <div className="mt-2 h-2 rounded-full bg-raised">
                 <div
-                  className={`h-2 rounded-full ${t.ours ? "bg-brand" : "bg-muted/50"}`}
+                  className={`h-2 rounded-full ${t.ours ? "bg-brand" : "bg-muted/40"}`}
                   style={{ width: `${(t.n / maxTotal) * 100}%` }}
                 />
               </div>
@@ -209,7 +233,7 @@ export default function Home() {
               <Link href={`/samples/${s.slug}`} className="group block">
                 <span
                   style={themeStyle(s.theme)}
-                  className="flex aspect-[4/3] flex-col justify-between rounded-2xl bg-surface p-5 text-ink ring-brand group-hover:ring-2"
+                  className="flex aspect-[4/3] flex-col justify-between rounded-2xl border border-line bg-surface p-5 text-ink group-hover:border-ink"
                 >
                   <span className="h-1 w-8 bg-brand" />
                   <span>
@@ -251,16 +275,16 @@ export default function Home() {
       </Section>
 
       <section className="mx-auto max-w-page px-4 pb-24">
-        <div className="rounded-3xl border border-line bg-surface px-6 py-16 text-center md:py-20">
-          <h2 className="text-3xl font-semibold leading-tight md:text-5xl">
+        <div className="rounded-3xl bg-brand px-6 py-16 text-center text-brand-ink md:py-20">
+          <h2 className="font-display text-3xl font-semibold leading-tight md:text-5xl">
             업종과 원하는 샘플만
             <br />
             알려주셔도 됩니다
           </h2>
-          <p className="mt-4 text-muted">영업일 2일 안에 메일로 답변드립니다</p>
+          <p className="mt-4 opacity-80">영업일 2일 안에 메일로 답변드립니다</p>
           <div className="mt-8 flex justify-center gap-3">
-            <Link href="/contact" className={primary}>문의하기</Link>
-            <Link href="/pricing" className={secondary}>요금 보기</Link>
+            <Link href="/contact" className="rounded-full bg-paper px-6 py-3 font-medium text-ink hover:opacity-90">문의하기</Link>
+            <Link href="/pricing" className="rounded-full border border-brand-ink/40 px-6 py-3 font-medium hover:bg-brand-ink/10">요금 보기</Link>
           </div>
         </div>
       </section>

@@ -99,9 +99,17 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
 // preview: 다른 페이지 안에 미리보기로 넣을 때. 그 페이지의 h1과 겹치지 않게 제목 태그를 바꾼다.
 export function SampleSite({ sample, preview }: { sample: Sample; preview?: boolean }) {
   const Title = preview ? "p" : "h1";
-  const center = themes[sample.theme].center;
+  const hero = themes[sample.theme].hero;
   // 히어로 버튼은 첫 가격표·카드 섹션으로 내려간다
   const target = Math.max(0, sample.sections.findIndex((s) => s.kind === "prices" || s.kind === "cards"));
+  const bold = hero === "bold";
+  const cta = (
+    <a href={`#sec-${target}`} className={`${button} mt-8 ${bold ? "!bg-brand-ink !text-brand" : ""}`}>
+      {sample.cta}
+    </a>
+  );
+  const kicker = <p className={`text-sm font-semibold ${bold ? "opacity-80" : "text-accent"}`}>{sample.type}</p>;
+  const tagline = <p className={`mt-4 text-lg ${bold ? "opacity-90" : "text-muted"}`}>{sample.tagline}</p>;
   return (
     <div style={themeStyle(sample.theme)} className="flex-1 bg-paper text-ink">
       <header className="border-b border-line">
@@ -112,18 +120,44 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
           </a>
         </div>
       </header>
-      <section className="bg-surface">
-        <div className={`mx-auto max-w-3xl px-5 py-20 sm:py-28 ${center ? "text-center" : ""}`}>
-          <p className="text-sm font-semibold text-accent">{sample.type}</p>
-          <Title className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">
-            {sample.name}
-          </Title>
-          <p className="mt-4 text-lg text-muted">{sample.tagline}</p>
-          <a href={`#sec-${target}`} className={button + " mt-8"}>
-            {sample.cta}
-          </a>
-        </div>
-      </section>
+      {hero === "split" ? (
+        // 왼쪽 글, 오른쪽 색 면
+        <section className="mx-auto grid max-w-5xl sm:grid-cols-2">
+          <div className="px-5 py-16 sm:py-28">
+            {kicker}
+            <Title className="mt-3 font-display text-4xl leading-tight font-bold sm:text-5xl">{sample.name}</Title>
+            {tagline}
+            {cta}
+          </div>
+          <div className="flex flex-col justify-end bg-brand p-8 text-brand-ink sm:p-12">
+            <p className="font-display text-2xl leading-snug font-bold sm:text-3xl">{sample.tagline}</p>
+            <p className="mt-6 text-sm opacity-80">{sample.phone}</p>
+          </div>
+        </section>
+      ) : hero === "huge" ? (
+        // 상호를 화면 가득 크게
+        <section className="border-b border-ink">
+          <div className="mx-auto max-w-5xl px-5 pt-16 pb-12 sm:pt-24">
+            {kicker}
+            <Title className="mt-4 font-display text-6xl leading-none sm:text-9xl">{sample.name}</Title>
+            <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
+              {tagline}
+              {cta}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className={bold ? "bg-brand text-brand-ink" : "bg-surface"}>
+          <div className={`mx-auto max-w-3xl px-5 py-20 sm:py-28 ${hero === "center" ? "text-center" : ""}`}>
+            {kicker}
+            <Title className={`mt-3 font-display leading-tight font-bold ${bold ? "text-5xl sm:text-7xl" : "text-4xl sm:text-5xl"}`}>
+              {sample.name}
+            </Title>
+            {tagline}
+            {cta}
+          </div>
+        </section>
+      )}
       {sample.sections.map((s, i) => (
         <section key={s.title} id={`sec-${i}`} className={i % 2 ? "scroll-mt-10 bg-surface" : "scroll-mt-10"}>
           <Block section={s} sample={sample} />

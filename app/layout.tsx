@@ -3,6 +3,7 @@ import { site } from "@/lib/site";
 // 글자 범위별로 쪼갠 파일이라 화면에 쓰인 글자 묶음만 내려받는다
 import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
+import { fontVars } from "./fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 // 헤더·푸터는 (site)/layout.tsx에 있다. 데모(/demo)는 고객 사이트처럼 보여야 해서 여기엔 두지 않는다.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className="h-full antialiased">
+    <html lang="ko" className={`h-full antialiased ${fontVars}`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

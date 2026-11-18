@@ -11,7 +11,7 @@ const h2 = "mt-10 mb-3 text-xl font-semibold";
 export default function Terms() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
-      <h1 className="text-3xl font-semibold sm:text-4xl">이용약관·환불 규정</h1>
+      <h1 className="font-display text-3xl font-semibold sm:text-4xl">이용약관·환불 규정</h1>
       <p className="mt-3 text-muted">시행일 2026년 11월 23일</p>
 
       <h2 className={h2}>1. 서비스</h2>

@@ -23,7 +23,7 @@ export default async function SamplePage(props: PageProps<"/samples/[slug]">) {
       <p className="text-sm text-muted">
         <Link href="/samples" className="underline">샘플</Link> / {sample.type}
       </p>
-      <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">
+      <h1 className="font-display mt-2 text-3xl font-semibold sm:text-4xl">
         {sample.type} 홈페이지 샘플
       </h1>
       <p className="mt-3 max-w-2xl text-muted">{sample.intro}</p>

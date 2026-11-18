@@ -1,12 +1,13 @@
 import type { CSSProperties } from "react";
 
 // 테마 = 디자인 토큰 덮어쓰기 묶음. 공통 섹션은 토큰만 쓰므로 여기 값만 바꾸면 인상이 달라진다.
-const serif = '"Noto Serif KR", "Nanum Myeongjo", "AppleMyungjo", serif';
+// 제목 글꼴은 app/fonts.ts에서 불러온 웹글꼴. hero는 첫 화면 구성.
+export type Hero = "center" | "left" | "huge" | "bold" | "split";
 
 const defs = {
   warm: {
     label: "따뜻한",
-    center: true,
+    hero: "center" as Hero,
     vars: {
       "--color-brand": "#7a4b2a",
       "--color-accent": "#b5651d",
@@ -15,12 +16,12 @@ const defs = {
       "--color-line": "#e8dfd2",
       "--color-surface": "#f7f1e8",
       "--color-paper": "#fffdf9",
-      "--font-display": serif,
+      "--font-display": 'var(--font-gowun), serif',
     },
   },
   mono: {
     label: "모노",
-    center: false,
+    hero: "huge" as Hero,
     vars: {
       "--color-brand": "#111111",
       "--color-accent": "#8a6d3b",
@@ -31,11 +32,12 @@ const defs = {
       "--color-paper": "#ffffff",
       "--radius-md": "0",
       "--radius-xl": "0",
+      "--font-display": 'var(--font-blackhan), sans-serif',
     },
   },
   hearty: {
     label: "든든한",
-    center: false,
+    hero: "bold" as Hero,
     vars: {
       "--color-brand": "#a8322a",
       "--color-accent": "#a8322a",
@@ -44,12 +46,12 @@ const defs = {
       "--color-line": "#eadfd8",
       "--color-surface": "#faf4ee",
       "--color-paper": "#ffffff",
-      "--font-display": serif,
+      "--font-display": 'var(--font-myeongjo), serif',
     },
   },
   bright: {
     label: "밝은",
-    center: true,
+    hero: "center" as Hero,
     vars: {
       "--color-brand": "#2456c9",
       "--color-accent": "#e0862a",
@@ -60,11 +62,12 @@ const defs = {
       "--color-paper": "#ffffff",
       "--radius-md": "999px",
       "--radius-xl": "1.25rem",
+      "--font-display": 'var(--font-jua), sans-serif',
     },
   },
   navy: {
     label: "단정한",
-    center: false,
+    hero: "split" as Hero,
     vars: {
       "--color-brand": "#14305a",
       "--color-accent": "#14305a",
@@ -75,11 +78,12 @@ const defs = {
       "--color-paper": "#ffffff",
       "--radius-md": "0.25rem",
       "--radius-xl": "0.25rem",
+      "--font-display": 'var(--font-plex), sans-serif',
     },
   },
   ink: {
     label: "차분한",
-    center: false,
+    hero: "left" as Hero,
     vars: {
       "--color-brand": "#1d4a4a",
       "--color-accent": "#9a6b3f",
@@ -88,15 +92,15 @@ const defs = {
       "--color-line": "#dfe3df",
       "--color-surface": "#f1f3ef",
       "--color-paper": "#fbfbf8",
-      "--font-display": serif,
+      "--font-display": 'var(--font-hahmlet), serif',
     },
   },
 };
 
 export type ThemeName = keyof typeof defs;
 
-export const themes: Record<ThemeName, { label: string; center: boolean; vars: Record<string, string> }> = defs;
+export const themes: Record<ThemeName, { label: string; hero: Hero; vars: Record<string, string> }> = defs;
 
-// 사이트 본체가 어두운 바탕이라, 테마가 따로 정하지 않는 값은 밝은 바탕용으로 되돌린다
+// 테마가 따로 정하지 않는 값은 샘플용 기본값으로 되돌린다
 export const themeStyle = (name: ThemeName) =>
   ({ "--color-brand-ink": "#ffffff", colorScheme: "light", ...themes[name].vars }) as CSSProperties;

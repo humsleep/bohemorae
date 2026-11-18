@@ -12,7 +12,7 @@ export default function Pricing() {
   return (
     <>
       <div className="mx-auto max-w-page px-4 pt-14">
-        <h1 className="text-3xl font-semibold sm:text-4xl">요금</h1>
+        <h1 className="font-display text-3xl font-semibold sm:text-4xl">요금</h1>
         <p className="mt-3 text-muted">
           가격, 약정, 해지 조건을 이 페이지에 전부 적었습니다. 모든 금액은 부가세 별도입니다.
         </p>

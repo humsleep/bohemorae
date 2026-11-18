@@ -7,7 +7,7 @@ export default function NotFound() {
     <>
       <Header />
       <main className="mx-auto w-full max-w-page flex-1 px-4 py-24">
-        <h1 className="text-3xl font-semibold">페이지를 찾을 수 없습니다</h1>
+        <h1 className="font-display text-3xl font-semibold">페이지를 찾을 수 없습니다</h1>
         <p className="mt-4 text-muted">주소가 바뀌었거나 없는 페이지입니다.</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/" className="rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90">
