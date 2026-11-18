@@ -12,7 +12,7 @@ export default function Pricing() {
   return (
     <>
       <div className="mx-auto max-w-page px-4 pt-14">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">요금</h1>
+        <h1 className="text-3xl font-semibold sm:text-4xl">요금</h1>
         <p className="mt-3 text-muted">
           가격, 약정, 해지 조건을 이 페이지에 전부 적었습니다. 모든 금액은 부가세 별도입니다.
         </p>
@@ -61,11 +61,11 @@ export default function Pricing() {
           <tbody className="divide-y divide-line">
             {comparison.map((c) => (
               <tr key={c.name} className={c.ours ? "bg-surface" : undefined}>
-                <th scope="row" className="py-3 pr-3 pl-2 font-semibold">
+                <th scope="row" className="py-3 pr-3 pl-2 font-medium">
                   {c.name}
                   <span className="block font-normal text-muted">{c.calc}</span>
                 </th>
-                <td className="py-3 pr-3 font-semibold whitespace-nowrap">{c.total}</td>
+                <td className="py-3 pr-3 font-medium whitespace-nowrap">{c.total}</td>
                 <td className="py-3 text-muted">{c.edits}</td>
               </tr>
             ))}
@@ -79,10 +79,10 @@ export default function Pricing() {
 
       <Section title="조건이 괜찮다면" lead="샘플을 고르고 문의를 남겨 주세요.">
         <div className="flex gap-3">
-          <Link href="/samples" className="rounded-md bg-brand px-5 py-3 font-semibold text-brand-ink hover:opacity-90">
+          <Link href="/samples" className="rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90">
             샘플 보기
           </Link>
-          <Link href="/contact" className="rounded-md border border-line px-5 py-3 font-semibold hover:bg-surface">
+          <Link href="/contact" className="rounded-lg border border-line px-5 py-3 font-medium hover:bg-surface">
             문의하기
           </Link>
         </div>

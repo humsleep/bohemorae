@@ -6,11 +6,11 @@ import { domainOptions } from "@/lib/inquiry";
 import { submitInquiry } from "./actions";
 
 const input =
-  "mt-1 block w-full rounded-md border border-line bg-paper px-3 py-2 focus:border-brand focus:outline-none";
+  "mt-1 block w-full rounded-lg border border-line bg-paper px-3 py-2 focus:border-brand focus:outline-none";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="block text-sm font-semibold">
+    <label className="block text-sm font-medium">
       {label}
       {children}
     </label>
@@ -31,7 +31,7 @@ export function ContactForm({
 
   if (state.ok)
     return (
-      <p role="status" className="rounded-md border border-brand bg-surface p-5 font-semibold">
+      <p role="status" className="rounded-lg border border-brand bg-surface p-5 font-medium">
         {state.message}
       </p>
     );
@@ -39,14 +39,14 @@ export function ContactForm({
   return (
     <form action={action} className="space-y-5">
       <fieldset className="flex gap-2">
-        <legend className="mb-2 text-sm font-semibold">문의 유형</legend>
+        <legend className="mb-2 text-sm font-medium">문의 유형</legend>
         {[
           ["견적", "견적 문의"],
           ["문의", "기타 문의"],
         ].map(([value, label]) => (
           <label
             key={value}
-            className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-semibold ${
+            className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium ${
               kind === value ? "border-brand bg-brand text-brand-ink" : "border-line"
             }`}
           >
@@ -130,7 +130,7 @@ export function ContactForm({
       </label>
 
       {state.message && (
-        <p role="alert" className="font-semibold text-accent">
+        <p role="alert" className="font-medium text-accent">
           {state.message}
         </p>
       )}
@@ -138,7 +138,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-md bg-brand px-6 py-3 font-semibold text-brand-ink hover:opacity-90 disabled:opacity-60"
+        className="rounded-lg bg-brand px-6 py-3 font-medium text-brand-ink hover:opacity-90 disabled:opacity-60"
       >
         {pending ? "보내는 중..." : "문의 보내기"}
       </button>

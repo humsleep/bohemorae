@@ -5,13 +5,13 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = { title: "이용약관·환불 규정" };
 
-const h2 = "mt-10 mb-3 text-xl font-bold";
+const h2 = "mt-10 mb-3 text-xl font-semibold";
 
 // 조건의 원본은 lib/pricing.ts. 요금 페이지와 약관이 서로 달라지지 않게 같은 데이터를 쓴다.
 export default function Terms() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">이용약관·환불 규정</h1>
+      <h1 className="text-3xl font-semibold sm:text-4xl">이용약관·환불 규정</h1>
       <p className="mt-3 text-muted">시행일 2026년 11월 23일</p>
 
       <h2 className={h2}>1. 서비스</h2>

@@ -22,20 +22,20 @@ const sheet = [
   ["해지하면", "소스·콘텐츠 인도"],
 ];
 
-const primary = "rounded-md bg-brand px-5 py-3 font-semibold text-brand-ink hover:opacity-90";
-const secondary = "rounded-md border border-ink px-5 py-3 font-semibold hover:bg-surface";
-const more = "mt-8 inline-block border-b border-ink pb-0.5 font-semibold hover:border-brand hover:text-brand";
-const num = "text-sm font-semibold text-accent";
+const primary = "rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90";
+const secondary = "rounded-lg border border-ink px-5 py-3 font-medium hover:bg-surface";
+const more = "mt-8 inline-block border-b border-ink pb-0.5 font-medium hover:border-brand hover:text-brand";
+const num = "text-sm font-medium text-accent";
 
 export default function Home() {
   return (
     <>
       <section className="mx-auto grid max-w-page items-end gap-10 px-4 py-16 md:grid-cols-[1fr_19rem] md:py-28">
         <div>
-          <h1 className="text-4xl font-bold leading-[1.15] sm:text-6xl">
+          <h1 className="text-4xl font-semibold leading-[1.15] sm:text-6xl">
             가게·회사 홈페이지,
             <br />
-            구축 <span className="text-brand">19만원</span>부터.
+            구축 <span className="text-brand">19만원</span>부터
           </h1>
           <p className="mt-6 max-w-md text-lg text-muted">
             월 2.5만원에 대신 고쳐드립니다. 가격과 해지 조건은 전부 공개합니다.
@@ -50,7 +50,7 @@ export default function Home() {
           {sheet.map(([k, v]) => (
             <div key={k} className="flex items-baseline justify-between gap-4 border-b border-line py-3">
               <dt className="text-sm text-muted">{k}</dt>
-              <dd className="font-semibold">{v}</dd>
+              <dd className="font-medium">{v}</dd>
             </div>
           ))}
           </dl>
@@ -67,10 +67,10 @@ export default function Home() {
                   style={themeStyle(s.theme)}
                   className="flex aspect-[4/3] flex-col justify-between border border-line bg-surface p-4 text-ink group-hover:border-ink"
                 >
-                  <span className="h-1.5 w-8 bg-brand" />
-                  <span className="font-display text-lg font-bold leading-snug sm:text-xl">{s.name}</span>
+                  <span className="h-1 w-8 bg-brand" />
+                  <span className="font-display text-lg font-semibold leading-snug sm:text-xl">{s.name}</span>
                 </span>
-                <span className="mt-3 block font-semibold">{s.type}</span>
+                <span className="mt-3 block font-medium">{s.type}</span>
                 <span className="block text-sm text-muted">
                   {plans[s.plan].name} · {samplePrice(s)}
                 </span>
@@ -86,7 +86,7 @@ export default function Home() {
           {promises.map(([t, d], i) => (
             <li key={t} className="grid gap-x-6 gap-y-1 border-b border-line py-5 sm:grid-cols-[2.5rem_13rem_1fr]">
               <span className={num}>0{i + 1}</span>
-              <h3 className="text-lg font-bold">{t}</h3>
+              <h3 className="text-lg font-semibold">{t}</h3>
               <p className="text-muted">{d}</p>
             </li>
           ))}
@@ -103,7 +103,7 @@ export default function Home() {
           {steps.map((s, i) => (
             <li key={s} className="border-t border-ink pt-3">
               <span className={num}>0{i + 1}</span>
-              <span className="mt-1 block font-semibold">{s}</span>
+              <span className="mt-1 block font-medium">{s}</span>
             </li>
           ))}
         </ol>
@@ -124,12 +124,12 @@ export default function Home() {
 
       <section className="bg-brand text-brand-ink">
         <div className="mx-auto flex max-w-page flex-col gap-6 px-4 py-16 md:flex-row md:items-end md:justify-between md:py-20">
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl">
+          <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
             업종과 원하는 샘플만
             <br />
-            알려주셔도 됩니다.
+            알려주셔도 됩니다
           </h2>
-          <Link href="/contact" className="self-start rounded-md bg-paper px-6 py-3 font-semibold text-ink hover:opacity-90 md:self-auto">
+          <Link href="/contact" className="self-start rounded-lg bg-paper px-6 py-3 font-medium text-ink hover:opacity-90 md:self-auto">
             문의하기
           </Link>
         </div>

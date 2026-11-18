@@ -24,7 +24,7 @@ export default function Image() {
         <div style={{ fontSize: 40 }}>{site.name}</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.2 }}>가게·회사 홈페이지,</div>
-          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.2 }}>구축 19만원부터.</div>
+          <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.2 }}>구축 19만원부터</div>
           <div style={{ fontSize: 40, marginTop: 28, opacity: 0.85 }}>월 2.5만원에 대신 고쳐드립니다</div>
         </div>
       </div>

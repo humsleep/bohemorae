@@ -26,7 +26,7 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
             type="button"
             aria-pressed={active === c}
             onClick={() => setActive(c)}
-            className={`rounded-full border px-4 py-2 text-sm font-semibold ${
+            className={`rounded-full border px-4 py-2 text-sm font-medium ${
               active === c ? "border-brand bg-brand text-brand-ink" : "border-line hover:bg-surface"
             }`}
           >
@@ -39,14 +39,14 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
           <li key={s.slug}>
             <Link
               href={`/samples/${s.slug}`}
-              className="block overflow-hidden rounded-md border border-line hover:border-brand"
+              className="block overflow-hidden rounded-lg border border-line hover:border-brand"
             >
               <div style={s.vars} className="flex h-36 flex-col items-center justify-center bg-surface px-3 text-center text-ink">
-                <span className="font-display text-xl font-bold">{s.name}</span>
+                <span className="font-display text-xl font-semibold">{s.name}</span>
                 <span className="mt-1 text-sm text-muted">{s.tagline}</span>
               </div>
               <div className="p-4">
-                <span className="font-bold">{s.type}</span>
+                <span className="font-semibold">{s.type}</span>
                 <span className="mt-1 block text-sm text-muted">{s.meta}</span>
               </div>
             </Link>

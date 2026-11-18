@@ -15,13 +15,13 @@ export default async function Contact(props: PageProps<"/contact">) {
   const defaultSample = typeof sample === "string" && getSample(sample) ? sample : "";
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">문의</h1>
+      <h1 className="text-3xl font-semibold sm:text-4xl">문의</h1>
       <p className="mt-3 mb-8 text-muted">
         영업일 2일 안에 메일로 답변드립니다. 전화 영업은 하지 않습니다.
         {site.kakaoChannelUrl && (
           <>
             {" "}
-            <a href={site.kakaoChannelUrl} className="font-semibold text-brand underline">
+            <a href={site.kakaoChannelUrl} className="font-medium text-brand underline">
               카카오톡 채널로 문의하기
             </a>
           </>
