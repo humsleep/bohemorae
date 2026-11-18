@@ -8,8 +8,8 @@ import { comparison, faqs, plans } from "@/lib/pricing";
 import { samplePrice, samples } from "@/lib/samples";
 import { themeStyle } from "@/lib/themes";
 
-const primary = "rounded-full bg-brand px-6 py-3 font-medium text-brand-ink hover:opacity-90";
-const secondary = "rounded-full border border-ink px-6 py-3 font-medium hover:bg-surface";
+const primary = "rounded-full bg-ink px-6 py-3 font-medium text-paper hover:opacity-90";
+const secondary = "rounded-full border border-line bg-surface px-6 py-3 font-medium hover:border-ink";
 const more = "mt-6 inline-block font-medium text-brand hover:underline";
 const panel = "rounded-3xl border border-line bg-surface p-6 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:p-10";
 
@@ -62,7 +62,7 @@ function Feature({
   return (
     <div className="mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
       <div className={flip ? "md:order-2" : undefined}>
-        <h2 className="font-display text-3xl font-semibold leading-tight md:text-4xl">{title}</h2>
+        <h2 className="text-3xl font-bold leading-tight md:text-4xl">{title}</h2>
         <p className="mt-4 max-w-md text-lg text-muted">{body}</p>
         <Link href={href} className={more}>
           {link} →
@@ -78,20 +78,14 @@ export default function Home() {
     <>
       <section className="overflow-hidden pt-16 md:pt-24">
         <div className="mx-auto max-w-page px-4 text-center">
-          <h1 className="font-display text-5xl font-semibold leading-[1.15] md:text-7xl">
+          <h1 className="text-5xl font-bold leading-[1.1] md:text-7xl">
             가게·회사 홈페이지,
             <br />
             구축{" "}
-            <span className="relative inline-block text-brand">
-              19만원
-              {/* 손으로 그은 듯한 밑줄 */}
-              <svg aria-hidden viewBox="0 0 200 12" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-3 w-full text-accent">
-                <path d="M2 8 C 40 2, 70 11, 110 5 S 170 3, 198 7" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-              </svg>
-            </span>
+            <span className="text-brand">19만원</span>
             부터
           </h1>
-          <p className="mx-auto mt-8 max-w-lg text-lg text-muted">
+          <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
             월 2.5만원에 대신 고쳐드립니다. 가격과 해지 조건은 전부 공개합니다.
           </p>
           <div className="mt-9 flex justify-center gap-3">
@@ -118,7 +112,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-page px-4 py-20 md:py-28">
         <div className="text-center">
-          <h2 className="font-display text-3xl font-semibold leading-tight md:text-5xl">
+          <h2 className="text-3xl font-bold leading-tight md:text-5xl">
             같은 가게도
             <br />
             분위기는 고르는 대로
@@ -275,8 +269,8 @@ export default function Home() {
       </Section>
 
       <section className="mx-auto max-w-page px-4 pb-24">
-        <div className="rounded-3xl bg-brand px-6 py-16 text-center text-brand-ink md:py-20">
-          <h2 className="font-display text-3xl font-semibold leading-tight md:text-5xl">
+        <div className="rounded-3xl bg-ink px-6 py-16 text-center text-paper md:py-20">
+          <h2 className="text-3xl font-bold leading-tight md:text-5xl">
             업종과 원하는 샘플만
             <br />
             알려주셔도 됩니다
@@ -284,7 +278,7 @@ export default function Home() {
           <p className="mt-4 opacity-80">영업일 2일 안에 메일로 답변드립니다</p>
           <div className="mt-8 flex justify-center gap-3">
             <Link href="/contact" className="rounded-full bg-paper px-6 py-3 font-medium text-ink hover:opacity-90">문의하기</Link>
-            <Link href="/pricing" className="rounded-full border border-brand-ink/40 px-6 py-3 font-medium hover:bg-brand-ink/10">요금 보기</Link>
+            <Link href="/pricing" className="rounded-full border border-paper/30 px-6 py-3 font-medium hover:bg-paper/10">요금 보기</Link>
           </div>
         </div>
       </section>

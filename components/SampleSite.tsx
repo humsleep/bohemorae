@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Sample, SampleSection } from "@/lib/samples";
 import { themes, themeStyle } from "@/lib/themes";
 
@@ -100,6 +101,7 @@ function Block({ section: s, sample }: { section: SampleSection; sample: Sample 
 export function SampleSite({ sample, preview }: { sample: Sample; preview?: boolean }) {
   const Title = preview ? "p" : "h1";
   const hero = themes[sample.theme].hero;
+  const photos = sample.photos;
   // 히어로 버튼은 첫 가격표·카드 섹션으로 내려간다
   const target = Math.max(0, sample.sections.findIndex((s) => s.kind === "prices" || s.kind === "cards"));
   const bold = hero === "bold";
@@ -129,10 +131,16 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
             {tagline}
             {cta}
           </div>
-          <div className="flex flex-col justify-end bg-brand p-8 text-brand-ink sm:p-12">
-            <p className="font-display text-2xl leading-snug font-bold sm:text-3xl">{sample.tagline}</p>
-            <p className="mt-6 text-sm opacity-80">{sample.phone}</p>
-          </div>
+          {photos?.hero ? (
+            <div className="relative min-h-64">
+              <Image src={photos.hero} alt="" fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
+            </div>
+          ) : (
+            <div className="flex flex-col justify-end bg-brand p-8 text-brand-ink sm:p-12">
+              <p className="font-display text-2xl leading-snug font-bold sm:text-3xl">{sample.tagline}</p>
+              <p className="mt-6 text-sm opacity-80">{sample.phone}</p>
+            </div>
+          )}
         </section>
       ) : hero === "huge" ? (
         // 상호를 화면 가득 크게
@@ -158,9 +166,23 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
           </div>
         </section>
       )}
+      {photos?.hero && hero !== "split" && (
+        <div className="relative mx-auto aspect-[16/9] max-w-5xl sm:aspect-[21/9]">
+          <Image src={photos.hero} alt="" fill sizes="(min-width: 1024px) 1024px, 100vw" className="object-cover" />
+        </div>
+      )}
       {sample.sections.map((s, i) => (
         <section key={s.title} id={`sec-${i}`} className={i % 2 ? "scroll-mt-10 bg-surface" : "scroll-mt-10"}>
           <Block section={s} sample={sample} />
+          {i === 0 && photos && photos.gallery.length > 0 && (
+            <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 px-5 pb-14 sm:gap-4">
+              {photos.gallery.map((src) => (
+                <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-md">
+                  <Image src={src} alt="" fill sizes="(min-width: 1024px) 330px, 33vw" className="object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       ))}
       <footer className="border-t border-line py-8 text-center text-sm text-muted">

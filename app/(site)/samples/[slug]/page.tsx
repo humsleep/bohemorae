@@ -23,7 +23,7 @@ export default async function SamplePage(props: PageProps<"/samples/[slug]">) {
       <p className="text-sm text-muted">
         <Link href="/samples" className="underline">샘플</Link> / {sample.type}
       </p>
-      <h1 className="font-display mt-2 text-3xl font-semibold sm:text-4xl">
+      <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">
         {sample.type} 홈페이지 샘플
       </h1>
       <p className="mt-3 max-w-2xl text-muted">{sample.intro}</p>
@@ -34,7 +34,7 @@ export default async function SamplePage(props: PageProps<"/samples/[slug]">) {
       <div className="mt-5 flex flex-wrap gap-3">
         <Link
           href={`/contact?sample=${sample.slug}`}
-          className="rounded-lg bg-brand px-5 py-3 font-medium text-brand-ink hover:opacity-90"
+          className="rounded-full bg-ink px-5 py-3 font-medium text-paper hover:opacity-90"
         >
           이 디자인으로 시작
         </Link>

@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { plans } from "@/lib/pricing";
 import type { ThemeName } from "@/lib/themes";
 import cafe from "@/content/samples/cafe";
@@ -37,12 +39,26 @@ export type Sample = {
   phone: string;
   cta: string;
   sections: SampleSection[];
+  photos?: { hero?: string; gallery: string[] }; // 아래에서 파일이 있는 것만 자동으로 채운다
 };
 
 // 샘플 추가: content/samples에 파일을 만들고 아래 배열에 한 줄 추가
-export const samples: Sample[] = [cafe, hair, restaurant, academy, company, freelancer,
+const list: Sample[] = [cafe, hair, restaurant, academy, company, freelancer,
   pilates, interior, nail, tax, dental, pension,
 ];
+
+// 사진은 public/samples/<slug>/ 에 hero.jpg, 1.jpg, 2.jpg, 3.jpg 로 넣는다. 있는 파일만 화면에 나온다.
+// 프롬프트와 규격은 content/samples/PHOTOS.md
+const photo = (slug: string, name: string) =>
+  existsSync(join(process.cwd(), "public/samples", slug, name)) ? `/samples/${slug}/${name}` : undefined;
+
+export const samples: Sample[] = list.map((s) => ({
+  ...s,
+  photos: {
+    hero: photo(s.slug, "hero.jpg"),
+    gallery: ["1.jpg", "2.jpg", "3.jpg"].map((n) => photo(s.slug, n)).filter((x) => x !== undefined),
+  },
+}));
 
 export const getSample = (slug: string) => samples.find((s) => s.slug === slug);
 

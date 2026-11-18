@@ -17,8 +17,8 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 80,
-          background: "#1f4d3a",
-          color: "#fffdf8",
+          background: "#09090b",
+          color: "#fafafa",
         }}
       >
         <div style={{ fontSize: 40 }}>{site.name}</div>

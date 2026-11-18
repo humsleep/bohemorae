@@ -11,7 +11,7 @@ export default function About() {
   const b = site.business;
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
-      <h1 className="font-display text-3xl font-semibold sm:text-4xl">소개</h1>
+      <h1 className="text-3xl font-semibold sm:text-4xl">소개</h1>
       <p className="mt-4 text-lg">Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다.</p>
 
       <h2 className="mt-10 text-xl font-semibold">경력</h2>

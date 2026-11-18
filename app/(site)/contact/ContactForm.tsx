@@ -138,7 +138,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-brand px-6 py-3 font-medium text-brand-ink hover:opacity-90 disabled:opacity-60"
+        className="rounded-full bg-ink px-6 py-3 font-medium text-paper hover:opacity-90 disabled:opacity-60"
       >
         {pending ? "보내는 중..." : "문의 보내기"}
       </button>
