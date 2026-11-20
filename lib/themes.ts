@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 // 제목 글꼴은 app/fonts.ts에서 불러온 웹글꼴.
 export type Look = {
   header: "simple" | "nav" | "center";
-  hero: "cover" | "huge" | "split" | "board" | "editorial" | "soft";
+  hero: "cover" | "scene" | "huge" | "split" | "board" | "editorial" | "soft";
   about: "plain" | "big" | "side";
   prices: "list" | "menu" | "rows" | "photo" | "table" | "plans";
   cards: "grid" | "numbered" | "list" | "photo";
@@ -187,7 +187,8 @@ const defs = {
   },
   forest: {
     label: "숲속",
-    look: { header: "center", hero: "cover", about: "big", prices: "table", cards: "photo", reviews: "quote", info: "panel", gallery: "none" } as Look,
+    // scene: 한 페이지 스크롤형. 배경 사진이 장면마다 바뀐다 (components/SceneScroll.tsx)
+    look: { header: "center", hero: "scene", about: "big", prices: "table", cards: "photo", reviews: "quote", info: "panel", gallery: "none" } as Look,
     vars: {
       "--color-brand": "#2f4a3a",
       "--color-accent": "#a0763f",

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Sample, SampleSection } from "@/lib/samples";
+import { SceneScroll } from "@/components/SceneScroll";
 import { type Look, themes, themeStyle } from "@/lib/themes";
 
 const W = "mx-auto max-w-5xl px-5";
@@ -326,8 +327,11 @@ const navLabel = (s: SampleSection) =>
 // preview: 다른 페이지 안에 미리보기로 넣을 때. 그 페이지의 h1과 겹치지 않게 제목 태그를 바꾼다.
 export function SampleSite({ sample, preview }: { sample: Sample; preview?: boolean }) {
   const Title = preview ? "p" : "h1";
-  const look = themes[sample.theme].look;
   const photos = sample.photos ?? { gallery: [] };
+  const base = themes[sample.theme].look;
+  if (base.hero === "scene" && !preview) return <Scene sample={sample} look={base} photos={photos} />;
+  // 미리보기 틀 안에서는 스크롤 장면 대신 첫 화면만 보여 준다
+  const look: Look = base.hero === "scene" ? { ...base, hero: "cover" } : base;
   const cover = look.hero === "cover";
   // 사진을 가격표·카드 안에서 이미 쓴 구성은 갤러리에서 뺀다
   const usedInCards = look.cards === "photo" && sample.sections.some((s) => s.kind === "cards");
@@ -503,6 +507,44 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
           {i === 0 && <Gallery kind={look.gallery} photos={gallery} />}
         </section>
       ))}
+      <footer className="border-t border-line py-8 text-center text-sm text-muted">© {sample.name}</footer>
+    </div>
+  );
+}
+
+// 한 페이지 스크롤형: 장면마다 화면 한 장을 차지하고, 글은 반투명 판 위에 얹는다
+function Scene({ sample, look, photos }: { sample: Sample; look: Look; photos: Photos }) {
+  const bgs = [photos.hero, ...photos.gallery].filter((x) => x !== undefined);
+  const target = Math.max(0, sample.sections.findIndex((s) => s.kind === "prices" || s.kind === "cards")) + 1;
+  const hero = (
+    <div className={`${W} w-full text-white`}>
+      <p className="text-sm font-semibold opacity-80">{sample.type}</p>
+      <h1 className="mt-4 font-display text-6xl leading-tight font-bold sm:text-8xl">{sample.name}</h1>
+      <p className="mt-5 text-xl opacity-90 sm:text-2xl">{sample.tagline}</p>
+      <a href={`#scene-${target}`} className={`${button} mt-10 !bg-white !text-black`}>
+        {sample.cta}
+      </a>
+      <p className="mt-16 text-sm opacity-70" aria-hidden>
+        아래로 내려 보세요 ↓
+      </p>
+    </div>
+  );
+  const scenes = sample.sections.map((s, i) => (
+    <div key={s.title} className={`${W} w-full`}>
+      <div className={`max-w-3xl overflow-hidden rounded-xl bg-paper/90 text-ink backdrop-blur-md ${i % 2 ? "ml-auto" : ""}`}>
+        <Block section={s} sample={sample} look={{ ...look, reviews: "quote" }} photos={{ gallery: [] }} />
+      </div>
+    </div>
+  ));
+  return (
+    <div style={themeStyle(sample.theme)} className="flex-1 bg-paper text-ink">
+      <SceneScroll
+        name={sample.name}
+        phone={sample.phone}
+        labels={sample.sections.map(navLabel)}
+        bgs={bgs}
+        scenes={[hero, ...scenes]}
+      />
       <footer className="border-t border-line py-8 text-center text-sm text-muted">© {sample.name}</footer>
     </div>
   );
