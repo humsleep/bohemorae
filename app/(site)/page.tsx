@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <>
       <section className="overflow-hidden pt-16 md:pt-24">
-        <div className="mx-auto max-w-page px-4 text-center">
+        <div className="px-rise mx-auto max-w-page px-4 text-center">
           <h1 className="text-5xl font-bold leading-[1.1] md:text-7xl">
             가게·회사 홈페이지,
             <br />
@@ -98,7 +98,7 @@ export default function Home() {
         <div className="relative mt-16 [--z:0.24] md:[--z:0.34]">
           <div className="flex justify-center gap-4 md:gap-6">
             {columns.map((col, i) => (
-              <div key={i} className={`flex shrink-0 flex-col gap-4 md:gap-6 ${i % 2 ? "pt-12 md:pt-20" : ""}`}>
+              <div key={i} className={`flex shrink-0 flex-col gap-4 md:gap-6 ${i % 2 ? "px-drift-b pt-12 md:pt-20" : "px-drift-a"}`}>
                 {col.map((s) => (
                   <SitePreview key={s.slug} sample={s} />
                 ))}
@@ -224,7 +224,7 @@ export default function Home() {
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {samples.slice(0, 6).map((s) => (
             <li key={s.slug}>
-              <Link href={`/samples/${s.slug}`} className="group block">
+              <Link href={`/demo/${s.slug}`} className="group block">
                 <span
                   style={themeStyle(s.theme)}
                   className="flex aspect-[4/3] flex-col justify-between rounded-2xl border border-line bg-surface p-5 text-ink group-hover:border-ink"

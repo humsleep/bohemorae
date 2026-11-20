@@ -11,7 +11,7 @@ const button = "inline-block rounded-md bg-brand px-6 py-3 font-semibold text-br
 type Photos = NonNullable<Sample["photos"]>;
 
 const Photo = ({ src, sizes, className = "" }: { src: string; sizes: string; className?: string }) => (
-  <div className={`relative overflow-hidden ${className}`}>
+  <div data-photo className={`relative overflow-hidden ${className}`}>
     <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
   </div>
 );
@@ -355,7 +355,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
   const name = <span className="font-display text-xl font-bold">{sample.name}</span>;
 
   return (
-    <div style={themeStyle(sample.theme)} className="relative flex-1 bg-paper text-ink">
+    <div style={themeStyle(sample.theme)} className={`relative flex-1 bg-paper text-ink ${look.parallax && !preview ? "parallax" : ""}`}>
       <header className={cover ? "absolute inset-x-0 top-0 z-10 text-white" : "border-b border-line"}>
         {look.header === "nav" ? (
           <div className={`${W} flex items-center justify-between gap-6 py-4`}>
@@ -387,14 +387,16 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
 
       {look.hero === "cover" ? (
         // 사진을 화면 가득 깔고 글을 아래쪽에 얹는다
-        <section className="relative isolate flex min-h-[600px] items-end bg-brand text-white">
+        <section className="relative isolate flex min-h-[600px] items-end overflow-hidden bg-brand text-white">
           {photos.hero && (
             <>
-              <Image src={photos.hero} alt="" fill sizes="100vw" className="-z-10 object-cover" />
+              <div data-photo className="absolute inset-0 -z-10">
+                <Image src={photos.hero} alt="" fill sizes="100vw" className="object-cover" />
+              </div>
               <div className="absolute inset-0 -z-10 bg-linear-to-t from-black/75 via-black/20 to-black/40" />
             </>
           )}
-          <div className={`${W} w-full pt-40 pb-14`}>
+          <div data-rise className={`${W} w-full pt-40 pb-14`}>
             {kicker}
             <Title className="mt-3 font-display text-5xl leading-tight font-bold sm:text-7xl">{sample.name}</Title>
             {tagline}
@@ -404,7 +406,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
       ) : look.hero === "huge" ? (
         // 상호를 화면 가득 크게
         <section>
-          <div className={`${W} pt-16 pb-12 sm:pt-24`}>
+          <div data-rise className={`${W} pt-16 pb-12 sm:pt-24`}>
             {kicker}
             <Title className="mt-4 font-display text-6xl leading-none sm:text-9xl">{sample.name}</Title>
             <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
@@ -476,7 +478,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
       ) : (
         // soft: 가운데 글, 둥근 큰 사진
         <section className="bg-surface">
-          <div className={`${W} pt-20 text-center ${photos.hero ? "pb-12" : "pb-20"}`}>
+          <div data-rise className={`${W} pt-20 text-center ${photos.hero ? "pb-12" : "pb-20"}`}>
             {kicker}
             <Title className="mt-3 font-display text-5xl leading-tight font-bold sm:text-6xl">{sample.name}</Title>
             {tagline}

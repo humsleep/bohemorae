@@ -38,7 +38,7 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
         {shown.map((s) => (
           <li key={s.slug}>
             <Link
-              href={`/samples/${s.slug}`}
+              href={`/demo/${s.slug}`}
               className="block overflow-hidden rounded-lg border border-line hover:border-brand"
             >
               <div style={s.vars} className="flex h-36 flex-col items-center justify-center bg-surface px-3 text-center text-ink">

@@ -20,11 +20,11 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 export function ContactForm({
   samples,
   plans,
-  defaultSample,
+  picked,
 }: {
   samples: { slug: string; label: string }[];
   plans: string[];
-  defaultSample: string;
+  picked?: { slug: string; plan: string }; // 샘플의 "이 디자인으로 시작"에서 왔을 때
 }) {
   const [state, action, pending] = useActionState(submitInquiry, { ok: false, message: "" });
   const [kind, setKind] = useState("견적");
@@ -38,6 +38,9 @@ export function ContactForm({
 
   return (
     <form action={action} className="space-y-5">
+      {picked ? (
+        <input type="hidden" name="kind" value="견적" />
+      ) : (
       <fieldset className="flex gap-2">
         <legend className="mb-2 text-sm font-medium">문의 유형</legend>
         {[
@@ -62,14 +65,18 @@ export function ContactForm({
           </label>
         ))}
       </fieldset>
+      )}
 
       {kind === "견적" && (
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="업종 *">
-            <input name="business" required maxLength={40} placeholder="예: 카페, 학원" className={input} />
+          <Field label="상호·업종 *">
+            <input name="business" required maxLength={40} placeholder="예: 달목 커피, 카페" className={input} />
           </Field>
+          {picked ? (
+            <input type="hidden" name="sample" value={picked.slug} />
+          ) : (
           <Field label="원하는 샘플">
-            <select name="sample" defaultValue={defaultSample} className={input}>
+            <select name="sample" defaultValue="" className={input}>
               <option value="">아직 못 골랐어요</option>
               {samples.map((s) => (
                 <option key={s.slug} value={s.slug}>
@@ -78,8 +85,9 @@ export function ContactForm({
               ))}
             </select>
           </Field>
+          )}
           <Field label="희망 플랜">
-            <select name="plan" defaultValue="" className={input}>
+            <select name="plan" defaultValue={picked?.plan ?? ""} className={input}>
               <option value="">상담 후 결정</option>
               {plans.map((p) => (
                 <option key={p}>{p}</option>

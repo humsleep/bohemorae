@@ -44,3 +44,56 @@ h2 {
 .font-display {
   font-synthesis: none;
 }
+
+/* 패럴랙스: 스크롤 위치에 따라 사진·글이 다른 속도로 움직인다. 순수 CSS(scroll-driven animation)라
+   지원하지 않는 브라우저나 "동작 줄이기" 설정에서는 그냥 멈춘 화면으로 보인다. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* 샘플 사이트(테마 look.parallax): 사진은 틀 안에서 천천히 흐르고, 첫 화면 글은 위로 빠지며 흐려진다 */
+    .parallax [data-photo] > img {
+      scale: 1.2;
+      animation: px-pan linear both;
+      animation-timeline: view();
+    }
+    .parallax [data-rise],
+    .px-rise {
+      animation: px-rise linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+    /* 홈 샘플 벽: 단마다 반대 방향으로 흐른다 */
+    .px-drift-a,
+    .px-drift-b {
+      animation: px-drift linear both;
+      animation-timeline: view();
+    }
+    .px-drift-b {
+      animation-direction: reverse;
+    }
+  }
+}
+
+@keyframes px-pan {
+  from {
+    translate: 0 -8%;
+  }
+  to {
+    translate: 0 8%;
+  }
+}
+
+@keyframes px-rise {
+  to {
+    translate: 0 40%;
+    opacity: 0;
+  }
+}
+
+@keyframes px-drift {
+  from {
+    translate: 0 80px;
+  }
+  to {
+    translate: 0 -80px;
+  }
+}

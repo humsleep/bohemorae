@@ -11,12 +11,13 @@ export type Look = {
   reviews: "grid" | "quote" | "strip";
   info: "table" | "panel";
   gallery: "row" | "mosaic" | "strip" | "none";
+  parallax?: true; // 사진이 스크롤 속도와 다르게 흐른다 (app/globals.css)
 };
 
 const defs = {
   warm: {
     label: "따뜻한",
-    look: { header: "center", hero: "cover", about: "big", prices: "menu", cards: "grid", reviews: "quote", info: "panel", gallery: "mosaic" } as Look,
+    look: { header: "center", hero: "cover", about: "big", prices: "menu", cards: "grid", reviews: "quote", info: "panel", gallery: "mosaic", parallax: true } as Look,
     vars: {
       "--color-brand": "#3d2c20",
       "--color-accent": "#9a5f33",
@@ -30,7 +31,7 @@ const defs = {
   },
   mono: {
     label: "모노",
-    look: { header: "simple", hero: "huge", about: "side", prices: "rows", cards: "numbered", reviews: "grid", info: "table", gallery: "strip" } as Look,
+    look: { header: "simple", hero: "huge", about: "side", prices: "rows", cards: "numbered", reviews: "grid", info: "table", gallery: "strip", parallax: true } as Look,
     vars: {
       "--color-brand": "#111111",
       "--color-accent": "#111111",
@@ -107,7 +108,7 @@ const defs = {
   },
   soft: {
     label: "부드러운",
-    look: { header: "center", hero: "soft", about: "big", prices: "plans", cards: "list", reviews: "strip", info: "table", gallery: "mosaic" } as Look,
+    look: { header: "center", hero: "soft", about: "big", prices: "plans", cards: "list", reviews: "strip", info: "table", gallery: "mosaic", parallax: true } as Look,
     vars: {
       "--color-brand": "#4f6457",
       "--color-accent": "#b07a5a",
@@ -123,7 +124,7 @@ const defs = {
   },
   stone: {
     label: "담백한",
-    look: { header: "nav", hero: "cover", about: "side", prices: "table", cards: "numbered", reviews: "quote", info: "panel", gallery: "mosaic" } as Look,
+    look: { header: "nav", hero: "cover", about: "side", prices: "table", cards: "numbered", reviews: "quote", info: "panel", gallery: "mosaic", parallax: true } as Look,
     vars: {
       "--color-brand": "#1c1c1a",
       "--color-accent": "#9c5a3c",
