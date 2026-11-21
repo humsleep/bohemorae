@@ -25,7 +25,7 @@ export async function submitInquiry(_prev: FormState, form: FormData): Promise<F
   const receipt = `${d.kind === "견적" ? "Q" : "A"}-${day}-${randomBytes(2).toString("hex").toUpperCase()}`;
 
   try {
-    await sendMail({ to: site.email, replyTo: d.email, subject: subject(d), text: body(d, receipt) });
+    await sendMail({ to: site.email, replyTo: d.email || undefined, subject: subject(d), text: body(d, receipt) });
   } catch (e) {
     console.error("문의 메일 발송 실패", e);
     return {
@@ -34,12 +34,14 @@ export async function submitInquiry(_prev: FormState, form: FormData): Promise<F
     };
   }
 
+  const via = d.email ? "메일" : "연락처";
+  // 이메일 없이 연락처만 남기면 자동 회신은 건너뛴다
   // 자동 회신에는 고객이 쓴 본문을 넣지 않는다: 남의 주소로 임의 문구를 보내는 데 악용될 수 있다
-  await sendMail({
+  if (d.email) await sendMail({
     to: d.email,
     subject: `[${site.name}] 문의가 접수되었습니다 (${receipt})`,
     text: `${d.name}님, 문의가 접수되었습니다.\n\n접수번호: ${receipt}\n유형: ${d.kind}\n\n영업일 2일 안에 이 메일 주소로 답변드립니다.\n\n${site.name}\n${site.url}`,
   }).catch((e) => console.error("자동 회신 실패", e));
 
-  return { ok: true, message: `접수되었습니다. 접수번호는 ${receipt}입니다. 영업일 2일 안에 메일로 답변드립니다.` };
+  return { ok: true, message: `접수되었습니다. 접수번호는 ${receipt}입니다. 영업일 2일 안에 ${via}로 답변드립니다.` };
 }

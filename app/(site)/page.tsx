@@ -18,7 +18,7 @@ const columns = Array.from({ length: Math.ceil(samples.length / 2) }, (_, i) => 
 
 const steps = [
   ["샘플 선택", "마음에 드는 디자인을 고릅니다"],
-  ["자료 전달", "상호, 가격표, 사진을 보내 주세요"],
+  ["자료 전달", "상호, 가격표, 영업시간, 사진 5~10장이면 충분합니다"],
   ["초안 확인", `${plans[0].specs[8][1]} 안에 초안을 드립니다`],
   ["오픈", "확인이 끝나면 도메인에 연결합니다"],
 ];
@@ -78,7 +78,7 @@ export default function Home() {
     <>
       <section className="overflow-hidden pt-16 md:pt-24">
         <div className="px-rise mx-auto max-w-page px-4 text-center">
-          <h1 className="text-5xl font-bold leading-[1.1] md:text-7xl">
+          <h1 className="text-4xl font-bold leading-[1.15] sm:text-5xl md:text-7xl">
             가게·회사 홈페이지,
             <br />
             구축{" "}
@@ -90,8 +90,9 @@ export default function Home() {
           </p>
           <div className="mt-9 flex justify-center gap-3">
             <Link href="/samples" className={primary}>샘플 보기</Link>
-            <Link href="/contact" className={secondary}>문의하기</Link>
+            <Link href="/contact" className={secondary}>무료 견적 받기</Link>
           </div>
+          <p className="mt-4 text-sm text-muted">{plans[0].vat}</p>
         </div>
 
         {/* 샘플 사이트 벽. 업종마다 글꼴, 색, 첫 화면 구성이 다르다. 화면보다 넓게 깔고 가운데를 맞춘다. */}
@@ -129,6 +130,67 @@ export default function Home() {
         </p>
       </section>
 
+      <Section title="요금" lead="큰 숫자는 부가세 별도 금액이고, 카드마다 부가세 포함가를 함께 적었습니다. 최소 이용 기간은 3개월입니다.">
+        <PlanCards />
+        <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기 →</Link>
+      </Section>
+
+      <Section title="진행 절차">
+        <ol className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+          {steps.map(([t, d], i) => (
+            <li key={t} className="rounded-2xl border border-line p-6">
+              <span className="text-sm font-medium text-accent">0{i + 1}</span>
+              <p className="mt-6 text-lg font-medium">{t}</p>
+              <p className="mt-1 text-sm text-muted">{d}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Feature
+        title="고칠 일이 생기면 대신 고쳐드립니다"
+        body={`가격표, 영업시간, 사진, 공지처럼 자주 바뀌는 내용은 요청만 하시면 됩니다. 라이트 기준 ${plans[0].specs[1][1]}, ${plans[0].specs[2][1]} 안에 반영합니다.`}
+        href="/pricing"
+        link="수정 범위 보기"
+      >
+        <div className="flex items-baseline justify-between">
+          <p className="font-medium">11월 수정 요청</p>
+          <p className="text-sm text-muted">예시 화면</p>
+        </div>
+        <ul className="mt-6 space-y-3">
+          {requests.map(([text, asked, done]) => (
+            <li key={text} className="rounded-2xl bg-raised p-4">
+              <p>{text}</p>
+              <p className="mt-3 flex items-center justify-between text-sm text-muted">
+                <span>{asked}</span>
+                <span className="flex items-center gap-2 text-brand">
+                  <span className="size-1.5 rounded-full bg-brand" />
+                  {done}
+                </span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </Feature>
+
+      <Feature
+        flip
+        title="해지해도 사이트는 고객님 것입니다"
+        body="도메인은 처음부터 고객 명의로 삽니다. 해지하면 소스와 콘텐츠 파일을 무료로 넘겨드립니다. 최소 이용 기간은 3개월입니다."
+        href="/pricing"
+        link="약정과 해지 조건"
+      >
+        <p className="font-medium">해지할 때 받는 것</p>
+        <dl className="mt-6 divide-y divide-line border-y border-line">
+          {handover.map(([k, v]) => (
+            <div key={k} className="flex items-baseline justify-between gap-4 py-4">
+              <dt>{k}</dt>
+              <dd className="text-right text-muted">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Feature>
+
       <Feature
         title="가격과 조건을 전부 공개합니다"
         body="구축비, 월 요금, 약정, 해지 조건을 요금 페이지 한 곳에 적었습니다. 3년 동안 내는 돈까지 미리 계산해 두었습니다."
@@ -158,54 +220,10 @@ export default function Home() {
 
       <Feature
         flip
-        title="고칠 일이 생기면 대신 고쳐드립니다"
-        body={`가격표, 영업시간, 사진, 공지처럼 자주 바뀌는 내용은 요청만 하시면 됩니다. 라이트 기준 ${plans[0].specs[1][1]}, ${plans[0].specs[2][1]} 안에 반영합니다.`}
-        href="/pricing"
-        link="수정 범위 보기"
-      >
-        <div className="flex items-baseline justify-between">
-          <p className="font-medium">11월 수정 요청</p>
-          <p className="text-sm text-muted">예시 화면</p>
-        </div>
-        <ul className="mt-6 space-y-3">
-          {requests.map(([text, asked, done]) => (
-            <li key={text} className="rounded-2xl bg-raised p-4">
-              <p>{text}</p>
-              <p className="mt-3 flex items-center justify-between text-sm text-muted">
-                <span>{asked}</span>
-                <span className="flex items-center gap-2 text-brand">
-                  <span className="size-1.5 rounded-full bg-brand" />
-                  {done}
-                </span>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </Feature>
-
-      <Feature
-        title="해지해도 사이트는 고객님 것입니다"
-        body="도메인은 처음부터 고객 명의로 삽니다. 해지하면 소스와 콘텐츠 파일을 무료로 넘겨드립니다. 최소 이용 기간은 3개월입니다."
-        href="/pricing"
-        link="약정과 해지 조건"
-      >
-        <p className="font-medium">해지할 때 받는 것</p>
-        <dl className="mt-6 divide-y divide-line border-y border-line">
-          {handover.map(([k, v]) => (
-            <div key={k} className="flex items-baseline justify-between gap-4 py-4">
-              <dt>{k}</dt>
-              <dd className="text-right text-muted">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      </Feature>
-
-      <Feature
-        flip
         title="14년차 개발자가 직접 만들고 직접 답합니다"
         body="Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 앱스토어에 앱을 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다."
-        href="/apps"
-        link="출시 앱 보기"
+        href="/about"
+        link="만든 사람 소개"
       >
         <ul className="grid grid-cols-2 gap-3">
           {apps.slice(0, 4).map((a) => (
@@ -246,23 +264,6 @@ export default function Home() {
         <Link href="/samples" className={more}>샘플 {samples.length}개 전체 보기 →</Link>
       </Section>
 
-      <Section title="요금" lead="부가세 별도. 최소 이용 기간은 3개월입니다.">
-        <PlanCards />
-        <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기 →</Link>
-      </Section>
-
-      <Section title="진행 절차">
-        <ol className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-          {steps.map(([t, d], i) => (
-            <li key={t} className="rounded-2xl border border-line p-6">
-              <span className="text-sm font-medium text-accent">0{i + 1}</span>
-              <p className="mt-6 text-lg font-medium">{t}</p>
-              <p className="mt-1 text-sm text-muted">{d}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
       <Section title="자주 묻는 질문">
         <Faq items={faqs.slice(0, 4)} />
         <Link href="/pricing" className={more}>질문 더 보기 →</Link>
@@ -275,9 +276,9 @@ export default function Home() {
             <br />
             알려주셔도 됩니다
           </h2>
-          <p className="mt-4 opacity-80">영업일 2일 안에 메일로 답변드립니다</p>
+          <p className="mt-4 opacity-80">연락처만 남겨 주셔도 영업일 2일 안에 답변드립니다</p>
           <div className="mt-8 flex justify-center gap-3">
-            <Link href="/contact" className="rounded-full bg-paper px-6 py-3 font-medium text-ink hover:opacity-90">문의하기</Link>
+            <Link href="/contact" className="rounded-full bg-paper px-6 py-3 font-medium text-ink hover:opacity-90">무료 견적 받기</Link>
             <Link href="/pricing" className="rounded-full border border-paper/30 px-6 py-3 font-medium hover:bg-paper/10">요금 보기</Link>
           </div>
         </div>

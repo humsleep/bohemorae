@@ -503,10 +503,11 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
         </dl>
       )}
 
-      {sample.sections.map((s, i) => (
+      {/* 미리보기 틀은 첫 화면 높이만 보이니 첫 섹션까지만 그린다(홈에 12채가 깔려 사진 수십 장을 아낀다) */}
+      {(preview ? sample.sections.slice(0, 1) : sample.sections).map((s, i) => (
         <section key={s.title} id={`sec-${i}`} className={i % 2 ? "scroll-mt-10 bg-surface" : "scroll-mt-10"}>
           <Block section={s} sample={sample} look={look} photos={photos} />
-          {i === 0 && <Gallery kind={look.gallery} photos={gallery} />}
+          {i === 0 && !preview && <Gallery kind={look.gallery} photos={gallery} />}
         </section>
       ))}
       <footer className="border-t border-line py-8 text-center text-sm text-muted">© {sample.name}</footer>

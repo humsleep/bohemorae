@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useState } from "react";
@@ -11,6 +12,7 @@ export type SampleCard = {
   type: string;
   category: string;
   meta: string; // 플랜 · 가격
+  photo?: string;
   vars: CSSProperties;
 };
 
@@ -26,7 +28,7 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
             type="button"
             aria-pressed={active === c}
             onClick={() => setActive(c)}
-            className={`rounded-full border px-4 py-2 text-sm font-medium ${
+            className={`min-h-11 rounded-full border px-4 text-sm font-medium ${
               active === c ? "border-brand bg-brand text-brand-ink" : "border-line hover:bg-surface"
             }`}
           >
@@ -39,11 +41,23 @@ export function SampleGrid({ cards, categories }: { cards: SampleCard[]; categor
           <li key={s.slug}>
             <Link
               href={`/demo/${s.slug}`}
-              className="block overflow-hidden rounded-lg border border-line hover:border-brand"
+              className="group block overflow-hidden rounded-2xl border border-line hover:border-ink"
             >
-              <div style={s.vars} className="flex h-36 flex-col items-center justify-center bg-surface px-3 text-center text-ink">
-                <span className="font-display text-xl font-semibold">{s.name}</span>
-                <span className="mt-1 text-sm text-muted">{s.tagline}</span>
+              <div style={s.vars} className="relative isolate flex aspect-[4/3] flex-col justify-end bg-surface p-5 text-ink">
+                {s.photo && (
+                  <>
+                    <Image
+                      src={s.photo}
+                      alt=""
+                      fill
+                      sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="-z-10 object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                    />
+                    <span className="absolute inset-0 -z-10 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
+                  </>
+                )}
+                <span className={`font-display text-2xl font-semibold ${s.photo ? "text-white" : ""}`}>{s.name}</span>
+                <span className={`mt-1 text-sm ${s.photo ? "text-white/85" : "text-muted"}`}>{s.tagline}</span>
               </div>
               <div className="p-4">
                 <span className="font-semibold">{s.type}</span>

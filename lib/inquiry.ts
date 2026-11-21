@@ -47,8 +47,10 @@ export function parseInquiry(
   };
 
   if (!data.name) return { ok: false, error: "이름을 적어 주세요." };
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
-    return { ok: false, error: "답변받을 이메일 주소를 확인해 주세요." };
+  // 소상공인은 전화가 편하다: 연락처와 이메일 중 하나만 있으면 된다
+  if (!data.email && !data.phone) return { ok: false, error: "답변받을 연락처나 이메일 중 하나를 적어 주세요." };
+  if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
+    return { ok: false, error: "이메일 주소를 확인해 주세요." };
   if (data.phone && !/^[0-9+\- ]{7,20}$/.test(data.phone))
     return { ok: false, error: "연락처는 숫자와 하이픈으로 적어 주세요." };
   if (kind === "견적" && !data.business) return { ok: false, error: "업종을 적어 주세요." };
@@ -68,7 +70,7 @@ export const body = (d: Inquiry, receipt: string) =>
     `접수번호: ${receipt}`,
     `유형: ${d.kind}`,
     `이름: ${d.name}`,
-    `이메일: ${d.email}`,
+    `이메일: ${d.email || "-"}`,
     `연락처: ${d.phone || "-"}`,
     ...(d.kind === "견적"
       ? [

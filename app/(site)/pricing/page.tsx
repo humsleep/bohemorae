@@ -14,7 +14,7 @@ export default function Pricing() {
       <div className="mx-auto max-w-page px-4 pt-14">
         <h1 className="text-3xl font-semibold sm:text-4xl">요금</h1>
         <p className="mt-3 text-muted">
-          가격, 약정, 해지 조건을 이 페이지에 전부 적었습니다. 모든 금액은 부가세 별도입니다.
+          가격, 약정, 해지 조건을 이 페이지에 전부 적었습니다. 큰 금액은 부가세 별도이고, 플랜 카드에 부가세 포함가를 함께 적었습니다.
         </p>
       </div>
 
@@ -61,7 +61,7 @@ export default function Pricing() {
           <tbody className="divide-y divide-line">
             {comparison.map((c) => (
               <tr key={c.name} className={c.ours ? "bg-surface" : undefined}>
-                <th scope="row" className="py-3 pr-3 pl-2 font-medium">
+                <th scope="row" className="py-3 pr-3 font-medium">
                   {c.name}
                   <span className="block font-normal text-muted">{c.calc}</span>
                 </th>
@@ -82,8 +82,8 @@ export default function Pricing() {
           <Link href="/samples" className="rounded-full bg-ink px-5 py-3 font-medium text-paper hover:opacity-90">
             샘플 보기
           </Link>
-          <Link href="/contact" className="rounded-lg border border-line px-5 py-3 font-medium hover:bg-surface">
-            문의하기
+          <Link href="/contact" className="rounded-full border border-line px-5 py-3 font-medium hover:bg-surface">
+            무료 견적 받기
           </Link>
         </div>
       </Section>

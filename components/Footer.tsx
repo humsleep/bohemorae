@@ -13,7 +13,7 @@ export function Footer() {
     <footer className="border-t border-line text-sm text-muted">
       <div className="mx-auto grid max-w-page gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <p className="text-lg font-semibold text-ink">{site.name}</p>
+          <p className="text-lg font-semibold text-ink">{site.nameKo} <span className="text-sm font-medium text-muted">{site.name}</span></p>
           <p className="mt-3 max-w-xs">{site.description}</p>
           <a href={`mailto:${site.email}`} className="mt-4 inline-block text-ink underline underline-offset-4">
             {site.email}
@@ -22,10 +22,10 @@ export function Footer() {
         {columns.map((c) => (
           <nav key={c.title} aria-label={c.title}>
             <p className="font-medium text-ink">{c.title}</p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-2">
               {c.links.map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href} className="hover:text-ink">{label}</Link>
+                  <Link href={href} className="inline-block py-2 hover:text-ink">{label}</Link>
                 </li>
               ))}
             </ul>
@@ -33,7 +33,8 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-line">
-        <p className="mx-auto max-w-page px-4 py-6 text-xs">
+        {/* 모바일 하단 고정 문의 바(MobileCta)에 가리지 않게 여백 */}
+        <p className="mx-auto max-w-page px-4 pt-6 pb-28 text-xs md:pb-6">
           상호 {b.company} · 대표 {b.owner} · 사업자등록번호 {b.regNo} · © {site.name}
         </p>
       </div>

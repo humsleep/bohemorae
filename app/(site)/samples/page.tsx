@@ -26,6 +26,7 @@ export default function Samples() {
           category: s.category,
           meta: `${plans[s.plan].name} · ${samplePrice(s)}`,
           vars: themeStyle(s.theme),
+          photo: s.photos?.hero,
         }))}
       />
     </div>

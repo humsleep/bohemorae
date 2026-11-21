@@ -8,27 +8,29 @@ import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "문의",
-  description: "견적 문의와 기타 문의를 남겨 주세요. 영업일 2일 안에 메일로 답변드립니다.",
+  description: "견적 문의와 기타 문의를 남겨 주세요. 영업일 2일 안에 답변드립니다.",
 };
 
 export default async function Contact(props: PageProps<"/contact">) {
-  const { sample } = await props.searchParams;
+  const { sample, plan } = await props.searchParams;
   // 샘플 페이지의 "이 디자인으로 시작"에서 넘어오면 그 샘플이 선택된 채로 열린다
   const picked = typeof sample === "string" ? getSample(sample) : undefined;
+  // 요금 카드의 "견적 받기"에서 오면 그 플랜이 골라진 채로 열린다
+  const plan0 = picked ? plans[picked.plan].name : plans.find((p) => p.name === plan)?.name;
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
       <h1 className="text-3xl font-semibold sm:text-4xl">{picked ? "이 디자인으로 시작하기" : "문의"}</h1>
       <p className="mt-3 mb-8 text-muted">
-        영업일 2일 안에 메일로 답변드립니다. 전화 영업은 하지 않습니다.
-        {site.kakaoChannelUrl && (
-          <>
-            {" "}
-            <a href={site.kakaoChannelUrl} className="font-medium text-brand underline">
-              카카오톡 채널로 문의하기
-            </a>
-          </>
-        )}
+        업종과 연락처만 남겨 주셔도 됩니다. 영업일 2일 안에 남겨 주신 연락처로 답변드리고, 전화 영업은 하지 않습니다.
       </p>
+      {site.kakaoChannelUrl && (
+        <a
+          href={site.kakaoChannelUrl}
+          className="mb-8 flex min-h-12 items-center justify-center rounded-full bg-[#fee500] px-6 font-medium text-[#191919] hover:opacity-90"
+        >
+          폼이 번거로우면 카카오톡으로 물어보기
+        </a>
+      )}
       {picked && (
         <div className="mb-10 flex items-center gap-4 rounded-2xl border border-line bg-surface p-3 pr-5">
           {picked.photos?.hero && (
@@ -51,7 +53,8 @@ export default async function Contact(props: PageProps<"/contact">) {
       <ContactForm
         samples={samples.map((s) => ({ slug: s.slug, label: `${s.type} (${s.name})` }))}
         plans={plans.map((p) => p.name)}
-        picked={picked && { slug: picked.slug, plan: plans[picked.plan].name }}
+        picked={picked?.slug}
+        plan={plan0}
       />
     </div>
   );

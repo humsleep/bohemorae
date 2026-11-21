@@ -1,5 +1,7 @@
 // 요금의 단일 출처. 금액 단위는 만원, 부가세 별도.
 const won = (n: number) => `${n}만원`;
+// 사장님들은 부가세 포함가로 비교한다: 19 → "209,000원"
+export const withVat = (n: number) => `${Math.round(n * 11000).toLocaleString("ko-KR")}원`;
 
 const base = [
   {
@@ -47,6 +49,7 @@ export const plans = base.map((p) => {
     target: p.target,
     build: won(p.build),
     monthly: won(p.monthly),
+    vat: `부가세 포함 구축 ${withVat(p.build)} · 월 ${withVat(p.monthly)}`,
     // 앞의 3개는 홈 요약 카드에도 쓴다
     specs: [
       ["구성", p.scope],
@@ -69,6 +72,9 @@ export const plans = base.map((p) => {
 
 export const included =
   "호스팅, 보안 인증서(SSL), 도메인 연결 유지, 장애 대응, 네이버·구글 검색 등록, 모바일 대응";
+
+// 플랜 카드 아래에 크게 보여 주는 보장. editScope의 "무상" 행과 같은 내용
+export const guarantee = "구독하는 동안 제작상 오류·화면 깨짐·접속 장애는 횟수 제한 없이 무상으로 고칩니다";
 
 export const editScope: [string, string][] = [
   ["월 수정에 포함", "문구·이미지·가격표·영업시간·연락처 교체, 공지나 메뉴 항목 추가"],
