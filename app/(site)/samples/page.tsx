@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SampleGrid } from "@/components/SampleGrid";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { plans } from "@/lib/pricing";
 import { categories, samplePrice, samples } from "@/lib/samples";
 import { themeStyle } from "@/lib/themes";
@@ -29,6 +30,17 @@ export default function Samples() {
           photo: s.photos?.hero,
         }))}
       />
+
+      <section className="mt-24 border-t border-line pt-16">
+        <h2 className="text-3xl font-bold leading-tight md:text-4xl">같은 가게도 분위기는 고르는 대로</h2>
+        <p className="mt-3 max-w-xl text-muted">
+          글꼴, 색, 첫 화면 구성을 통째로 바꿉니다. 아래에서 직접 눌러 보세요. 원하는 분위기가 없으면 맞춤 디자인(
+          {plans[0].specs[4][1]}부터)으로 새로 만듭니다.
+        </p>
+        <div className="mt-10">
+          <ThemeSwitcher sample={samples[0]} />
+        </div>
+      </section>
     </div>
   );
 }

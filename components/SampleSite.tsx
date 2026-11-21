@@ -355,7 +355,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
   const name = <span className="font-display text-xl font-bold">{sample.name}</span>;
 
   return (
-    <div style={themeStyle(sample.theme)} className={`relative flex-1 bg-paper text-ink ${look.parallax && !preview ? "parallax" : ""}`}>
+    <div style={themeStyle(sample.theme)} className={`relative flex-1 overflow-x-clip bg-paper text-ink ${look.skin ? `skin-${look.skin}` : ""} ${look.parallax && !preview ? "parallax" : ""}`}>
       <header className={cover ? "absolute inset-x-0 top-0 z-10 text-white" : "border-b border-line"}>
         {look.header === "nav" ? (
           <div className={`${W} flex items-center justify-between gap-6 py-4`}>
@@ -456,6 +456,61 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
             )}
           </div>
         </section>
+      ) : look.hero === "poster" ? (
+        // 포스터: 화면을 꽉 채우는 상호, 기울인 사진, 숫자 스티커
+        <section className="relative">
+          <div className={`${W} grid items-center gap-12 py-14 md:grid-cols-[1.25fr_1fr] md:py-20`}>
+            <div data-rise>
+              <p className="inline-block -rotate-2 border-2 border-ink bg-accent px-3 py-1 text-sm font-bold text-white">
+                {sample.type}
+              </p>
+              <Title className="mt-6 font-display text-[clamp(3.5rem,11vw,8rem)] leading-[0.95]">{sample.name}</Title>
+              <p className="mt-6 max-w-md text-lg font-medium sm:text-xl">{sample.tagline}</p>
+              {cta}
+            </div>
+            <div className="relative mx-auto w-4/5 max-w-sm md:w-full">
+              {photos.hero ? (
+                <Photo
+                  src={photos.hero}
+                  sizes="(min-width: 768px) 384px, 80vw"
+                  className="aspect-[4/5] rotate-3 border-2 border-ink shadow-[10px_10px_0_var(--color-ink)]"
+                />
+              ) : (
+                <div className="aspect-[4/5] rotate-3 border-2 border-ink bg-brand shadow-[10px_10px_0_var(--color-ink)]" />
+              )}
+              {sample.stats?.[0] && (
+                <span
+                  aria-hidden
+                  className="pop-spin absolute -top-8 -left-8 flex size-28 flex-col items-center justify-center rounded-full border-2 border-ink bg-surface text-center leading-tight font-bold"
+                >
+                  <span className="font-display text-2xl">{sample.stats[0][0]}</span>
+                  <span className="text-xs">{sample.stats[0][1]}</span>
+                </span>
+              )}
+            </div>
+          </div>
+        </section>
+      ) : look.hero === "stage" ? (
+        // 무대: 검은 바탕에 큰 이름, 아치형 사진에 형광 테두리
+        <section className="relative">
+          <div className={`${W} grid gap-12 pt-16 pb-12 md:grid-cols-[1.35fr_1fr] md:items-end md:pt-24`}>
+            <div data-rise>
+              <p className="text-sm font-semibold text-brand">{sample.type}</p>
+              <Title className="mt-5 font-display text-[clamp(3.25rem,10vw,7.5rem)] leading-[1.02] font-bold">{sample.name}</Title>
+              <p className="mt-6 max-w-lg text-xl leading-relaxed text-muted sm:text-2xl">{sample.tagline}</p>
+              {cta}
+            </div>
+            {photos.hero ? (
+              <Photo
+                src={photos.hero}
+                sizes="(min-width: 768px) 400px, 90vw"
+                className="mx-auto aspect-[3/4] w-4/5 rounded-t-full outline-2 outline-offset-8 outline-brand md:w-full"
+              />
+            ) : (
+              <div className="mx-auto aspect-[3/4] w-4/5 rounded-t-full border-2 border-brand md:w-full" />
+            )}
+          </div>
+        </section>
       ) : look.hero === "editorial" ? (
         // 한 줄 소개를 제목처럼 크게
         <section>
@@ -492,7 +547,26 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
         </section>
       )}
 
-      {sample.stats && (
+      {sample.stats && look.marquee ? (
+        // 옆으로 흐르는 띠. 같은 줄을 두 번 이어 붙여 끊김 없이 돈다(app/globals.css .marquee)
+        <div className="overflow-hidden border-y-2 border-ink bg-brand py-4 text-brand-ink">
+          <p className="sr-only">{sample.stats.map(([v, l]) => `${l} ${v}`).join(", ")}</p>
+          <div aria-hidden className="marquee flex w-max">
+            {[0, 1].map((k) => (
+              <span key={k} className="flex shrink-0 items-center gap-10 pr-10 font-display text-2xl whitespace-nowrap sm:text-3xl">
+                {[...sample.stats!, ...sample.stats!].map(([v, l], i) => (
+                  <span key={i} className="flex items-center gap-10">
+                    <span>
+                      {v} <span className="text-base font-sans font-semibold opacity-80">{l}</span>
+                    </span>
+                    <span className="text-lg">✳</span>
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : sample.stats && (
         <dl className={`${W} grid grid-cols-2 gap-y-8 border-b border-line py-12 ${look.hero === "board" && photos.hero ? "pt-20" : ""} ${sample.stats.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4"}`}>
           {sample.stats.map(([value, label]) => (
             <div key={label} className="flex flex-col-reverse">

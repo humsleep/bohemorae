@@ -98,3 +98,62 @@ h2 {
     translate: 0 -80px;
   }
 }
+
+/* 화려한 샘플 테마(lib/themes.ts의 skin). 섹션 코드는 그대로 두고 질감만 바꾼다 */
+.skin-pop .rounded-md,
+.skin-pop .rounded-lg,
+.skin-pop .rounded-xl {
+  border-radius: 0;
+}
+.skin-pop .border {
+  border-width: 2px;
+}
+.skin-pop .rounded-xl.border,
+.skin-pop .rounded-xl.bg-paper,
+.skin-pop .rounded-xl.bg-brand {
+  border: 2px solid var(--color-ink);
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+.skin-pop a.bg-brand {
+  border: 2px solid var(--color-ink);
+  box-shadow: 4px 4px 0 var(--color-ink);
+  transition: translate 120ms, box-shadow 120ms;
+}
+.skin-pop a.bg-brand:hover {
+  translate: 2px 2px;
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+.skin-pop section + section {
+  border-top: 2px solid var(--color-ink);
+}
+
+.skin-stage h2 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.15;
+}
+.skin-stage a.bg-brand {
+  border-radius: 999px;
+}
+.skin-stage ::selection {
+  background: var(--color-brand);
+  color: var(--color-brand-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    animation: marquee 28s linear infinite;
+  }
+  .pop-spin {
+    animation: pop-spin 14s linear infinite;
+  }
+}
+@keyframes marquee {
+  to {
+    translate: -50% 0;
+  }
+}
+@keyframes pop-spin {
+  to {
+    rotate: 360deg;
+  }
+}

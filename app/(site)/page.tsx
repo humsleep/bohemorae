@@ -2,13 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SitePreview } from "@/components/SitePreview";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { apps } from "@/lib/apps";
 import { comparison, faqs, plans } from "@/lib/pricing";
-import { samplePrice, samples } from "@/lib/samples";
+import { samples } from "@/lib/samples";
 import { site } from "@/lib/site";
-import { themeStyle } from "@/lib/themes";
 
 const primary = "rounded-full bg-ink px-6 py-3 font-medium text-paper hover:opacity-90";
 const secondary = "rounded-full border border-line bg-surface px-6 py-3 font-medium hover:border-ink";
@@ -88,7 +86,7 @@ export default function Home() {
             부터
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
-            월 2.5만원에 대신 고쳐드립니다. 가격과 해지 조건은 전부 공개합니다.
+            가게와 회사는 물론 인플루언서·전문가 개인 사이트까지. 월 2.5만원에 대신 고쳐드립니다.
           </p>
           <div className="mt-9 flex justify-center gap-3">
             <Link href="/samples" className={primary}>샘플 보기</Link>
@@ -111,25 +109,11 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper to-transparent" />
           <Link href="/samples" aria-label="샘플 전체 보기" className="absolute inset-0" />
         </div>
-      </section>
-
-      <section className="mx-auto max-w-page px-4 py-20 md:py-28">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold leading-tight md:text-5xl">
-            같은 가게도
-            <br />
-            분위기는 고르는 대로
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-lg text-muted">
-            글꼴, 색, 첫 화면 구성을 통째로 바꿉니다. 아래에서 직접 눌러 보세요.
-          </p>
+        <div className="relative mx-auto -mt-6 max-w-page px-4 pb-4 text-center">
+          <Link href="/samples" className="font-medium text-brand hover:underline">
+            업종별 샘플 {samples.length}개 전부 보기 →
+          </Link>
         </div>
-        <div className="mt-10">
-          <ThemeSwitcher sample={samples[0]} />
-        </div>
-        <p className="mt-6 text-center text-sm text-muted">
-          원하는 분위기가 여기 없다면 맞춤 디자인({plans[0].specs[4][1]}부터)으로 새로 만듭니다
-        </p>
       </section>
 
       <Section title="요금" lead="큰 숫자는 부가세 별도 금액이고, 카드마다 부가세 포함가를 함께 적었습니다. 최소 이용 기간은 3개월입니다.">
@@ -245,32 +229,6 @@ export default function Home() {
         </ul>
         <p className="mt-5 text-sm text-muted">앱스토어 출시 {apps.length}개 · 기획부터 출시까지 1인 개발</p>
       </Feature>
-
-      <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다">
-        <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
-          {samples.slice(0, 6).map((s) => (
-            <li key={s.slug}>
-              <Link href={`/demo/${s.slug}`} className="group block">
-                <span
-                  style={themeStyle(s.theme)}
-                  className="flex aspect-[4/3] flex-col justify-between rounded-2xl border border-line bg-surface p-5 text-ink group-hover:border-ink"
-                >
-                  <span className="h-1 w-8 bg-brand" />
-                  <span>
-                    <span className="block font-display text-xl font-semibold leading-snug sm:text-2xl">{s.name}</span>
-                    <span className="mt-1 hidden text-sm text-muted sm:block">{s.tagline}</span>
-                  </span>
-                </span>
-                <span className="mt-3 block font-medium">{s.type}</span>
-                <span className="block text-sm text-muted">
-                  {plans[s.plan].name} · {samplePrice(s)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link href="/samples" className={more}>샘플 {samples.length}개 전체 보기 →</Link>
-      </Section>
 
       <Section title="자주 묻는 질문">
         <Faq items={faqs.slice(0, 4)} />

@@ -14,6 +14,8 @@ import nail from "@/content/samples/nail";
 import tax from "@/content/samples/tax";
 import dental from "@/content/samples/dental";
 import pension from "@/content/samples/pension";
+import creator from "@/content/samples/creator";
+import coach from "@/content/samples/coach";
 
 export type SampleSection =
   | { kind: "about"; title: string; body: string }
@@ -44,7 +46,7 @@ export type Sample = {
 };
 
 // 샘플 추가: content/samples에 파일을 만들고 아래 배열에 한 줄 추가
-const list: Sample[] = [cafe, hair, restaurant, academy, company, freelancer,
+const list: Sample[] = [cafe, hair, restaurant, academy, coach, company, creator, freelancer,
   pilates, interior, nail, tax, dental, pension,
 ];
 

@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 // 제목 글꼴은 app/fonts.ts에서 불러온 웹글꼴.
 export type Look = {
   header: "simple" | "nav" | "center";
-  hero: "cover" | "scene" | "huge" | "split" | "board" | "editorial" | "soft";
+  hero: "cover" | "scene" | "huge" | "split" | "board" | "editorial" | "soft" | "poster" | "stage";
   about: "plain" | "big" | "side";
   prices: "list" | "menu" | "rows" | "photo" | "table" | "plans";
   cards: "grid" | "numbered" | "list" | "photo";
@@ -12,6 +12,8 @@ export type Look = {
   info: "table" | "panel";
   gallery: "row" | "mosaic" | "strip" | "none";
   parallax?: true; // 사진이 스크롤 속도와 다르게 흐른다 (app/globals.css)
+  marquee?: true; // 숫자 띠 대신 옆으로 흐르는 띠
+  skin?: "pop" | "stage"; // 화면 전체 질감을 바꾸는 화려한 테마 (app/globals.css .skin-*)
 };
 
 const defs = {
@@ -201,6 +203,38 @@ const defs = {
       "--font-display": 'var(--font-myeongjo), serif',
     },
   },
+  pop: {
+    label: "팝",
+    // 화려함 1: 원색 면, 굵은 검정 테두리, 기울인 사진, 딱딱한 그림자. 인플루언서·크리에이터용
+    look: { header: "simple", hero: "poster", about: "big", prices: "plans", cards: "grid", reviews: "strip", info: "panel", gallery: "strip", marquee: true, skin: "pop" } as Look,
+    vars: {
+      "--color-brand": "#ff4f1f",
+      "--color-brand-ink": "#ffffff",
+      "--color-accent": "#2f3cff",
+      "--color-ink": "#121212",
+      "--color-muted": "#3a3a3a",
+      "--color-line": "#121212",
+      "--color-surface": "#ffe14d",
+      "--color-paper": "#fff6e9",
+      "--font-display": 'var(--font-blackhan), sans-serif',
+    },
+  },
+  stage: {
+    label: "무대",
+    // 화려함 2: 검은 무대, 형광 연두 한 줄기, 아치형 사진, 큰 명조. 강연자·코치·전문가용
+    look: { header: "nav", hero: "stage", about: "side", prices: "rows", cards: "numbered", reviews: "quote", info: "table", gallery: "mosaic", marquee: true, skin: "stage", parallax: true } as Look,
+    vars: {
+      "--color-brand": "#c6f432",
+      "--color-brand-ink": "#0d0d0f",
+      "--color-accent": "#c6f432",
+      "--color-ink": "#f4f1ea",
+      "--color-muted": "#a3a09a",
+      "--color-line": "#2c2c33",
+      "--color-surface": "#16161a",
+      "--color-paper": "#0d0d0f",
+      "--font-display": 'var(--font-myeongjo), serif',
+    },
+  },
 };
 
 export type ThemeName = keyof typeof defs;
@@ -209,4 +243,4 @@ export const themes: Record<ThemeName, { label: string; look: Look; vars: Record
 
 // 테마가 따로 정하지 않는 값은 샘플용 기본값으로 되돌린다
 export const themeStyle = (name: ThemeName) =>
-  ({ "--color-brand-ink": "#ffffff", colorScheme: "light", ...themes[name].vars }) as CSSProperties;
+  ({ "--color-brand-ink": "#ffffff", colorScheme: themes[name].look.skin === "stage" ? "dark" : "light", ...themes[name].vars }) as CSSProperties;

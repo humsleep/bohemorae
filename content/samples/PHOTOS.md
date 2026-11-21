@@ -317,3 +317,59 @@ Outdoor barbecue grill and wooden table set for dinner in a cabin yard at dusk, 
 ```
 Living room of a cabin with a loft, wood interior, warm light, photorealistic editorial photography, natural light, shallow depth of field, no text, no logos, no watermark, no recognizable faces, 4:3 landscape aspect ratio
 ```
+
+## creator · 오늘도 해나 (인플루언서, 팝 테마)
+
+hero는 기울인 세로 카드(4:5)로 잘려 나오므로 **세로 4:5**로 만든다. 1~3은 4:3.
+
+`public/samples/creator/hero.jpg`
+
+```
+Overhead shot of a young Korean woman's hands cooking a simple one-pot dinner in a small bright apartment kitchen, colorful vegetables, a red enamel pot, playful vivid color styling, punchy saturated colors, hard flash lighting, editorial lifestyle photography, face not shown, no text, no logos, no watermark, 4:5 vertical portrait aspect ratio
+```
+
+`public/samples/creator/1.jpg`
+
+```
+A smartphone on a small tripod filming a cutting board with sliced vegetables on a home kitchen counter, ring light glow, bright saturated colors, playful styling, editorial photography, no people, no text on screen, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/creator/2.jpg`
+
+```
+Top-down flat lay of a finished Korean home-cooked meal for one, rice bowl, stew in a small pot, side dishes, on a bright yellow table, hard flash lighting, vivid colors, editorial food photography, no people, no text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/creator/3.jpg`
+
+```
+Small home cooking class scene, several people's hands chopping vegetables around a long table, bright cheerful studio kitchen, vivid colors, editorial photography, faces not shown, no text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+## coach · 강서윤 (강연자·코치, 무대 테마)
+
+hero는 아치형 세로 틀(3:4)로 잘려 나오므로 **세로 3:4**로 만든다. 1~3은 4:3. 어두운 배경에 어울리게 어둡고 대비가 강한 사진.
+
+`public/samples/coach/hero.jpg`
+
+```
+Dramatic portrait of a Korean woman speaker in her 40s in a black blazer standing on a dark stage, single warm spotlight from above, face turned away in partial shadow, dark background, cinematic low-key lighting, editorial photography, no text, no logos, no watermark, 3:4 vertical portrait aspect ratio
+```
+
+`public/samples/coach/1.jpg`
+
+```
+View from the back of a dark auditorium toward a lit stage with a lone speaker silhouette and a large blank screen, audience heads in silhouette, cinematic low-key lighting, editorial photography, no readable text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/coach/2.jpg`
+
+```
+One-on-one coaching session at a wooden table, two people's hands with notebooks and a laptop, warm desk lamp in a dark room, cinematic lighting, editorial photography, faces not shown, no readable text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/coach/3.jpg`
+
+```
+Two hardcover books with plain blank covers standing on a dark shelf, a single beam of warm light, minimal moody still life, editorial photography, no text on covers, no logos, no watermark, 4:3 landscape aspect ratio
+```
