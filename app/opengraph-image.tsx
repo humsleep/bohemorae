@@ -17,11 +17,11 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 80,
-          background: "#09090b",
-          color: "#fafafa",
+          background: "#1c1917",
+          color: "#fafaf9",
         }}
       >
-        <div style={{ fontSize: 40 }}>{site.name}</div>
+        <div style={{ fontSize: 40, color: "#e0b25c" }}>{site.nameKo}</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.2 }}>가게·회사 홈페이지,</div>
           <div style={{ fontSize: 84, fontWeight: 700, lineHeight: 1.2 }}>구축 19만원부터</div>
