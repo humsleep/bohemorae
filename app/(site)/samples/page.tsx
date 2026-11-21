@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default function Samples() {
   return (
     <div className="mx-auto max-w-page px-4 py-14">
-      <h1 className="text-3xl font-semibold sm:text-4xl">샘플</h1>
+      <h1 className="text-4xl font-bold md:text-5xl">샘플</h1>
       <p className="mt-3 text-muted">
-        마음에 드는 디자인을 고르면 상호와 내용만 바꿔 그대로 만들어 드립니다.
+        마음에 드는 디자인을 고르면 상호와 내용만 바꿔 그대로 만들어 드립니다. 샘플 속 상호, 전화번호, 후기는 모두 가상입니다.
       </p>
       <SampleGrid
         categories={categories}

@@ -19,7 +19,7 @@ export default async function Contact(props: PageProps<"/contact">) {
   const plan0 = picked ? plans[picked.plan].name : plans.find((p) => p.name === plan)?.name;
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
-      <h1 className="text-3xl font-semibold sm:text-4xl">{picked ? "이 디자인으로 시작하기" : "문의"}</h1>
+      <h1 className="text-4xl font-bold md:text-5xl">{picked ? "이 디자인으로 시작하기" : "문의"}</h1>
       <p className="mt-3 mb-8 text-muted">
         업종과 연락처만 남겨 주셔도 됩니다. 영업일 2일 안에 남겨 주신 연락처로 답변드리고, 전화 영업은 하지 않습니다.
       </p>

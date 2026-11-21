@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { domainOptions } from "@/lib/inquiry";
+import { site } from "@/lib/site";
 import { submitInquiry } from "./actions";
 
 // text-base: 16px 미만 입력칸은 iOS가 포커스할 때 화면을 확대한다
@@ -34,9 +35,18 @@ export function ContactForm({
 
   if (state.ok)
     return (
-      <p role="status" className="rounded-lg border border-brand bg-surface p-5 font-medium">
-        {state.message}
-      </p>
+      <div role="status" className="rounded-lg border border-brand bg-surface p-5">
+        <p className="font-medium">{state.message}</p>
+        {site.kakaoChannelUrl && (
+          <p className="mt-3 text-sm text-muted">
+            급하시면{" "}
+            <a href={site.kakaoChannelUrl} className="font-medium text-brand underline">
+              카카오톡
+            </a>
+            으로 접수번호를 알려 주세요.
+          </p>
+        )}
+      </div>
     );
 
   return (

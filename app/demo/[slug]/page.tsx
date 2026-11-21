@@ -26,7 +26,7 @@ export default async function Demo(props: PageProps<"/demo/[slug]">) {
           ← 샘플 목록
         </Link>
         <span>
-          {sample.type} 샘플 · 이 디자인 그대로 {samplePrice(sample)}
+          가상의 {sample.type} 샘플 · 이 디자인 그대로 {samplePrice(sample)}
         </span>
         <Link href={`/contact?sample=${sample.slug}`} className="font-semibold underline">
           이 디자인으로 시작

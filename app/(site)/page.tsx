@@ -6,6 +6,7 @@ import { Faq, PlanCards, Section } from "@/components/ui";
 import { apps } from "@/lib/apps";
 import { comparison, faqs, plans } from "@/lib/pricing";
 import { samplePrice, samples } from "@/lib/samples";
+import { site } from "@/lib/site";
 import { themeStyle } from "@/lib/themes";
 
 const primary = "rounded-full bg-ink px-6 py-3 font-medium text-paper hover:opacity-90";
@@ -277,9 +278,13 @@ export default function Home() {
             알려주셔도 됩니다
           </h2>
           <p className="mt-4 opacity-80">연락처만 남겨 주셔도 영업일 2일 안에 답변드립니다</p>
-          <div className="mt-8 flex justify-center gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/contact" className="rounded-full bg-paper px-6 py-3 font-medium text-ink hover:opacity-90">무료 견적 받기</Link>
-            <Link href="/pricing" className="rounded-full border border-paper/30 px-6 py-3 font-medium hover:bg-paper/10">요금 보기</Link>
+            {site.kakaoChannelUrl ? (
+              <a href={site.kakaoChannelUrl} className="rounded-full border border-paper/30 px-6 py-3 font-medium hover:bg-paper/10">카톡으로 물어보기</a>
+            ) : (
+              <Link href="/pricing" className="rounded-full border border-paper/30 px-6 py-3 font-medium hover:bg-paper/10">요금 보기</Link>
+            )}
           </div>
         </div>
       </section>

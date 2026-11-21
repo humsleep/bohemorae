@@ -7,7 +7,7 @@ import { fontVars } from "./fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} | 월 관리형 홈페이지`, template: `%s | ${site.name}` },
+  title: { default: `${site.nameKo} | 가게·회사 월 관리형 홈페이지`, template: `%s | ${site.nameKo}` },
   description: site.description,
 };
 

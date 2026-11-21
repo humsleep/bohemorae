@@ -12,7 +12,7 @@ export default function Pricing() {
   return (
     <>
       <div className="mx-auto max-w-page px-4 pt-14">
-        <h1 className="text-3xl font-semibold sm:text-4xl">요금</h1>
+        <h1 className="text-4xl font-bold md:text-5xl">요금</h1>
         <p className="mt-3 text-muted">
           가격, 약정, 해지 조건을 이 페이지에 전부 적었습니다. 큰 금액은 부가세 별도이고, 플랜 카드에 부가세 포함가를 함께 적었습니다.
         </p>

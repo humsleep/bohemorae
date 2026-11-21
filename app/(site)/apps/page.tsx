@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Apps() {
   return (
     <div className="mx-auto max-w-page px-4 py-14">
-      <h1 className="text-3xl font-semibold sm:text-4xl">앱</h1>
+      <h1 className="text-4xl font-bold md:text-5xl">앱</h1>
       <p className="mt-3 text-muted">iOS 4종 출시, Android 개발 중.</p>
       <ul className="mt-8 border-t-2 border-ink">
         {apps.map((a) => (
