@@ -35,7 +35,9 @@ export function Footer() {
       <div className="border-t border-line">
         {/* 모바일 하단 고정 문의 바(MobileCta)에 가리지 않게 여백 */}
         <p className="mx-auto max-w-page px-4 pt-6 pb-28 text-xs md:pb-6">
-          상호 {b.company} · 대표 {b.owner} · 사업자등록번호 {b.regNo} · © {site.name}
+          상호 {b.company} · 대표 {b.owner} · 사업자등록번호 {b.regNo} · 통신판매업 {b.mailOrderNo}
+          <br />
+          {b.address} · {site.email} · © {site.name}
         </p>
       </div>
     </footer>

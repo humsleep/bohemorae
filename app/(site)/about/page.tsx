@@ -26,6 +26,8 @@ export default function About() {
           ["상호", b.company],
           ["대표자", b.owner],
           ["사업자등록번호", b.regNo],
+          ["통신판매업 신고번호", b.mailOrderNo],
+          ["사업장 주소", b.address],
           ["과세 유형", "일반과세자 (세금계산서 발행 가능)"],
           ["연락처", site.email],
         ]}
