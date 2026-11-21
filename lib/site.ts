@@ -5,7 +5,7 @@ export const site = {
   description:
     "가게·회사 홈페이지, 구축 19만원부터. 월 2.5만원에 대신 고쳐드립니다.",
   email: "bohemorae@gmail.com",
-  kakaoChannelUrl: "", // 채널 개설 후 주소를 넣으면 문의 페이지에 버튼이 생긴다
+  kakaoChannelUrl: "https://open.kakao.com/o/s3SWY5Xi", // 카카오톡 오픈채팅. 비우면 카톡 버튼이 사라진다
   nav: [
     { href: "/samples", label: "샘플", mobile: true },
     { href: "/pricing", label: "요금", mobile: true },
