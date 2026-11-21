@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "소개",
-  description: "Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다.",
+  description: "보헤모레는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다.",
 };
 
 export default function About() {
@@ -12,7 +12,7 @@ export default function About() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-14">
       <h1 className="text-4xl font-bold md:text-5xl">소개</h1>
-      <p className="mt-4 text-lg">Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다.</p>
+      <p className="mt-4 text-lg">보헤모레는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다.</p>
 
       <h2 className="mt-10 text-xl font-semibold">경력</h2>
       <p className="mt-3 text-muted">

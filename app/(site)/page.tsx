@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SitePreview } from "@/components/SitePreview";
@@ -222,21 +223,27 @@ export default function Home() {
       <Feature
         flip
         title="14년차 개발자가 직접 만들고 직접 답합니다"
-        body="Bohemorae는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 앱스토어에 앱을 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다."
+        body="보헤모레는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 앱스토어에 앱 5개를 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다."
         href="/about"
         link="만든 사람 소개"
       >
-        <ul className="grid grid-cols-2 gap-3">
-          {apps.slice(0, 4).map((a) => (
-            <li key={a.name} className="rounded-2xl bg-raised p-4">
-              <span className="flex size-10 items-center justify-center rounded-xl bg-paper font-semibold text-brand">
-                {a.name[0]}
-              </span>
-              <p className="mt-4 font-medium">{a.name}</p>
-              <p className="mt-1 text-sm text-muted">{a.desc}</p>
+        {/* 출시 앱의 실제 화면. App Store 등록 이미지(public/apps) */}
+        <ul className="grid grid-cols-3 gap-3">
+          {[apps[0], apps[2], apps[3]].map((a) => (
+            <li key={a.slug}>
+              <Link href="/apps" className="block">
+                <span className="relative block aspect-[598/1300] overflow-hidden rounded-xl border border-line">
+                  <Image src={a.shots[0]} alt={`${a.name} 앱 화면`} fill sizes="(min-width: 768px) 160px, 30vw" className="object-cover" />
+                </span>
+                <span className="mt-3 flex items-center gap-2">
+                  <Image src={a.icon} alt="" width={24} height={24} className="size-6 rounded-md" />
+                  <span className="truncate text-sm font-medium">{a.name}</span>
+                </span>
+              </Link>
             </li>
           ))}
         </ul>
+        <p className="mt-5 text-sm text-muted">앱스토어 출시 {apps.length}개 · 기획부터 출시까지 1인 개발</p>
       </Feature>
 
       <Section title="샘플" lead="마음에 드는 디자인을 고르면 그대로 만들어 드립니다">
