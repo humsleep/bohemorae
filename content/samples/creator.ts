@@ -13,6 +13,13 @@ const sample: Sample = {
     "채널 소개, 대표 콘텐츠, 협업 단가, 문의를 한 장에 담은 인플루언서용 미디어킷 사이트입니다. 원색 면과 굵은 테두리, 흐르는 숫자 띠로 화면에서 바로 눈에 띕니다.",
   phone: "010-0000-0000",
   cta: "협업 안내 보기",
+  // 가상 계정이라 각 서비스 첫 화면으로만 연결한다
+  links: [
+    { kind: "instagram", label: "인스타그램", handle: "@haena.cooks", href: "https://www.instagram.com/" },
+    { kind: "youtube", label: "유튜브", handle: "오늘도 해나", href: "https://www.youtube.com/" },
+    { kind: "email", label: "협업 메일", handle: "hello@example.com", href: "mailto:hello@example.com" },
+    { kind: "kakao", label: "카카오톡", handle: "오픈채팅", href: "https://open.kakao.com/" },
+  ],
   stats: [
     ["18만", "유튜브 구독자"],
     ["32만", "인스타그램 팔로워"],

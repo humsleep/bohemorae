@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Sample, SampleSection } from "@/lib/samples";
 import { SceneScroll } from "@/components/SceneScroll";
+import { SocialLinks } from "@/components/SocialLinks";
 import { type Look, themes, themeStyle } from "@/lib/themes";
 
 const W = "mx-auto max-w-5xl px-5";
@@ -282,9 +283,13 @@ function Block({ section: s, sample, look, photos }: { section: SampleSection; s
         <div className={`${W} ${pad} text-center`}>
           <h2 className={h2}>{s.title}</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted">{s.body}</p>
-          <a href={`tel:${sample.phone}`} className={button + " mt-7"}>
-            {s.cta} {sample.phone}
-          </a>
+          {sample.links ? (
+            <SocialLinks links={sample.links} labeled className="mt-8" />
+          ) : (
+            <a href={`tel:${sample.phone}`} className={button + " mt-7"}>
+              {s.cta} {sample.phone}
+            </a>
+          )}
         </div>
       );
   }
@@ -347,7 +352,9 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
   );
   const kicker = <p className={`text-sm font-semibold ${onBrand ? "opacity-80" : "text-accent"}`}>{sample.type}</p>;
   const tagline = <p className={`mt-4 text-lg sm:text-xl ${onBrand ? "opacity-90" : "text-muted"}`}>{sample.tagline}</p>;
-  const phone = (
+  const phone = sample.links ? (
+    <SocialLinks links={sample.links.slice(0, 3)} className="gap-1" />
+  ) : (
     <a href={`tel:${sample.phone}`} className={`text-sm font-semibold ${cover ? "" : "text-brand"}`}>
       {sample.phone}
     </a>
@@ -355,7 +362,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
   const name = <span className="font-display text-xl font-bold">{sample.name}</span>;
 
   return (
-    <div style={themeStyle(sample.theme)} className={`relative flex-1 overflow-x-clip bg-paper text-ink ${look.skin ? `skin-${look.skin}` : ""} ${look.parallax && !preview ? "parallax" : ""}`}>
+    <div data-sample style={themeStyle(sample.theme)} className={`relative flex-1 overflow-x-clip bg-paper text-ink ${look.skin ? `skin-${look.skin}` : ""} ${look.parallax && !preview ? "parallax" : ""}`}>
       <header className={cover ? "absolute inset-x-0 top-0 z-10 text-white" : "border-b border-line"}>
         {look.header === "nav" ? (
           <div className={`${W} flex items-center justify-between gap-6 py-4`}>
@@ -367,9 +374,13 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
                 </a>
               ))}
             </nav>
-            <a href={`tel:${sample.phone}`} className={`${button} !px-4 !py-2 text-sm ${cover ? "!bg-white !text-black" : ""}`}>
-              {sample.phone}
-            </a>
+            {sample.links ? (
+              phone
+            ) : (
+              <a href={`tel:${sample.phone}`} className={`${button} !px-4 !py-2 text-sm ${cover ? "!bg-white !text-black" : ""}`}>
+                {sample.phone}
+              </a>
+            )}
           </div>
         ) : look.header === "center" ? (
           <div className={`${W} grid grid-cols-[1fr_auto_1fr] items-center py-5`}>
@@ -467,6 +478,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
               <Title className="mt-6 font-display text-[clamp(3.5rem,11vw,8rem)] leading-[0.95]">{sample.name}</Title>
               <p className="mt-6 max-w-md text-lg font-medium sm:text-xl">{sample.tagline}</p>
               {cta}
+              {sample.links && <SocialLinks links={sample.links} className="mt-6" />}
             </div>
             <div className="relative mx-auto w-4/5 max-w-sm md:w-full">
               {photos.hero ? (
@@ -499,6 +511,7 @@ export function SampleSite({ sample, preview }: { sample: Sample; preview?: bool
               <Title className="mt-5 font-display text-[clamp(3.25rem,10vw,7.5rem)] leading-[1.02] font-bold">{sample.name}</Title>
               <p className="mt-6 max-w-lg text-xl leading-relaxed text-muted sm:text-2xl">{sample.tagline}</p>
               {cta}
+              {sample.links && <SocialLinks links={sample.links} className="mt-6" />}
             </div>
             {photos.hero ? (
               <Photo

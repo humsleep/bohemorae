@@ -235,6 +235,22 @@ const defs = {
       "--font-display": 'var(--font-myeongjo), serif',
     },
   },
+  volt: {
+    label: "볼트",
+    // 화려함 3: 미색 바탕에 전기 파랑, 화면을 넘칠 듯한 제목, 번호 커리큘럼. 부업·수익화 강의용
+    look: { header: "nav", hero: "huge", about: "side", prices: "plans", cards: "numbered", reviews: "grid", info: "panel", gallery: "row", marquee: true, skin: "pop" } as Look,
+    vars: {
+      "--color-brand": "#3b2bff",
+      "--color-brand-ink": "#ffffff",
+      "--color-accent": "#3b2bff",
+      "--color-ink": "#0b0b0b",
+      "--color-muted": "#45443f",
+      "--color-line": "#0b0b0b",
+      "--color-surface": "#e9e7de",
+      "--color-paper": "#f4f3ee",
+      "--font-display": 'var(--font-blackhan), sans-serif',
+    },
+  },
 };
 
 export type ThemeName = keyof typeof defs;

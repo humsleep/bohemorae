@@ -60,7 +60,7 @@ function Feature({
   children: ReactNode;
 }) {
   return (
-    <div className="mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
+    <div className="reveal mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
       <div className={flip ? "md:order-2" : undefined}>
         <h2 className="text-3xl font-bold leading-tight md:text-4xl">{title}</h2>
         <p className="mt-4 max-w-md text-lg text-muted">{body}</p>

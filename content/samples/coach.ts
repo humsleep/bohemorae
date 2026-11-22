@@ -13,6 +13,12 @@ const sample: Sample = {
     "강연, 코칭, 책을 한 사람의 이름 아래 묶는 전문가 개인 브랜딩 사이트입니다. 검은 무대 위에 큰 명조 이름과 형광 연두 한 줄기로 무대에 선 사람처럼 보이게 합니다.",
   phone: "010-0000-0000",
   cta: "프로그램 보기",
+  links: [
+    { kind: "email", label: "이메일", handle: "talk@example.com", href: "mailto:talk@example.com" },
+    { kind: "instagram", label: "인스타그램", handle: "@seoyun.brand", href: "https://www.instagram.com/" },
+    { kind: "youtube", label: "유튜브", handle: "강서윤 TV", href: "https://www.youtube.com/" },
+    { kind: "blog", label: "블로그", handle: "브랜딩 노트", href: "https://blog.naver.com/" },
+  ],
   stats: [
     ["320회+", "기업·기관 강연"],
     ["1,800명", "1:1 코칭"],

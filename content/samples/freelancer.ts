@@ -12,6 +12,11 @@ const sample: Sample = {
     "경력, 강의 주제, 문의를 한 화면에 담는 강사·프리랜서용 1페이지 디자인입니다. 짙은 청록과 명조 제목으로 차분한 인상을 줍니다.",
   phone: "010-0000-0000",
   cta: "강의 주제 보기",
+  links: [
+    { kind: "email", label: "이메일", handle: "class@example.com", href: "mailto:class@example.com" },
+    { kind: "blog", label: "블로그", handle: "글쓰기 노트", href: "https://blog.naver.com/" },
+    { kind: "kakao", label: "카카오톡", handle: "문의 채널", href: "https://open.kakao.com/" },
+  ],
   stats: [
     ["9년", "출강 경력"],
     ["120회+", "기업 사내 교육"],

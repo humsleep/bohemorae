@@ -157,3 +157,22 @@ h2 {
     rotate: 360deg;
   }
 }
+
+/* 스크롤 등장: 화면에 들어올 때 아래에서 떠오른다. 브랜드 사이트(.reveal)와 샘플 섹션 공통.
+   처음부터 화면에 있는 것은 이미 다 떠오른 상태라 깜빡이지 않는다 */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal,
+    [data-sample] section > * {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 56px;
+  }
+}

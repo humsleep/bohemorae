@@ -16,6 +16,7 @@ import dental from "@/content/samples/dental";
 import pension from "@/content/samples/pension";
 import creator from "@/content/samples/creator";
 import coach from "@/content/samples/coach";
+import sidejob from "@/content/samples/sidejob";
 
 export type SampleSection =
   | { kind: "about"; title: string; body: string }
@@ -41,13 +42,15 @@ export type Sample = {
   phone: string;
   cta: string;
   stats?: [string, string][]; // 첫 화면 아래 숫자 띠
+  // 개인 사이트의 연락 아이콘(components/SocialLinks.tsx). 있으면 머리말·첫 화면·문의 칸에 나온다
+  links?: { kind: "email" | "instagram" | "youtube" | "kakao" | "blog"; label: string; handle: string; href: string }[];
   sections: SampleSection[];
   photos?: { hero?: string; gallery: string[] }; // 아래에서 파일이 있는 것만 자동으로 채운다
 };
 
 // 샘플 추가: content/samples에 파일을 만들고 아래 배열에 한 줄 추가
 const list: Sample[] = [cafe, hair, restaurant, academy, coach, company, creator, freelancer,
-  pilates, interior, nail, tax, dental, pension,
+  sidejob, pilates, interior, nail, tax, dental, pension,
 ];
 
 // 사진은 public/samples/<slug>/ 에 hero.jpg, 1.jpg, 2.jpg, 3.jpg 로 넣는다. 있는 파일만 화면에 나온다.

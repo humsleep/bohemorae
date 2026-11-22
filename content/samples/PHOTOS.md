@@ -373,3 +373,31 @@ One-on-one coaching session at a wooden table, two people's hands with notebooks
 ```
 Two hardcover books with plain blank covers standing on a dark shelf, a single beam of warm light, minimal moody still life, editorial photography, no text on covers, no logos, no watermark, 4:3 landscape aspect ratio
 ```
+
+## sidejob · 퇴근후 연구소 (부업·수익화 강의, 볼트 테마)
+
+hero는 큰 제목 아래 가로로 넓게(21:9로 잘림) 나온다. **가로 16:9**로 만든다. 1~3은 4:3.
+
+`public/samples/sidejob/hero.jpg`
+
+```
+A tidy home desk at night after work, laptop open showing a blank online store dashboard, a few small product packages with kraft boxes and shipping labels, warm desk lamp, city lights through the window, cool blue accent light, energetic modern editorial photography, no people, no readable text on screen, no logos, no watermark, 16:9 wide landscape aspect ratio
+```
+
+`public/samples/sidejob/1.jpg`
+
+```
+Hands packing a small product into a kraft shipping box on a desk, tape and labels, bright clean light with a vivid electric blue background, editorial photography, face not shown, no readable text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/sidejob/2.jpg`
+
+```
+A small online live class on a laptop screen with a grid of blurred participants, notebook and coffee beside it, evening home setting, editorial photography, no recognizable faces, no readable text, no logos, no watermark, 4:3 landscape aspect ratio
+```
+
+`public/samples/sidejob/3.jpg`
+
+```
+Simple product photo setup at home, a smartphone on a mini tripod shooting a ceramic mug on a white sweep, softbox light, editorial behind-the-scenes photography, no people, no readable text, no logos, no watermark, 4:3 landscape aspect ratio
+```
