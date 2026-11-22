@@ -22,11 +22,12 @@ const industries = [...new Set(samples.map((s) => s.type))];
 // 스크롤로 채워지는 문장. 마지막 세 낱말은 금색
 const statement = "홈페이지는 만들고 끝이 아닙니다. 가격이 바뀌고, 메뉴가 바뀌고, 공지가 생깁니다. 그때마다 사장님 대신 고쳐드립니다.".split(" ");
 
+// 진행 절차: 누가 하는지(who), 무엇을, 얼마나 걸리는지
 const steps = [
-  ["샘플 선택", "마음에 드는 디자인을 고릅니다"],
-  ["자료 전달", "상호, 가격표, 영업시간, 사진 5~10장이면 충분합니다"],
-  ["초안 확인", `${plans[0].specs[8][1]} 안에 초안을 드립니다`],
-  ["오픈", "확인이 끝나면 도메인에 연결합니다"],
+  { who: "고객님", title: "샘플 고르기", body: "마음에 드는 디자인을 고릅니다. 못 골라도 괜찮습니다", time: "5분" },
+  { who: "고객님", title: "자료 보내기", body: "상호, 가격표, 영업시간, 사진 5~10장을 카톡이나 메일로", time: "편할 때" },
+  { who: "보헤모레", title: "초안 받아 보기", body: "만든 화면을 링크로 보내 드립니다. 고칠 곳만 말씀해 주세요", time: `${plans[0].specs[8][1]}` },
+  { who: "보헤모레", title: "오픈", body: "도메인에 연결하고 네이버·구글에 등록합니다. 이후 월 관리 시작", time: "확인 후 바로" },
 ];
 
 // 3년 총액 비교: 직접 제작, 우리 라이트, 초기비 0원 구독형. 숫자는 요금 페이지와 같은 출처.
@@ -103,7 +104,8 @@ export default function Home() {
         </div>
 
         {/* 샘플 사이트 벽. 업종마다 글꼴, 색, 첫 화면 구성이 다르다. 화면보다 넓게 깔고 가운데를 맞춘다. */}
-        <div className="relative mt-16 [--z:0.24] md:[--z:0.34]">
+        {/* 양옆과 아래가 바탕색으로 서서히 사라져 잘린 느낌이 없다 */}
+        <div className="relative mt-16 [--z:0.24] [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent),linear-gradient(to_bottom,black_70%,transparent)] [mask-composite:intersect] md:[--z:0.3]">
           <div className="flex justify-center gap-4 md:gap-6">
             {columns.map((col, i) => (
               <div key={i} className={`flex shrink-0 flex-col gap-4 md:gap-6 ${i % 2 ? "px-drift-b pt-12 md:pt-20" : "px-drift-a"}`}>
@@ -113,7 +115,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper to-transparent" />
           <Link href="/samples" aria-label="샘플 전체 보기" className="absolute inset-0" />
         </div>
         <div className="relative mx-auto -mt-6 max-w-page px-4 pb-4 text-center">
@@ -124,15 +125,15 @@ export default function Home() {
       </section>
 
       {/* 업종 이름이 옆으로 흐르는 띠. 같은 줄을 두 번 이어 붙여 끊김 없이 돈다 */}
-      <div className="overflow-hidden bg-ink py-6 text-paper md:py-8">
+      <div className="overflow-hidden bg-ink py-4 text-paper md:py-5">
         <p className="sr-only">만드는 업종: {industries.join(", ")}</p>
         <div aria-hidden className="marquee flex w-max">
           {[0, 1].map((k) => (
-            <span key={k} className="flex shrink-0 items-center gap-8 pr-8 text-3xl font-bold whitespace-nowrap md:gap-12 md:pr-12 md:text-5xl">
+            <span key={k} className="flex shrink-0 items-center gap-6 pr-6 text-lg font-semibold whitespace-nowrap md:gap-8 md:pr-8 md:text-2xl">
               {industries.map((t) => (
-                <span key={t} className="flex items-center gap-8 md:gap-12">
+                <span key={t} className="flex items-center gap-6 md:gap-8">
                   {t}
-                  <span className="text-xl text-brand md:text-3xl">✳</span>
+                  <span className="text-sm text-brand md:text-base">✳</span>
                 </span>
               ))}
             </span>
@@ -159,29 +160,34 @@ export default function Home() {
         <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기 →</Link>
       </Section>
 
-      {/* 진행 절차: 세로로 스크롤하면 카드가 옆으로 지나간다(app/globals.css .hscroll). 지원하지 않으면 손가락으로 옆으로 넘긴다 */}
-      <section className="hscroll">
-        <div className="hscroll-pin">
-          <div className="mx-auto w-full max-w-page px-4">
-            <h2 className="text-3xl font-bold md:text-4xl">진행 절차</h2>
-            <p className="mt-3 text-muted">샘플을 고르고 자료를 보내 주시면, 라이트 기준 {plans[0].specs[8][1]} 안에 초안을 드립니다</p>
-          </div>
-          <ol className="hscroll-track mt-10 flex gap-4 px-4 md:gap-6 md:px-[max(1rem,calc((100vw-68rem)/2))]">
-            {steps.map(([t, d], i) => (
-              <li
-                key={t}
-                className="flex aspect-[4/5] w-[78vw] max-w-[26rem] shrink-0 snap-start flex-col justify-between rounded-3xl border border-line bg-surface p-8 md:aspect-[5/6] md:p-10"
+      <Section title="진행 절차" lead="고객님이 하실 일은 두 가지뿐입니다. 나머지는 보헤모레가 합니다.">
+        <ol className="grid gap-3 md:grid-cols-4 md:gap-4">
+          {steps.map((st, i) => (
+            <li key={st.title} className="relative flex gap-4 rounded-2xl border border-line bg-surface p-5 md:flex-col md:gap-0 md:p-6">
+              <span
+                className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                  st.who === "고객님" ? "border-2 border-brand text-brand" : "bg-brand text-brand-ink"
+                }`}
               >
-                <span className="text-7xl font-bold text-brand md:text-8xl">0{i + 1}</span>
-                <span>
-                  <span className="block text-2xl font-bold md:text-3xl">{t}</span>
-                  <span className="mt-2 block text-muted">{d}</span>
+                {i + 1}
+              </span>
+              <span className="min-w-0 md:mt-5">
+                <span className="text-xs font-semibold text-muted">{st.who} · {st.time}</span>
+                <span className="mt-1 block text-lg font-bold">{st.title}</span>
+                <span className="mt-1 block text-sm leading-relaxed text-muted">{st.body}</span>
+              </span>
+              {i < steps.length - 1 && (
+                <span aria-hidden className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 text-lg text-brand md:block">
+                  →
                 </span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+              )}
+            </li>
+          ))}
+        </ol>
+        <p className="mt-5 text-sm text-muted">
+          구축비는 시작할 때 절반, 오픈할 때 절반을 냅니다. 초안을 보기 전에 그만두시면 전액 돌려드립니다.
+        </p>
+      </Section>
 
       <Feature
         title="고칠 일이 생기면 대신 고쳐드립니다"
