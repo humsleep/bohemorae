@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { SitePreview } from "@/components/SitePreview";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { apps } from "@/lib/apps";
@@ -15,6 +15,12 @@ const panel = "rounded-3xl border border-line bg-surface p-6 shadow-[0_8px_24px_
 
 // 샘플 벽: 두 채씩 묶어 세로 단을 만든다
 const columns = Array.from({ length: Math.ceil(samples.length / 2) }, (_, i) => samples.slice(i * 2, i * 2 + 2));
+
+// 업종 띠: 샘플 업종에서 겹치지 않게
+const industries = [...new Set(samples.map((s) => s.type))];
+
+// 스크롤로 채워지는 문장. 마지막 세 낱말은 금색
+const statement = "홈페이지는 만들고 끝이 아닙니다. 가격이 바뀌고, 메뉴가 바뀌고, 공지가 생깁니다. 그때마다 사장님 대신 고쳐드립니다.".split(" ");
 
 const steps = [
   ["샘플 선택", "마음에 드는 디자인을 고릅니다"],
@@ -79,16 +85,17 @@ export default function Home() {
       <section className="overflow-hidden pt-16 md:pt-24">
         <div className="px-rise mx-auto max-w-page px-4 text-center">
           <h1 className="text-4xl font-bold leading-[1.15] sm:text-5xl md:text-7xl">
-            가게·회사 홈페이지,
-            <br />
-            구축{" "}
-            <span className="text-brand">19만원</span>
-            부터
+            <span className="line-in block" style={{ "--i": 0 } as CSSProperties}>
+              가게·회사 홈페이지,
+            </span>
+            <span className="line-in block" style={{ "--i": 1 } as CSSProperties}>
+              구축 <span className="text-brand">19만원</span>부터
+            </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
+          <p className="line-in mx-auto mt-6 max-w-lg text-lg text-muted" style={{ "--i": 2 } as CSSProperties}>
             가게와 회사는 물론 인플루언서·전문가 개인 사이트까지. 월 2.5만원에 대신 고쳐드립니다.
           </p>
-          <div className="mt-9 flex justify-center gap-3">
+          <div className="line-in mt-9 flex justify-center gap-3" style={{ "--i": 3 } as CSSProperties}>
             <Link href="/samples" className={primary}>샘플 보기</Link>
             <Link href="/contact" className={secondary}>무료 견적 받기</Link>
           </div>
@@ -116,22 +123,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 업종 이름이 옆으로 흐르는 띠. 같은 줄을 두 번 이어 붙여 끊김 없이 돈다 */}
+      <div className="overflow-hidden bg-ink py-6 text-paper md:py-8">
+        <p className="sr-only">만드는 업종: {industries.join(", ")}</p>
+        <div aria-hidden className="marquee flex w-max">
+          {[0, 1].map((k) => (
+            <span key={k} className="flex shrink-0 items-center gap-8 pr-8 text-3xl font-bold whitespace-nowrap md:gap-12 md:pr-12 md:text-5xl">
+              {industries.map((t) => (
+                <span key={t} className="flex items-center gap-8 md:gap-12">
+                  {t}
+                  <span className="text-xl text-brand md:text-3xl">✳</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* 스크롤하면 글자가 앞에서부터 진해진다(app/globals.css .fill-text). 지원하지 않으면 처음부터 진하게 보인다 */}
+      <section className="mx-auto max-w-page px-4 py-28 md:py-40">
+        <p
+          className="fill-text max-w-4xl text-3xl leading-snug font-bold md:text-6xl md:leading-tight"
+          style={{ "--n": statement.length } as CSSProperties}
+        >
+          {statement.map((w, i) => (
+            <span key={i} style={{ "--i": i } as CSSProperties} className={i >= statement.length - 3 ? "text-brand" : undefined}>
+              {w}{" "}
+            </span>
+          ))}
+        </p>
+      </section>
+
       <Section title="요금" lead="큰 숫자는 부가세 별도 금액이고, 카드마다 부가세 포함가를 함께 적었습니다. 최소 이용 기간은 3개월입니다.">
         <PlanCards />
         <Link href="/pricing" className={more}>수정 범위와 해지 조건까지 전부 보기 →</Link>
       </Section>
 
-      <Section title="진행 절차">
-        <ol className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-          {steps.map(([t, d], i) => (
-            <li key={t} className="rounded-2xl border border-line p-6">
-              <span className="text-sm font-medium text-accent">0{i + 1}</span>
-              <p className="mt-6 text-lg font-medium">{t}</p>
-              <p className="mt-1 text-sm text-muted">{d}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
+      {/* 진행 절차: 세로로 스크롤하면 카드가 옆으로 지나간다(app/globals.css .hscroll). 지원하지 않으면 손가락으로 옆으로 넘긴다 */}
+      <section className="hscroll">
+        <div className="hscroll-pin">
+          <div className="mx-auto w-full max-w-page px-4">
+            <h2 className="text-3xl font-bold md:text-4xl">진행 절차</h2>
+            <p className="mt-3 text-muted">샘플을 고르고 자료를 보내 주시면, 라이트 기준 {plans[0].specs[8][1]} 안에 초안을 드립니다</p>
+          </div>
+          <ol className="hscroll-track mt-10 flex gap-4 px-4 md:gap-6 md:px-[max(1rem,calc((100vw-68rem)/2))]">
+            {steps.map(([t, d], i) => (
+              <li
+                key={t}
+                className="flex aspect-[4/5] w-[78vw] max-w-[26rem] shrink-0 snap-start flex-col justify-between rounded-3xl border border-line bg-surface p-8 md:aspect-[5/6] md:p-10"
+              >
+                <span className="text-7xl font-bold text-brand md:text-8xl">0{i + 1}</span>
+                <span>
+                  <span className="block text-2xl font-bold md:text-3xl">{t}</span>
+                  <span className="mt-2 block text-muted">{d}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       <Feature
         title="고칠 일이 생기면 대신 고쳐드립니다"

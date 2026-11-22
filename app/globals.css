@@ -176,3 +176,77 @@ h2 {
     translate: 0 56px;
   }
 }
+
+/* 홈 연출(상 받는 사이트들의 패턴 중 읽기를 방해하지 않는 것만) */
+
+/* 첫 화면 제목·글·버튼이 한 줄씩 차례로 떠오른다(--i: 순서) */
+@media (prefers-reduced-motion: no-preference) {
+  .line-in {
+    animation: line-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 110ms);
+  }
+}
+@keyframes line-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5em;
+  }
+}
+
+/* 진행 절차 카드 줄: 기본은 손가락으로 옆으로 넘기는 줄 */
+.hscroll-track {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+  scrollbar-width: none;
+}
+.hscroll {
+  padding-block: 4rem 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* 스크롤하면 문장이 앞 낱말부터 진해진다(--n: 낱말 수, --i: 순서) */
+    .fill-text {
+      view-timeline-name: --fill;
+    }
+    .fill-text > span {
+      animation: fill-word linear both;
+      animation-timeline: --fill;
+      animation-range: cover calc(20% + var(--i) * 45% / var(--n)) cover calc(20% + (var(--i) + 1) * 45% / var(--n));
+    }
+
+    /* 진행 절차: 섹션을 화면에 붙여 두고, 세로 스크롤만큼 카드 줄을 옆으로 민다 */
+    .hscroll {
+      height: 280vh;
+      padding: 0;
+      view-timeline-name: --hs;
+    }
+    .hscroll-pin {
+      position: sticky;
+      top: 4rem;
+      height: calc(100svh - 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hscroll-track {
+      width: max-content;
+      overflow: visible;
+      animation: hscroll linear both;
+      animation-timeline: --hs;
+      animation-range: contain 5% contain 95%;
+    }
+  }
+}
+@keyframes fill-word {
+  from {
+    opacity: 0.18;
+  }
+}
+@keyframes hscroll {
+  to {
+    translate: min(0px, calc(-100% + 100vw)) 0;
+  }
+}
