@@ -6,7 +6,7 @@ export function Section({ title, lead, children }: { title: string; lead?: strin
   return (
     <section>
       <div className="reveal mx-auto max-w-page px-4 py-20 md:py-28">
-        <h2 className="font-serif-ko text-3xl leading-tight font-extrabold md:text-5xl">{title}</h2>
+        <h2 className="font-head text-3xl leading-tight font-extrabold md:text-5xl">{title}</h2>
         {lead && <p className="mt-3 max-w-xl text-muted">{lead}</p>}
         <div className="mt-10">{children}</div>
       </div>

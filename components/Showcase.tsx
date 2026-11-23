@@ -42,7 +42,7 @@ export function Showcase({ items, total }: { items: Item[]; total: number }) {
                 }`}
               >
                 <span className="w-6 shrink-0 text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
-                <span className="font-serif-ko text-2xl font-extrabold md:text-3xl">{it.name}</span>
+                <span className="font-head text-2xl font-extrabold md:text-3xl">{it.name}</span>
                 <span className="ml-auto shrink-0 text-sm">{it.type}</span>
               </button>
             </li>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
 // 글자 범위별로 쪼갠 파일이라 화면에 쓰인 글자 묶음만 내려받는다
-import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+// 본문·제목 글꼴: 원티드 산스(SIL OFL 1.1, 상업적 사용 가능). 글자 범위별로 쪼개져 쓰인 묶음만 내려받는다
+import "wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.css";
 import "./globals.css";
 import { fontVars } from "./fonts";
 

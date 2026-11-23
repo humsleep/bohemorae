@@ -90,7 +90,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-page px-4 pb-24">
         <div className="rounded-2xl bg-ink px-6 py-14 text-center text-paper md:py-20">
-          <h2 className="font-serif-ko text-3xl leading-tight font-extrabold md:text-5xl">
+          <h2 className="font-head text-3xl leading-tight font-extrabold md:text-5xl">
             가게 이름만 알려 주셔도
             <br />
             견적을 드립니다

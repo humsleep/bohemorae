@@ -20,12 +20,12 @@ export function HeroTry({ samples, note }: { samples: Sample[]; note: string }) 
 
   return (
     <section className="mx-auto flex max-w-page flex-col items-center px-4 pt-10 text-center md:pt-16">
-      <h1 className="font-serif-ko order-1 text-[2rem] leading-[1.25] font-extrabold sm:text-5xl md:text-6xl">
+      <h1 className="font-head order-1 text-[2rem] leading-[1.25] font-extrabold sm:text-5xl md:text-6xl">
         만드는 데 19만원,
         <br />
         고치는 데는 <span className="whitespace-nowrap text-brand">월 2.5만원</span>
       </h1>
-      <p className="line-in order-2 mt-4 max-w-xl text-base text-muted md:mt-5 md:text-lg" style={step(1)}>
+      <p className="line-in order-2 mt-4 max-w-xl text-base text-balance text-muted md:mt-5 md:text-lg" style={step(1)}>
         가게 홈페이지를 업종에 맞춰 만들고, 가격·영업시간이 바뀌면 매달 대신 고쳐 드립니다.
       </p>
 

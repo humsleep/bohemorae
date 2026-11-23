@@ -13,7 +13,7 @@
   --color-brand: #a16207;
   --color-brand-ink: #ffffff;
   --color-accent: #a16207;
-  --font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+  --font-sans: "Wanted Sans Variable", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
   --font-display: var(--font-sans);
   --container-page: 68rem;
@@ -194,10 +194,10 @@ h2 {
 }
 
 
-/* 브랜드 제목용 명조(app/fonts.ts의 나눔명조 700·800) */
-.font-serif-ko {
-  font-family: var(--font-myeongjo), serif;
-  letter-spacing: -0.02em;
+/* 브랜드 제목: 원티드 산스를 굵고 촘촘하게 */
+.font-head {
+  font-family: var(--font-sans);
+  letter-spacing: -0.04em;
 }
 
 /* 종이 질감: 브랜드 사이트 전체에 아주 옅은 잡티를 얹는다(app/(site)/layout.tsx). 클릭은 통과 */

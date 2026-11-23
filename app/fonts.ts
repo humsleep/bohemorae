@@ -1,6 +1,6 @@
 import { Black_Han_Sans, Gowun_Batang, Hahmlet, IBM_Plex_Sans_KR, Nanum_Myeongjo } from "next/font/google";
 
-// 제목용 웹글꼴. 본문은 Pretendard(layout.tsx). 한글은 글자 범위별로 쪼개져 있어 쓰인 묶음만 내려받는다.
+// 샘플 테마의 제목용 웹글꼴. 본문은 원티드 산스(layout.tsx). 한글은 글자 범위별로 쪼개져 있어 쓰인 묶음만 내려받는다.
 // 테마가 --font-display로 골라 쓴다(lib/themes.ts).
 // next/font는 옵션을 글자 그대로 적어야 해서 줄마다 반복한다
 const hahmlet = Hahmlet({ subsets: ["latin"], display: "swap", preload: false, variable: "--font-hahmlet" });
