@@ -1,12 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { guarantee, plans } from "@/lib/pricing";
+import { guarantee, plans, steps } from "@/lib/pricing";
 
 export function Section({ title, lead, children }: { title: string; lead?: string; children: ReactNode }) {
   return (
     <section>
-      <div className="reveal mx-auto max-w-page px-4 py-16 md:py-24">
-        <h2 className="text-3xl font-bold md:text-4xl">{title}</h2>
+      <div className="reveal mx-auto max-w-page px-4 py-20 md:py-28">
+        <h2 className="font-serif-ko text-3xl leading-tight font-extrabold md:text-5xl">{title}</h2>
         {lead && <p className="mt-3 max-w-xl text-muted">{lead}</p>}
         <div className="mt-10">{children}</div>
       </div>
@@ -28,7 +28,8 @@ export function KV({ rows }: { rows: [string, string][] }) {
   );
 }
 
-export function PlanCards({ full }: { full?: boolean }) {
+// cta: 카드마다 견적 버튼(요금 페이지). 홈은 버튼을 줄이려고 끈다
+export function PlanCards({ full, cta = true }: { full?: boolean; cta?: boolean }) {
   return (
     <>
     <div className="grid gap-4 md:grid-cols-3">
@@ -50,6 +51,7 @@ export function PlanCards({ full }: { full?: boolean }) {
               </div>
             ))}
           </dl>
+          {cta && (
           <div className="mt-auto pt-6">
             <Link
               href={`/contact?plan=${encodeURIComponent(p.name)}`}
@@ -58,6 +60,7 @@ export function PlanCards({ full }: { full?: boolean }) {
               {p.name} 견적 받기
             </Link>
           </div>
+          )}
         </article>
       ))}
     </div>
@@ -79,5 +82,31 @@ export function Faq({ items }: { items: [string, string][] }) {
         </details>
       ))}
     </div>
+  );
+}
+
+// 진행 절차 4단계. 고객 단계는 테두리 번호, 보헤모레 단계는 채운 번호
+export function Steps() {
+  return (
+    <ol className="grid gap-3 md:grid-cols-4 md:gap-4">
+      {steps.map((st, i) => (
+        <li key={st.title} className="flex gap-4 rounded-2xl border border-line bg-surface p-5 md:flex-col md:gap-0 md:p-6">
+          <span
+            className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+              st.who === "고객님" ? "border-2 border-brand text-brand" : "bg-brand text-brand-ink"
+            }`}
+          >
+            {i + 1}
+          </span>
+          <span className="min-w-0 md:mt-5">
+            <span className="text-xs font-semibold text-muted">
+              {st.who} · {st.time}
+            </span>
+            <span className="mt-1 block text-lg font-bold">{st.title}</span>
+            <span className="mt-1 block text-sm leading-relaxed text-muted">{st.body}</span>
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }

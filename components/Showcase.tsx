@@ -42,7 +42,7 @@ export function Showcase({ items, total }: { items: Item[]; total: number }) {
                 }`}
               >
                 <span className="w-6 shrink-0 text-xs tabular-nums text-muted">{String(i + 1).padStart(2, "0")}</span>
-                <span className={`font-serif-ko text-2xl font-extrabold md:text-3xl ${i === active ? "text-brand" : ""}`}>{it.name}</span>
+                <span className="font-serif-ko text-2xl font-extrabold md:text-3xl">{it.name}</span>
                 <span className="ml-auto shrink-0 text-sm">{it.type}</span>
               </button>
             </li>
@@ -63,7 +63,7 @@ export function Showcase({ items, total }: { items: Item[]; total: number }) {
                   type="button"
                   aria-pressed={device === d}
                   onClick={() => setDevice(d)}
-                  className={`min-h-10 rounded-full px-4 text-sm font-medium ${device === d ? "bg-ink text-paper" : "text-muted"}`}
+                  className={`min-h-11 rounded-full px-4 text-sm font-medium ${device === d ? "bg-ink text-paper" : "text-muted"}`}
                 >
                   {d === "pc" ? "PC 화면" : "휴대폰 화면"}
                 </button>

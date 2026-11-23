@@ -25,7 +25,7 @@ export function Header() {
           href="/contact"
           className="hidden min-h-11 items-center rounded-full bg-ink px-5 text-sm font-medium text-paper hover:opacity-90 md:flex"
         >
-          견적 문의
+          무료 견적 받기
         </Link>
       </div>
     </header>

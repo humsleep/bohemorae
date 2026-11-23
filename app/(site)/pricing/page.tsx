@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Faq, KV, PlanCards, Section } from "@/components/ui";
+import { Faq, KV, PlanCards, Section, Steps } from "@/components/ui";
 import { comparison, editScope, extras, faqs, included, terms } from "@/lib/pricing";
 
 export const metadata: Metadata = {
@@ -28,6 +28,10 @@ export default function Pricing() {
           30개 이상이거나, 자주 고쳐야 하는 콘텐츠가 있으면 프로입니다. 그 외에는 라이트나
           스탠다드로 충분합니다.
         </p>
+      </Section>
+
+      <Section title="진행 절차" lead="고객님이 하실 일은 두 가지뿐입니다. 구축비는 시작할 때 절반, 오픈할 때 절반을 냅니다.">
+        <Steps />
       </Section>
 
       <Section
