@@ -24,11 +24,13 @@ export function ContactForm({
   plans,
   picked,
   plan,
+  business,
 }: {
   samples: { slug: string; label: string }[];
   plans: string[];
   picked?: string; // 샘플의 "이 디자인으로 시작"에서 왔을 때 그 샘플
   plan?: string; // 미리 골라 둘 플랜
+  business?: string; // 홈 첫 화면에서 넣어 본 가게 이름
 }) {
   const [state, action, pending] = useActionState(submitInquiry, { ok: false, message: "" });
   const [kind, setKind] = useState("견적");
@@ -83,7 +85,7 @@ export function ContactForm({
       {kind === "견적" && (
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label="상호·업종 *">
-            <input name="business" required maxLength={40} placeholder="예: 달목 커피, 카페" className={input} />
+            <input name="business" required maxLength={40} defaultValue={business} placeholder="예: 달목 커피, 카페" className={input} />
           </Field>
           {picked ? (
             <input type="hidden" name="sample" value={picked} />

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Contact(props: PageProps<"/contact">) {
-  const { sample, plan } = await props.searchParams;
+  const { sample, plan, business } = await props.searchParams;
   // 샘플 페이지의 "이 디자인으로 시작"에서 넘어오면 그 샘플이 선택된 채로 열린다
   const picked = typeof sample === "string" ? getSample(sample) : undefined;
   // 요금 카드의 "견적 받기"에서 오면 그 플랜이 골라진 채로 열린다
@@ -55,6 +55,7 @@ export default async function Contact(props: PageProps<"/contact">) {
         plans={plans.map((p) => p.name)}
         picked={picked?.slug}
         plan={plan0}
+        business={typeof business === "string" ? business.slice(0, 40) : undefined}
       />
     </div>
   );

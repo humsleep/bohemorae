@@ -10,6 +10,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <MobileCta />
+      <div aria-hidden className="grain" />
     </>
   );
 }

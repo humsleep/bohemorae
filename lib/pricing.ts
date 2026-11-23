@@ -105,7 +105,7 @@ export const terms: [string, string][] = [
 // 경쟁사 이름은 쓰지 않고 유형으로만 표기 (기획서 5장)
 export const comparison = [
   { name: "빌더로 직접 제작", calc: "월 1.6만원 × 36", total: "약 58만원", edits: "본인이 직접" },
-  ...plans.map((p) => ({ name: `Bohemorae ${p.name}`, ...p.threeYear, ours: true })),
+  ...plans.map((p) => ({ name: `보헤모레 ${p.name}`, ...p.threeYear, ours: true })),
   { name: "초기비 0원 구독형 (월 9.9만원 기준)", calc: "9.9만원 × 36", total: "약 356만원", edits: "업체별 상이" },
   { name: "초기비 0원 구독형 (월 20만원 기준)", calc: "20만원 × 36", total: "720만원", edits: "월 1회" },
 ] as { name: string; calc: string; total: string; edits: string; ours?: boolean }[];

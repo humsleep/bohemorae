@@ -1,20 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
-import { SitePreview } from "@/components/SitePreview";
+import type { CSSProperties } from "react";
+import { BeforeAfter } from "@/components/BeforeAfter";
+import { HeroTry } from "@/components/HeroTry";
+import { Showcase } from "@/components/Showcase";
 import { Faq, PlanCards, Section } from "@/components/ui";
 import { apps } from "@/lib/apps";
 import { comparison, faqs, plans } from "@/lib/pricing";
-import { samples } from "@/lib/samples";
+import { getSample, samples } from "@/lib/samples";
 import { site } from "@/lib/site";
 
-const primary = "rounded-full bg-ink px-6 py-3 font-medium text-paper hover:opacity-90";
-const secondary = "rounded-full border border-line bg-surface px-6 py-3 font-medium hover:border-ink";
 const more = "mt-6 inline-block font-medium text-brand hover:underline";
-const panel = "rounded-3xl border border-line bg-surface p-6 shadow-[0_8px_24px_rgba(0,0,0,0.06)] md:p-10";
+const tile = "reveal rounded-3xl border border-line bg-surface p-6 md:p-8";
 
-// 샘플 벽: 두 채씩 묶어 세로 단을 만든다
-const columns = Array.from({ length: Math.ceil(samples.length / 2) }, (_, i) => samples.slice(i * 2, i * 2 + 2));
+// 첫 화면 미리보기와 비포/애프터에 쓰는 샘플(이름을 바꿔 넣기 좋은 매장형)
+const cafe = getSample("cafe")!;
+
+// 포트폴리오 목록: 업종이 고루 섞이게 8채만
+const showcase = ["cafe", "creator", "hair", "coach", "restaurant", "sidejob", "pilates", "interior"]
+  .map((slug) => getSample(slug)!)
+  .map((s) => ({ slug: s.slug, name: s.name, type: s.type }));
 
 // 업종 띠: 샘플 업종에서 겹치지 않게
 const industries = [...new Set(samples.map((s) => s.type))];
@@ -51,78 +56,10 @@ const handover = [
   ["다른 호스팅으로 이전", "원하면 5만원에 대행"],
 ];
 
-function Feature({
-  title,
-  body,
-  href,
-  link,
-  flip,
-  children,
-}: {
-  title: string;
-  body: string;
-  href: string;
-  link: string;
-  flip?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <div className="reveal mx-auto grid max-w-page items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-16 md:py-20">
-      <div className={flip ? "md:order-2" : undefined}>
-        <h2 className="text-3xl font-bold leading-tight md:text-4xl">{title}</h2>
-        <p className="mt-4 max-w-md text-lg text-muted">{body}</p>
-        <Link href={href} className={more}>
-          {link} →
-        </Link>
-      </div>
-      <div className={panel}>{children}</div>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
     <>
-      <section className="overflow-hidden pt-16 md:pt-24">
-        <div className="px-rise mx-auto max-w-page px-4 text-center">
-          <h1 className="text-4xl font-bold leading-[1.15] sm:text-5xl md:text-7xl">
-            <span className="line-in block" style={{ "--i": 0 } as CSSProperties}>
-              가게·회사 홈페이지,
-            </span>
-            <span className="line-in block" style={{ "--i": 1 } as CSSProperties}>
-              구축 <span className="text-brand">19만원</span>부터
-            </span>
-          </h1>
-          <p className="line-in mx-auto mt-6 max-w-lg text-lg text-muted" style={{ "--i": 2 } as CSSProperties}>
-            가게와 회사는 물론 인플루언서·전문가 개인 사이트까지. 월 2.5만원에 대신 고쳐드립니다.
-          </p>
-          <div className="line-in mt-9 flex justify-center gap-3" style={{ "--i": 3 } as CSSProperties}>
-            <Link href="/samples" className={primary}>샘플 보기</Link>
-            <Link href="/contact" className={secondary}>무료 견적 받기</Link>
-          </div>
-          <p className="mt-4 text-sm text-muted">{plans[0].vat}</p>
-        </div>
-
-        {/* 샘플 사이트 벽. 업종마다 글꼴, 색, 첫 화면 구성이 다르다. 화면보다 넓게 깔고 가운데를 맞춘다. */}
-        {/* 양옆과 아래가 바탕색으로 서서히 사라져 잘린 느낌이 없다 */}
-        <div className="relative mt-16 [--z:0.24] [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent),linear-gradient(to_bottom,black_70%,transparent)] [mask-composite:intersect] md:[--z:0.3]">
-          <div className="flex justify-center gap-4 md:gap-6">
-            {columns.map((col, i) => (
-              <div key={i} className={`flex shrink-0 flex-col gap-4 md:gap-6 ${i % 2 ? "px-drift-b pt-12 md:pt-20" : "px-drift-a"}`}>
-                {col.map((s) => (
-                  <SitePreview key={s.slug} sample={s} />
-                ))}
-              </div>
-            ))}
-          </div>
-          <Link href="/samples" aria-label="샘플 전체 보기" className="absolute inset-0" />
-        </div>
-        <div className="relative mx-auto -mt-6 max-w-page px-4 pb-4 text-center">
-          <Link href="/samples" className="font-medium text-brand hover:underline">
-            업종별 샘플 {samples.length}개 전부 보기 →
-          </Link>
-        </div>
-      </section>
+      <HeroTry sample={cafe} priceLine={`구축 ${plans[0].build}부터 · 월 ${plans[0].monthly} (부가세 별도) · 상담은 무료입니다`} />
 
       {/* 업종 이름이 옆으로 흐르는 띠. 같은 줄을 두 번 이어 붙여 끊김 없이 돈다 */}
       <div className="overflow-hidden bg-ink py-4 text-paper md:py-5">
@@ -154,6 +91,14 @@ export default function Home() {
           ))}
         </p>
       </section>
+
+      <Section title="업종마다 다르게 만듭니다" lead="이름에 마우스를 올리거나 눌러 보세요. PC와 휴대폰에서 어떻게 보이는지 바로 바꿔 볼 수 있습니다.">
+        <Showcase items={showcase} total={samples.length} />
+      </Section>
+
+      <Section title="SNS만 있을 때와 무엇이 다를까요" lead="가운데 손잡이를 좌우로 끌어 보세요. 손님이 DM으로 묻던 것들이 홈페이지에서는 한 번에 보입니다.">
+        <BeforeAfter sample={cafe} />
+      </Section>
 
       <Section title="요금" lead="큰 숫자는 부가세 별도 금액이고, 카드마다 부가세 포함가를 함께 적었습니다. 최소 이용 기간은 3개월입니다.">
         <PlanCards />
@@ -189,102 +134,90 @@ export default function Home() {
         </p>
       </Section>
 
-      <Feature
-        title="고칠 일이 생기면 대신 고쳐드립니다"
-        body={`가격표, 영업시간, 사진, 공지처럼 자주 바뀌는 내용은 요청만 하시면 됩니다. 라이트 기준 ${plans[0].specs[1][1]}, ${plans[0].specs[2][1]} 안에 반영합니다.`}
-        href="/pricing"
-        link="수정 범위 보기"
-      >
-        <div className="flex items-baseline justify-between">
-          <p className="font-medium">11월 수정 요청</p>
-          <p className="text-sm text-muted">예시 화면</p>
-        </div>
-        <ul className="mt-6 space-y-3">
-          {requests.map(([text, asked, done]) => (
-            <li key={text} className="rounded-2xl bg-raised p-4">
-              <p>{text}</p>
-              <p className="mt-3 flex items-center justify-between text-sm text-muted">
-                <span>{asked}</span>
-                <span className="flex items-center gap-2 text-brand">
-                  <span className="size-1.5 rounded-full bg-brand" />
-                  {done}
-                </span>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </Feature>
-
-      <Feature
-        flip
-        title="해지해도 사이트는 고객님 것입니다"
-        body="도메인은 처음부터 고객 명의로 삽니다. 해지하면 소스와 콘텐츠 파일을 무료로 넘겨드립니다. 최소 이용 기간은 3개월입니다."
-        href="/pricing"
-        link="약정과 해지 조건"
-      >
-        <p className="font-medium">해지할 때 받는 것</p>
-        <dl className="mt-6 divide-y divide-line border-y border-line">
-          {handover.map(([k, v]) => (
-            <div key={k} className="flex items-baseline justify-between gap-4 py-4">
-              <dt>{k}</dt>
-              <dd className="text-right text-muted">{v}</dd>
+      <Section title="구독하는 동안 해드리는 일" lead="만들고 끝내지 않습니다. 매달 고치고, 지키고, 언제든 가져가실 수 있게 둡니다.">
+        <div className="grid gap-4 md:grid-cols-6">
+          <div className={`${tile} md:col-span-4 md:row-span-2`}>
+            <h3 className="text-2xl font-bold">고칠 일이 생기면 대신 고쳐드립니다</h3>
+            <p className="mt-2 text-muted">
+              가격표, 영업시간, 사진, 공지는 요청만 하세요. 라이트 기준 {plans[0].specs[1][1]}, {plans[0].specs[2][1]} 안에 반영합니다.
+            </p>
+            <div className="mt-6 flex items-baseline justify-between text-sm">
+              <p className="font-medium">11월 수정 요청</p>
+              <p className="text-muted">예시 화면</p>
             </div>
-          ))}
-        </dl>
-      </Feature>
+            <ul className="mt-3 space-y-3">
+              {requests.map(([text, asked, done]) => (
+                <li key={text} className="rounded-2xl bg-raised p-4">
+                  <p>{text}</p>
+                  <p className="mt-3 flex items-center justify-between text-sm text-muted">
+                    <span>{asked}</span>
+                    <span className="flex items-center gap-2 text-brand">
+                      <span className="size-1.5 rounded-full bg-brand" />
+                      {done}
+                    </span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <Feature
-        title="가격과 조건을 전부 공개합니다"
-        body="구축비, 월 요금, 약정, 해지 조건을 요금 페이지 한 곳에 적었습니다. 3년 동안 내는 돈까지 미리 계산해 두었습니다."
-        href="/pricing"
-        link="요금 전부 보기"
-      >
-        <p className="font-medium">3년 동안 내는 돈</p>
-        <ul className="mt-6 space-y-6">
-          {totals.map((t) => (
-            <li key={t.name}>
-              <div className="flex items-baseline justify-between gap-4">
-                <span className={t.ours ? "font-medium" : "text-muted"}>{t.name}</span>
-                <span className={`whitespace-nowrap text-xl font-semibold ${t.ours ? "text-brand" : ""}`}>{t.total}</span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-raised">
-                <div
-                  className={`h-2 rounded-full ${t.ours ? "bg-brand" : "bg-muted/40"}`}
-                  style={{ width: `${(t.n / maxTotal) * 100}%` }}
-                />
-              </div>
-              <p className="mt-2 text-sm text-muted">수정: {t.edits}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-xs text-muted">부가세 별도, 도메인 비용 제외</p>
-      </Feature>
+          <div className={`${tile} md:col-span-2`}>
+            <h3 className="text-xl font-bold">해지해도 사이트는 고객님 것</h3>
+            <dl className="mt-4 divide-y divide-line text-sm">
+              {handover.map(([k, v]) => (
+                <div key={k} className="flex justify-between gap-3 py-2.5">
+                  <dt>{k}</dt>
+                  <dd className="text-right text-muted">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
 
-      <Feature
-        flip
-        title="14년차 개발자가 직접 만들고 직접 답합니다"
-        body="보헤모레는 앱과 웹을 직접 만드는 1인 개발 스튜디오입니다. 앱스토어에 앱 5개를 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다."
-        href="/about"
-        link="만든 사람 소개"
-      >
-        {/* 출시 앱의 실제 화면. App Store 등록 이미지(public/apps) */}
-        <ul className="grid grid-cols-3 gap-3">
-          {[apps[0], apps[2], apps[3]].map((a) => (
-            <li key={a.slug}>
-              <Link href="/apps" className="block">
-                <span className="relative block aspect-[598/1300] overflow-hidden rounded-xl border border-line">
-                  <Image src={a.shots[0]} alt={`${a.name} 앱 화면`} fill sizes="(min-width: 768px) 160px, 30vw" className="object-cover" />
-                </span>
-                <span className="mt-3 flex items-center gap-2">
-                  <Image src={a.icon} alt="" width={24} height={24} className="size-6 rounded-md" />
-                  <span className="truncate text-sm font-medium">{a.name}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-5 text-sm text-muted">앱스토어 출시 {apps.length}개 · 기획부터 출시까지 1인 개발</p>
-      </Feature>
+          <div className={`${tile} md:col-span-2`}>
+            <h3 className="text-xl font-bold">3년 동안 내는 돈</h3>
+            <ul className="mt-4 space-y-4 text-sm">
+              {totals.map((t) => (
+                <li key={t.name}>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className={t.ours ? "font-medium" : "text-muted"}>{t.name}</span>
+                    <span className={`whitespace-nowrap font-semibold ${t.ours ? "text-brand" : ""}`}>{t.total}</span>
+                  </div>
+                  <div className="mt-1.5 h-1.5 rounded-full bg-raised">
+                    <div className={`h-1.5 rounded-full ${t.ours ? "bg-brand" : "bg-muted/40"}`} style={{ width: `${(t.n / maxTotal) * 100}%` }} />
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-muted">부가세 별도, 도메인 비용 제외</p>
+          </div>
+
+          <div className={`${tile} grid items-center gap-6 md:col-span-6 md:grid-cols-[1fr_1.2fr]`}>
+            <div>
+              <h3 className="text-2xl font-bold">14년차 개발자가 직접 만들고 직접 답합니다</h3>
+              <p className="mt-2 text-muted">
+                앱스토어에 앱 {apps.length}개를 출시한 손으로 홈페이지도 직접 만듭니다. 전화 영업은 하지 않습니다.
+              </p>
+              <Link href="/about" className={more}>만든 사람 소개 →</Link>
+            </div>
+            {/* 출시 앱의 실제 화면. App Store 등록 이미지(public/apps) */}
+            <ul className="grid grid-cols-3 gap-3">
+              {[apps[0], apps[2], apps[3]].map((a) => (
+                <li key={a.slug}>
+                  <Link href="/apps" className="block">
+                    <span className="relative block aspect-[598/1300] overflow-hidden rounded-xl border border-line">
+                      <Image src={a.shots[0]} alt={`${a.name} 앱 화면`} fill sizes="(min-width: 768px) 160px, 30vw" className="object-cover" />
+                    </span>
+                    <span className="mt-2 flex items-center gap-2">
+                      <Image src={a.icon} alt="" width={20} height={20} className="size-5 rounded-md" />
+                      <span className="truncate text-sm font-medium">{a.name}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
 
       <Section title="자주 묻는 질문">
         <Faq items={faqs.slice(0, 4)} />
@@ -293,7 +226,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-page px-4 pb-24">
         <div className="rounded-3xl bg-ink px-6 py-16 text-center text-paper md:py-20">
-          <h2 className="text-3xl font-bold leading-tight md:text-5xl">
+          <h2 className="font-serif-ko text-3xl leading-tight font-extrabold md:text-5xl">
             업종과 원하는 샘플만
             <br />
             알려주셔도 됩니다

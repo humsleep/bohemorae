@@ -212,3 +212,29 @@ h2 {
     opacity: 0.18;
   }
 }
+
+/* 브랜드 제목용 명조(app/fonts.ts의 나눔명조 700·800) */
+.font-serif-ko {
+  font-family: var(--font-myeongjo), serif;
+  letter-spacing: -0.02em;
+}
+
+/* 종이 질감: 브랜드 사이트 전체에 아주 옅은 잡티를 얹는다(app/(site)/layout.tsx). 클릭은 통과 */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 첫 화면: 커서를 따라가는 은은한 금빛(components/HeroTry.tsx가 --mx, --my를 넣는다) */
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(560px circle at var(--mx, 72%) var(--my, 35%), color-mix(in srgb, var(--color-brand) 13%, transparent), transparent 70%);
+}
