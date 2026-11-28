@@ -34,6 +34,8 @@ export function ContactForm({
 }) {
   const [state, action, pending] = useActionState(submitInquiry, { ok: false, message: "" });
   const [kind, setKind] = useState("견적");
+  // React 19는 액션 뒤 폼을 비운다. 실패하면 서버가 돌려준 입력값으로 다시 채운다
+  const f = state.fields ?? {};
 
   if (state.ok)
     return (
@@ -52,7 +54,8 @@ export function ContactForm({
     );
 
   return (
-    <form action={action} className="space-y-5">
+    // key: select는 마운트 뒤 바뀐 defaultValue를 반영하지 않으므로, 되돌려 받은 값이 바뀌면 폼을 새로 그린다
+    <form key={JSON.stringify(f)} action={action} className="space-y-5">
       {picked || plan ? (
         <input type="hidden" name="kind" value="견적" />
       ) : (
@@ -85,13 +88,13 @@ export function ContactForm({
       {kind === "견적" && (
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label="상호·업종 *">
-            <input name="business" required maxLength={40} defaultValue={business} placeholder="예: 달목 커피, 카페" className={input} />
+            <input name="business" required maxLength={40} defaultValue={f.business ?? business} placeholder="예: 달목 커피, 카페" className={input} />
           </Field>
           {picked ? (
             <input type="hidden" name="sample" value={picked} />
           ) : (
             <Field label="원하는 샘플">
-              <select name="sample" defaultValue="" className={input}>
+              <select name="sample" defaultValue={f.sample ?? ""} className={input}>
                 <option value="">아직 못 골랐어요</option>
                 {samples.map((s) => (
                   <option key={s.slug} value={s.slug}>
@@ -102,7 +105,7 @@ export function ContactForm({
             </Field>
           )}
           <Field label="희망 플랜">
-            <select name="plan" defaultValue={plan ?? ""} className={input}>
+            <select name="plan" defaultValue={f.plan ?? plan ?? ""} className={input}>
               <option value="">상담 후 결정</option>
               {plans.map((p) => (
                 <option key={p}>{p}</option>
@@ -115,11 +118,12 @@ export function ContactForm({
       <div>
         <div className="grid gap-5 sm:grid-cols-3">
           <Field label="이름 *">
-            <input name="name" required maxLength={40} autoComplete="name" className={input} />
+            <input name="name" defaultValue={f.name} required maxLength={40} autoComplete="name" className={input} />
           </Field>
           <Field label="연락처">
             <input
               name="phone"
+              defaultValue={f.phone}
               type="tel"
               inputMode="tel"
               maxLength={20}
@@ -129,20 +133,20 @@ export function ContactForm({
             />
           </Field>
           <Field label="이메일">
-            <input name="email" type="email" maxLength={100} autoComplete="email" className={input} />
+            <input name="email" defaultValue={f.email} type="email" maxLength={100} autoComplete="email" className={input} />
           </Field>
         </div>
         <p className="mt-2 text-sm text-muted">연락처와 이메일 중 하나만 적어도 됩니다.</p>
       </div>
 
       {kind === "견적" && (
-        <details className="rounded-lg border border-line px-4">
+        <details open={Boolean(f.domain || f.openDate)} className="rounded-lg border border-line px-4">
           <summary className="flex min-h-12 cursor-pointer items-center text-sm font-medium">
             더 알려주실 것 (선택)
           </summary>
           <div className="grid gap-5 pb-4 sm:grid-cols-2">
             <Field label="도메인 보유 여부">
-              <select name="domain" defaultValue="" className={input}>
+              <select name="domain" defaultValue={f.domain ?? ""} className={input}>
                 <option value="">선택</option>
                 {domainOptions.map((d) => (
                   <option key={d}>{d}</option>
@@ -150,14 +154,14 @@ export function ContactForm({
               </select>
             </Field>
             <Field label="희망 오픈일">
-              <input name="openDate" type="date" className={input} />
+              <input name="openDate" defaultValue={f.openDate} type="date" className={input} />
             </Field>
           </div>
         </details>
       )}
 
       <Field label={kind === "견적" ? "남기실 말 (선택)" : "문의 내용 *"}>
-        <textarea name="message" rows={4} maxLength={2000} required={kind === "문의"} className={input} />
+        <textarea name="message" defaultValue={f.message} rows={4} maxLength={2000} required={kind === "문의"} className={input} />
       </Field>
 
       {/* 스팸 방지용 숨김 필드. 사람은 채우지 않는다 */}
