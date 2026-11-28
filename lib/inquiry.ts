@@ -61,6 +61,21 @@ export function parseInquiry(
   return { ok: true, data };
 }
 
+// 검증 실패 때 폼에 되돌려 줄 입력값. React 19는 액션 뒤 폼을 비우므로 이 값을 defaultValue로 다시 채운다.
+// 숨김 필드(website)·동의(agree)는 넣지 않는다: 동의는 다시 받는다
+export const keptFields = ["name", "email", "phone", "message", "business", "sample", "plan", "domain", "openDate"] as const;
+export type KeptFields = Partial<Record<(typeof keptFields)[number], string>>;
+
+export function keepFields(get: (key: string) => string | null): KeptFields {
+  const out: KeptFields = {};
+  for (const k of keptFields) {
+    const v = get(k);
+    // 빈 값도 남긴다: 지운 칸이 미리 채워 둔 값(예: 홈에서 넣은 상호)으로 되살아나지 않게
+    if (v !== null) out[k] = v.slice(0, k === "message" ? 2000 : 100);
+  }
+  return out;
+}
+
 // Gmail 필터가 머리말([견적]·[문의])로 분류한다
 export const subject = (d: Inquiry) =>
   d.kind === "견적" ? `[견적] ${d.business} / ${d.name}` : `[문의] ${d.name}`;

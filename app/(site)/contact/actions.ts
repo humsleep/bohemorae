@@ -1,24 +1,26 @@
 "use server";
 
 import { randomBytes } from "node:crypto";
-import { body, parseInquiry, subject } from "@/lib/inquiry";
+import { body, keepFields, parseInquiry, subject, type KeptFields } from "@/lib/inquiry";
 import { sendMail } from "@/lib/mail";
 import { plans } from "@/lib/pricing";
 import { samples } from "@/lib/samples";
 import { site } from "@/lib/site";
 
-export type FormState = { ok: boolean; message: string };
+// fields: 실패 때 폼에 다시 채울 입력값(숨김 필드·동의 제외)
+export type FormState = { ok: boolean; message: string; fields?: KeptFields };
 
 // shortcut: 전송 횟수 제한 없음(숨김 필드만), 스팸이 오면 Vercel 방화벽의 rate limit 규칙을 /contact에 건다
 export async function submitInquiry(_prev: FormState, form: FormData): Promise<FormState> {
-  const parsed = parseInquiry((k) => {
+  const get = (k: string) => {
     const v = form.get(k);
     return typeof v === "string" ? v : null;
-  }, { samples: samples.map((s) => s.slug), plans: plans.map((p) => p.name) });
+  };
+  const parsed = parseInquiry(get, { samples: samples.map((s) => s.slug), plans: plans.map((p) => p.name) });
 
   // 봇에게는 성공한 것처럼 보인다
   if (!parsed.ok && parsed.spam) return { ok: true, message: "접수되었습니다." };
-  if (!parsed.ok) return { ok: false, message: parsed.error };
+  if (!parsed.ok) return { ok: false, message: parsed.error, fields: keepFields(get) };
 
   const d = parsed.data;
   const day = new Date().toISOString().slice(0, 10).replaceAll("-", "");
@@ -31,6 +33,7 @@ export async function submitInquiry(_prev: FormState, form: FormData): Promise<F
     return {
       ok: false,
       message: `접수에 실패했습니다. 번거로우시겠지만 ${site.email}로 메일을 보내 주세요.`,
+      fields: keepFields(get),
     };
   }
 
